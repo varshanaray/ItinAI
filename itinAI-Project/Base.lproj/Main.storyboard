@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AfO-0d-2Tx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AfO-0d-2Tx">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,7 +43,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logoItinAI.png" translatesAutoresizingMaskIntoConstraints="NO" id="u4u-De-jTn">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logoItinAI.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="u4u-De-jTn">
                                 <rect key="frame" x="76" y="81" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -104,7 +104,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Sign Up"/>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logoItinAI.png" translatesAutoresizingMaskIntoConstraints="NO" id="plV-58-lNv">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logoItinAI.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="plV-58-lNv">
                                 <rect key="frame" x="76" y="92" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -270,31 +270,10 @@
             </objects>
             <point key="canvasLocation" x="497" y="-692"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="kX3-3D-vCo">
-            <objects>
-                <viewController id="DSL-JS-hNE" customClass="ViewController" customModule="SplashScreen" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="WFI-YG-6bW">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logoItinAI.png" translatesAutoresizingMaskIntoConstraints="NO" id="b6y-eS-h5Q">
-                                <rect key="frame" x="76" y="362" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="XDE-DM-McT"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GHg-uT-ENp" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-898" y="-398"/>
-        </scene>
         <!--Group View Controller-->
         <scene sceneID="f7V-RC-ePl">
             <objects>
-                <viewController id="FkJ-cl-HvY" customClass="GroupViewController" customModule="itinAI_Main" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="FkJ-cl-HvY" customClass="GroupViewController" customModule="itinAI_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ly8-3Z-GGi">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -374,12 +353,12 @@
         <!--Profile Page-->
         <scene sceneID="fer-ag-v8r">
             <objects>
-                <viewController id="Ogk-dp-7tv" customClass="ProfilePage" customModule="ItinAI_ProfilePageUI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Ogk-dp-7tv" customClass="ProfilePage" customModule="itinAI_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nwq-aV-ASQ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfilePicture.png" translatesAutoresizingMaskIntoConstraints="NO" id="jt4-gm-2W1" customClass="CircularProfilePicture" customModule="ItinAI_ProfilePageUI" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfilePicture.png" translatesAutoresizingMaskIntoConstraints="NO" id="jt4-gm-2W1" customClass="CircularProfilePicture" customModule="itinAI_Project" customModuleProvider="target">
                                 <rect key="frame" x="111.66666666666669" y="159" width="170" height="170"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="170" id="TCb-TG-Ue0"/>
@@ -468,7 +447,7 @@
         <image name="camera" catalog="system" width="128" height="93"/>
         <image name="defaultProfilePicture.png" width="225" height="225"/>
         <image name="japan.jpg" width="505.67999267578125" height="337.44000244140625"/>
-        <image name="logoItinAI.png" width="371" height="211"/>
+        <image name="logoItinAI.jpeg" width="371" height="211"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
