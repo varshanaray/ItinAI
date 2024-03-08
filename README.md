@@ -1,3 +1,3 @@
 # ItinAI
 iOS project
-Members - Varsha Narayanan, Gurman Kulkat, Eric Yang, Erick Albarran
+Members - Varsha Narayanan, Gurman Kalkat, Eric Yang, Erick Albarran
