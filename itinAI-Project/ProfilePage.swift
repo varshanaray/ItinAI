@@ -195,6 +195,12 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
         
         // Create done button for this modal view
         let createDoneButton = ProfileDoneButton()
+        
+        createDoneButton.createDoneCallback = {
+            print("Create done callback")
+            self.handleGroupCreation(name: groupTextField.text!, code: codeDisplayLabel.text!)
+        }
+        
         createDoneButton.dismissCallback = {
             // Dismiss modal view
             self.dismissModalView()
@@ -222,6 +228,15 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
         
     }
     
+    
+    func handleGroupCreation(name: String, code: String) {
+        globalGroupList.append(Group(groupName: name, groupCode: code, userList: [currentUser!]))
+        
+        for group in globalGroupList {
+            print("group name:", group.groupName)
+        }
+    }
+        
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else {return true}
         

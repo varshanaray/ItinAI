@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28BA0AEE2B9A441E009CCBEF /* logoItinAI.png in Resources */ = {isa = PBXBuildFile; fileRef = 28BA0AED2B9A441E009CCBEF /* logoItinAI.png */; };
 		28C6B51F2B9B651200E2DBC3 /* japan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B51E2B9B651200E2DBC3 /* japan.jpg */; };
 		28C6B5212B9B660E00E2DBC3 /* defaultProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */; };
 		28C786452B9A3C81003C757D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C786442B9A3C81003C757D /* AppDelegate.swift */; };
@@ -19,10 +18,13 @@
 		28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28C786522B9A3C87003C757D /* LaunchScreen.storyboard */; };
 		28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C7865B2B9A3E4C003C757D /* SignUpVC.swift */; };
 		3BB6B56E2B9B6EA80057C691 /* Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB6B56D2B9B6EA80057C691 /* Classes.swift */; };
+		82E7BBC12B9B70F100EE2CED /* CircularProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */; };
+		82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */; };
+		82E7BBC32B9B70F100EE2CED /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */; };
+		82E7BBC52B9B72D800EE2CED /* logoItinAI.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 82E7BBC42B9B72D800EE2CED /* logoItinAI.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		28BA0AED2B9A441E009CCBEF /* logoItinAI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logoItinAI.png; path = ../../../../../../Desktop/logoItinAI.png; sourceTree = "<group>"; };
 		28C6B51E2B9B651200E2DBC3 /* japan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = japan.jpg; sourceTree = "<group>"; };
 		28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProfilePicture.png; sourceTree = "<group>"; };
 		28C786412B9A3C81003C757D /* itinAI-Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "itinAI-Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,6 +38,10 @@
 		28C786552B9A3C87003C757D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28C7865B2B9A3E4C003C757D /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		3BB6B56D2B9B6EA80057C691 /* Classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classes.swift; sourceTree = "<group>"; };
+		82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProfilePicture.swift; sourceTree = "<group>"; };
+		82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDoneButton.swift; sourceTree = "<group>"; };
+		82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
+		82E7BBC42B9B72D800EE2CED /* logoItinAI.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logoItinAI.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,13 +76,16 @@
 			children = (
 				28C786442B9A3C81003C757D /* AppDelegate.swift */,
 				28C786462B9A3C81003C757D /* SceneDelegate.swift */,
+				82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */,
+				82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */,
+				82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */,
 				28C786482B9A3C81003C757D /* LoginVC.swift */,
 				28C7865B2B9A3E4C003C757D /* SignUpVC.swift */,
-				28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */,
-				28BA0AED2B9A441E009CCBEF /* logoItinAI.png */,
+				82E7BBC42B9B72D800EE2CED /* logoItinAI.jpeg */,
 				28C6B51E2B9B651200E2DBC3 /* japan.jpg */,
 				28C7864A2B9A3C81003C757D /* Main.storyboard */,
 				28C786502B9A3C87003C757D /* Assets.xcassets */,
+				28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */,
 				28C786522B9A3C87003C757D /* LaunchScreen.storyboard */,
 				28C786552B9A3C87003C757D /* Info.plist */,
 				28C7864D2B9A3C81003C757D /* itinAI_Project.xcdatamodeld */,
@@ -144,11 +153,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				28C6B5212B9B660E00E2DBC3 /* defaultProfilePicture.png in Resources */,
-				28BA0AEE2B9A441E009CCBEF /* logoItinAI.png in Resources */,
 				28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */,
 				28C786512B9A3C87003C757D /* Assets.xcassets in Resources */,
 				28C6B51F2B9B651200E2DBC3 /* japan.jpg in Resources */,
 				28C7864C2B9A3C81003C757D /* Main.storyboard in Resources */,
+				82E7BBC52B9B72D800EE2CED /* logoItinAI.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,10 +168,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82E7BBC32B9B70F100EE2CED /* ProfilePage.swift in Sources */,
+				82E7BBC12B9B70F100EE2CED /* CircularProfilePicture.swift in Sources */,
 				28C786492B9A3C81003C757D /* LoginVC.swift in Sources */,
 				28C786452B9A3C81003C757D /* AppDelegate.swift in Sources */,
 				3BB6B56E2B9B6EA80057C691 /* Classes.swift in Sources */,
 				28C786472B9A3C81003C757D /* SceneDelegate.swift in Sources */,
+				82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */,
 				28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */,
 				28C7864F2B9A3C81003C757D /* itinAI_Project.xcdatamodeld in Sources */,
 			);
