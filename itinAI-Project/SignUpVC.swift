@@ -20,7 +20,14 @@ class SignUpVC: UIViewController {
     }
     
     
-
+    @IBAction func signUpButtonPressed(_ sender: Any) {
+        
+        // authentication code
+        
+        
+        
+    }
+    
     /*
     // MARK: - Navigation
 
