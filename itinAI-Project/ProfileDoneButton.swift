@@ -58,15 +58,19 @@ class ProfileDoneButton: UIButton {
     
     // TODO: - Figure out how to save stuff from any modal view when the done button is pressed
     @objc private func doneButtonPressed() {
-//        switch typeOfButton {
-//        case .create:
-//            // execute the callback with the groupname
-//            doneCallback("")
-//        case .join:
-//            <#code#>
-//        case .reset:
-//            <#code#>
-//        }
+        switch typeOfButton {
+        case .create:
+            // execute the callback with the groupname
+            createDoneCallback?()
+        case .join:
+            // hello
+            print("Join callback")
+        case .reset:
+            // hello
+            print("reset callback")
+        default:
+            print("default")
+        }
         
         dismissCallback?()
     }

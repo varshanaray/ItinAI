@@ -8,7 +8,9 @@
 import Foundation
 import UIKit
 
-var groupList: [Group] = []
+var globalGroupList: [Group] = []
+var globalUserList: [User] = []
+var currentUser: User?
 
 class User {
     
@@ -20,6 +22,7 @@ class User {
         self.displayName = displayName
         self.profileImage = profileImage
         self.groupList = groupList
+        currentUser = self
     }
     
 }
@@ -38,5 +41,6 @@ class Group {
         self.groupCode = groupCode
         self.userList = userList
     }
+
 
 }
