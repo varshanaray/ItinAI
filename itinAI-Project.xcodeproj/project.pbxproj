@@ -17,10 +17,8 @@
 		28C786512B9A3C87003C757D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28C786502B9A3C87003C757D /* Assets.xcassets */; };
 		28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28C786522B9A3C87003C757D /* LaunchScreen.storyboard */; };
 		28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C7865B2B9A3E4C003C757D /* SignUpVC.swift */; };
-		3B1123D72B9B70BF00DF05D8 /* CircularProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1123D42B9B70BF00DF05D8 /* CircularProfilePicture.swift */; };
-		3B1123D82B9B70BF00DF05D8 /* ProfileDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1123D52B9B70BF00DF05D8 /* ProfileDoneButton.swift */; };
-		3B1123D92B9B70BF00DF05D8 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1123D62B9B70BF00DF05D8 /* ProfilePage.swift */; };
 		3B1123DB2B9B717800DF05D8 /* logoItinAI.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3B1123DA2B9B717800DF05D8 /* logoItinAI.jpeg */; };
+		3B340C412BA5948C003799CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B340C402BA5948C003799CE /* GoogleService-Info.plist */; };
 		3BB6B56E2B9B6EA80057C691 /* Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB6B56D2B9B6EA80057C691 /* Classes.swift */; };
 		82E7BBC12B9B70F100EE2CED /* CircularProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */; };
 		82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */; };
@@ -45,6 +43,7 @@
 		3B1123D52B9B70BF00DF05D8 /* ProfileDoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDoneButton.swift; sourceTree = "<group>"; };
 		3B1123D62B9B70BF00DF05D8 /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		3B1123DA2B9B717800DF05D8 /* logoItinAI.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logoItinAI.jpeg; sourceTree = "<group>"; };
+		3B340C402BA5948C003799CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3BB6B56D2B9B6EA80057C691 /* Classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classes.swift; sourceTree = "<group>"; };
 		82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProfilePicture.swift; sourceTree = "<group>"; };
 		82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDoneButton.swift; sourceTree = "<group>"; };
@@ -68,6 +67,7 @@
 			children = (
 				28C786432B9A3C81003C757D /* itinAI-Project */,
 				28C786422B9A3C81003C757D /* Products */,
+				3BDE84F52BA589DC001CA809 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,20 +88,13 @@
 				82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */,
 				82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */,
 				28C786482B9A3C81003C757D /* LoginVC.swift */,
+				3B340C402BA5948C003799CE /* GoogleService-Info.plist */,
 				28C7865B2B9A3E4C003C757D /* SignUpVC.swift */,
-<<<<<<< HEAD
-				28C7864A2B9A3C81003C757D /* Main.storyboard */,
-				28C786502B9A3C87003C757D /* Assets.xcassets */,
-				28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */,
-				28C6B51E2B9B651200E2DBC3 /* japan.jpg */,
-				3B1123DA2B9B717800DF05D8 /* logoItinAI.jpeg */,
-=======
 				82E7BBC42B9B72D800EE2CED /* logoItinAI.jpeg */,
 				28C6B51E2B9B651200E2DBC3 /* japan.jpg */,
 				28C7864A2B9A3C81003C757D /* Main.storyboard */,
 				28C786502B9A3C87003C757D /* Assets.xcassets */,
 				28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */,
->>>>>>> e185e1682f5265a241d9488f33c66d91988fa85e
 				28C786522B9A3C87003C757D /* LaunchScreen.storyboard */,
 				28C786552B9A3C87003C757D /* Info.plist */,
 				28C7864D2B9A3C81003C757D /* itinAI_Project.xcdatamodeld */,
@@ -111,6 +104,14 @@
 				3B1123D62B9B70BF00DF05D8 /* ProfilePage.swift */,
 			);
 			path = "itinAI-Project";
+			sourceTree = "<group>";
+		};
+		3BDE84F52BA589DC001CA809 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				3B1123DA2B9B717800DF05D8 /* logoItinAI.jpeg */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +158,9 @@
 				Base,
 			);
 			mainGroup = 28C786382B9A3C81003C757D;
+			packageReferences = (
+				3B340C442BA596BA003799CE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 28C786422B9A3C81003C757D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -172,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B1123DB2B9B717800DF05D8 /* logoItinAI.jpeg in Resources */,
+				3B340C412BA5948C003799CE /* GoogleService-Info.plist in Resources */,
 				28C6B5212B9B660E00E2DBC3 /* defaultProfilePicture.png in Resources */,
 				28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */,
 				28C786512B9A3C87003C757D /* Assets.xcassets in Resources */,
@@ -188,22 +193,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-				3B1123D92B9B70BF00DF05D8 /* ProfilePage.swift in Sources */,
-				3B1123D72B9B70BF00DF05D8 /* CircularProfilePicture.swift in Sources */,
-=======
 				82E7BBC32B9B70F100EE2CED /* ProfilePage.swift in Sources */,
 				82E7BBC12B9B70F100EE2CED /* CircularProfilePicture.swift in Sources */,
->>>>>>> e185e1682f5265a241d9488f33c66d91988fa85e
 				28C786492B9A3C81003C757D /* LoginVC.swift in Sources */,
 				28C786452B9A3C81003C757D /* AppDelegate.swift in Sources */,
 				3BB6B56E2B9B6EA80057C691 /* Classes.swift in Sources */,
 				28C786472B9A3C81003C757D /* SceneDelegate.swift in Sources */,
-<<<<<<< HEAD
-				3B1123D82B9B70BF00DF05D8 /* ProfileDoneButton.swift in Sources */,
-=======
 				82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */,
->>>>>>> e185e1682f5265a241d9488f33c66d91988fa85e
 				28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */,
 				28C7864F2B9A3C81003C757D /* itinAI_Project.xcdatamodeld in Sources */,
 			);
@@ -428,6 +424,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3B340C442BA596BA003799CE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.21.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCVersionGroup section */
 		28C7864D2B9A3C81003C757D /* itinAI_Project.xcdatamodeld */ = {
