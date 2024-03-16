@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// All groups existing on app for all users
 var globalGroupList: [Group] = []
 var globalUserList: [User] = []
 var currentUser: User?
