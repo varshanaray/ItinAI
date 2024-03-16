@@ -19,6 +19,8 @@ class GroupPageVC: UIViewController {
     @IBOutlet weak var citiesTableView: UITableView!
     @IBOutlet weak var announcementsTableView: UITableView!
     
+    var group:Group?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

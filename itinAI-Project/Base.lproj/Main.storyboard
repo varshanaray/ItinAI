@@ -35,6 +35,9 @@
                                 <buttonConfiguration key="configuration" style="gray" title="Login">
                                     <color key="baseBackgroundColor" systemColor="systemGray5Color"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="qZc-Bk-4Yo" kind="show" identifier="LoginToHomeSegue" id="vGX-JC-XNs"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HML-4m-wTR">
                                 <rect key="frame" x="51" y="545" width="179" height="21"/>
@@ -114,6 +117,7 @@
                                 <buttonConfiguration key="configuration" style="gray" title="Sign Up"/>
                                 <connections>
                                     <action selector="signUpButtonPressed:" destination="Dgh-Ve-zrj" eventType="touchUpInside" id="yn2-1j-mwK"/>
+                                    <segue destination="qZc-Bk-4Yo" kind="show" identifier="SignupToHomeSegue" id="upo-dc-dSw"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logoItinAI.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="a3C-os-WSW">
@@ -349,6 +353,7 @@
                         <viewLayoutGuide key="safeArea" id="CUj-ga-qPO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="KQh-Co-Mqb"/>
                     <connections>
                         <outlet property="announcementsTableView" destination="4CZ-kN-Uof" id="K47-Lj-ULG"/>
                         <outlet property="citiesTableView" destination="Bef-XZ-3vZ" id="7bA-ct-97H"/>
@@ -362,10 +367,10 @@
             </objects>
             <point key="canvasLocation" x="-827" y="347"/>
         </scene>
-        <!--View Controller-->
+        <!--Home PageVC-->
         <scene sceneID="DaS-x1-nEJ">
             <objects>
-                <viewController id="qZc-Bk-4Yo" sceneMemberID="viewController">
+                <viewController id="qZc-Bk-4Yo" customClass="HomePageVC" customModule="itinAI_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dvg-uy-tao">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -398,6 +403,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="FkJ-cl-HvY" kind="show" identifier="CellToGroupSegue" id="Nby-HU-rI3"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -405,6 +413,10 @@
                         <viewLayoutGuide key="safeArea" id="tac-rO-IBa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="66o-wa-ZqH"/>
+                    <connections>
+                        <outlet property="groupTableView" destination="PEL-o8-sMN" id="XrX-oY-aAH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iJB-QB-8Xb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -504,6 +516,9 @@
             <point key="canvasLocation" x="1444" y="-692"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="upo-dc-dSw"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="93"/>
         <image name="defaultProfilePicture.png" width="225" height="225"/>
