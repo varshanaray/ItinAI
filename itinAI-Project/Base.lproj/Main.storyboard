@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AfO-0d-2Tx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AfO-0d-2Tx">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -81,7 +82,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-697" y="4"/>
+            <point key="canvasLocation" x="-698.47328244274809" y="3.5211267605633805"/>
         </scene>
         <!--Sign UpVC-->
         <scene sceneID="m9D-dt-qbI">
@@ -337,6 +338,47 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </tableView>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gZ7-mX-SVD">
+                                                <rect key="frame" x="0.0" y="43" width="393" height="97"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="97" id="Zbo-XG-YX3"/>
+                                                </constraints>
+                                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qpb-yG-uCS">
+                                                    <size key="itemSize" width="354" height="128"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                                <cells>
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collViewCell" id="NIc-rQ-78H" customClass="PicCell" customModule="itinAI_Project" customModuleProvider="target">
+                                                        <rect key="frame" x="19.666666666666668" y="0.0" width="354" height="128"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Q7M-MK-lxu">
+                                                            <rect key="frame" x="0.0" y="0.0" width="354" height="128"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dGR-G0-Nll">
+                                                                    <rect key="frame" x="169" y="0.0" width="396" height="128"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                </view>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lf1-T1-ycL">
+                                                                    <rect key="frame" x="8" y="8" width="357" height="128"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="357" id="BO4-aT-nES"/>
+                                                                        <constraint firstAttribute="height" constant="128" id="TlR-V4-DgQ"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                            </subviews>
+                                                        </collectionViewCellContentView>
+                                                        <size key="customSize" width="354" height="128"/>
+                                                        <connections>
+                                                            <outlet property="profileImageView" destination="lf1-T1-ycL" id="iHI-Ka-ajy"/>
+                                                        </connections>
+                                                    </collectionViewCell>
+                                                </cells>
+                                            </collectionView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
@@ -363,6 +405,7 @@
                     <connections>
                         <outlet property="announcementsTableView" destination="4CZ-kN-Uof" id="K47-Lj-ULG"/>
                         <outlet property="citiesTableView" destination="Bef-XZ-3vZ" id="7bA-ct-97H"/>
+                        <outlet property="collectionViewPeople" destination="gZ7-mX-SVD" id="BIK-XA-eMD"/>
                         <outlet property="contentView" destination="637-uC-elZ" id="nrV-GE-SX6"/>
                         <outlet property="imageView" destination="9YZ-yR-KXo" id="O1i-7N-58G"/>
                         <outlet property="scrollView" destination="DoZ-4w-nGg" id="f5k-7D-PMN"/>
@@ -432,6 +475,15 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Join"/>
                                 <connections>
                                     <action selector="joinButtonPressed:" destination="qZc-Bk-4Yo" eventType="touchUpInside" id="288-41-wAH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CKa-3z-kun">
+                                <rect key="frame" x="215" y="190" width="114" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Group Page"/>
+                                <connections>
+                                    <segue destination="FkJ-cl-HvY" kind="show" id="aY8-Xr-69z"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -530,6 +582,9 @@
             <point key="canvasLocation" x="-324.4274809160305" y="905.63380281690149"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Nby-HU-rI3"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="93"/>
         <image name="defaultProfilePicture.png" width="225" height="225"/>
