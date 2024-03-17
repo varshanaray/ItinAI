@@ -66,7 +66,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="loginButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SJa-y6-6Yc"/>
-                                    <segue destination="urb-sK-zs4" kind="show" identifier="loginToHomeSegue" id="vGX-JC-XNs"/>
                                 </connections>
                             </button>
                         </subviews>
