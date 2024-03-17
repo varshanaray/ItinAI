@@ -9,9 +9,13 @@ import UIKit
 
 class CustomPeopleTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        iconImageView.layer.cornerRadius = iconImageView.frame.size.width/2
+        iconImageView.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
