@@ -381,14 +381,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Groups" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZY-d8-GlQ">
-                                <rect key="frame" x="43" y="84" width="56" height="21"/>
+                                <rect key="frame" x="16" y="213" width="56" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PEL-o8-sMN">
-                                <rect key="frame" x="0.0" y="113" width="393" height="705"/>
+                                <rect key="frame" x="0.0" y="242" width="393" height="576"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -414,13 +414,35 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l30-qU-lwx">
+                                <rect key="frame" x="51" y="103" width="125" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Create"/>
+                                <connections>
+                                    <action selector="createButtonPressed:" destination="qZc-Bk-4Yo" eventType="touchUpInside" id="JYn-tD-in8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6jf-In-HrT">
+                                <rect key="frame" x="209" y="103" width="125" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Join"/>
+                                <connections>
+                                    <action selector="joinButtonPressed:" destination="qZc-Bk-4Yo" eventType="touchUpInside" id="288-41-wAH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tac-rO-IBa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="66o-wa-ZqH"/>
                     <connections>
+                        <outlet property="createButton" destination="l30-qU-lwx" id="w6Q-yO-Xu9"/>
                         <outlet property="groupTableView" destination="PEL-o8-sMN" id="XrX-oY-aAH"/>
+                        <outlet property="joinButton" destination="6jf-In-HrT" id="FmK-3k-PzB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iJB-QB-8Xb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -442,32 +464,6 @@
                                     <constraint firstAttribute="height" constant="170" id="ZO9-ti-Bdr"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6jf-In-HrT">
-                                <rect key="frame" x="223" y="499" width="125" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="125" id="bsV-jl-bcw"/>
-                                    <constraint firstAttribute="height" constant="60" id="gcB-fa-c5n"/>
-                                </constraints>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Join"/>
-                                <connections>
-                                    <action selector="joinButtonPressed:" destination="Ogk-dp-7tv" eventType="touchUpInside" id="eOc-uB-Tsd"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCq-JU-Gt1">
-                                <rect key="frame" x="45" y="499" width="125" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="46g-oV-tkB"/>
-                                    <constraint firstAttribute="width" constant="125" id="VJp-iU-Dca"/>
-                                </constraints>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Create"/>
-                                <connections>
-                                    <action selector="createButtonPressed:" destination="Ogk-dp-7tv" eventType="touchUpInside" id="RUw-ae-hx0"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9vd-EM-lLf">
                                 <rect key="frame" x="124" y="623" width="145" height="35"/>
                                 <state key="normal" title="Button"/>
@@ -497,12 +493,8 @@
                         <constraints>
                             <constraint firstItem="B41-ya-9zC" firstAttribute="centerX" secondItem="nwq-aV-ASQ" secondAttribute="centerX" id="0sF-VR-s2x"/>
                             <constraint firstItem="B41-ya-9zC" firstAttribute="top" secondItem="jt4-gm-2W1" secondAttribute="bottom" constant="40" id="AQZ-nD-N73"/>
-                            <constraint firstItem="aCq-JU-Gt1" firstAttribute="leading" secondItem="Kar-uE-qTF" secondAttribute="leading" constant="45" id="DJD-If-PoO"/>
-                            <constraint firstItem="aCq-JU-Gt1" firstAttribute="top" secondItem="B41-ya-9zC" secondAttribute="bottom" constant="65" id="S78-0M-FNp"/>
                             <constraint firstItem="Kar-uE-qTF" firstAttribute="bottom" secondItem="9vd-EM-lLf" secondAttribute="bottom" constant="160" id="apX-hY-ATg"/>
-                            <constraint firstItem="Kar-uE-qTF" firstAttribute="trailing" secondItem="6jf-In-HrT" secondAttribute="trailing" constant="45" id="egC-ZQ-cGn"/>
                             <constraint firstItem="9vd-EM-lLf" firstAttribute="centerX" secondItem="nwq-aV-ASQ" secondAttribute="centerX" id="fgJ-eY-Afr"/>
-                            <constraint firstItem="6jf-In-HrT" firstAttribute="top" secondItem="B41-ya-9zC" secondAttribute="bottom" constant="65" id="m7J-Ws-iZH"/>
                             <constraint firstItem="jt4-gm-2W1" firstAttribute="top" secondItem="Kar-uE-qTF" secondAttribute="top" constant="100" id="taQ-oZ-Ink"/>
                             <constraint firstItem="jt4-gm-2W1" firstAttribute="centerX" secondItem="nwq-aV-ASQ" secondAttribute="centerX" id="ywf-2q-ccK"/>
                         </constraints>
@@ -510,8 +502,6 @@
                     <navigationItem key="navigationItem" id="aeo-CK-ucB"/>
                     <connections>
                         <outlet property="changePictureButton" destination="UrT-OJ-n6j" id="qjE-CY-idP"/>
-                        <outlet property="createButton" destination="aCq-JU-Gt1" id="KTp-8r-CTF"/>
-                        <outlet property="joinButton" destination="6jf-In-HrT" id="6oD-7s-B6u"/>
                         <outlet property="profilePicture" destination="jt4-gm-2W1" id="XQi-kE-Cc3"/>
                         <outlet property="resetPasswordButton" destination="9vd-EM-lLf" id="TzD-uK-QvG"/>
                     </connections>

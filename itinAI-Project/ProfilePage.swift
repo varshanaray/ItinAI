@@ -11,8 +11,8 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var profilePicture: CircularProfilePicture!
     
-    @IBOutlet weak var createButton: UIButton!
-    @IBOutlet weak var joinButton: UIButton!
+//    @IBOutlet weak var createButton: UIButton!
+//    @IBOutlet weak var joinButton: UIButton!
     @IBOutlet weak var resetPasswordButton: UIButton!
     @IBOutlet weak var changePictureButton: UIButton!
     
@@ -42,18 +42,18 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
         // set button settings
         
         // Create button
-        createButton.backgroundColor = UIColor.black
-        createButton.setTitle("Create", for: .normal)
-        createButton.setTitleColor(UIColor.white, for: .normal)
-        createButton.layer.cornerRadius = 10
-        createButton.clipsToBounds = true
-        
-        // Join Button
-        joinButton.backgroundColor = UIColor.black
-        joinButton.setTitle("Join", for: .normal)
-        joinButton.setTitleColor(UIColor.white, for: .normal)
-        joinButton.layer.cornerRadius = 10
-        joinButton.clipsToBounds = true
+//        createButton.backgroundColor = UIColor.black
+//        createButton.setTitle("Create", for: .normal)
+//        createButton.setTitleColor(UIColor.white, for: .normal)
+//        createButton.layer.cornerRadius = 10
+//        createButton.clipsToBounds = true
+//        
+//        // Join Button
+//        joinButton.backgroundColor = UIColor.black
+//        joinButton.setTitle("Join", for: .normal)
+//        joinButton.setTitleColor(UIColor.white, for: .normal)
+//        joinButton.layer.cornerRadius = 10
+//        joinButton.clipsToBounds = true
         
         // Change Picture button
         changePictureButton.setTitle("", for: .normal)
@@ -64,17 +64,17 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
         
     }
     
-    @IBAction func createButtonPressed(_ sender: Any) {
-        print("Create button pressed")
-        setupCreateModalView(title: createButton.title(for: .normal)!)
-        currentModalView = createModalView
-        animateModalView()
-    }
+//    @IBAction func createButtonPressed(_ sender: Any) {
+//        print("Create button pressed")
+//        setupCreateModalView(title: createButton.title(for: .normal)!)
+//        currentModalView = createModalView
+//        animateModalView()
+//    }
     
-    @IBAction func joinButtonPressed(_ sender: Any) {
-        print("Join button pressed")
-        animateModalView()
-    }
+//    @IBAction func joinButtonPressed(_ sender: Any) {
+//        print("Join button pressed")
+//        animateModalView()
+//    }
     
     
     @IBAction func resetPasswordButtonPressed(_ sender: Any) {
