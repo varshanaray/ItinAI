@@ -28,29 +28,29 @@ class SignUpVC: UIViewController {
         
         // Check for empty fields
         guard let email = emailField.text, !email.isEmpty else {
-                displayErrorAlert(missingField: "your email")
+                displayErrorAlert(message: "Please enter your email.")
                 return
             }
             
         guard let realName = nameField.text, !realName.isEmpty else {
-            displayErrorAlert(missingField: "your real name")
+            displayErrorAlert(message: "Please enter your real name.")
             return
         }
         
         guard let password = passwordField.text, !password.isEmpty else {
-            displayErrorAlert(missingField: "your password")
+            displayErrorAlert(message: "Please enter your password.")
             return
         }
         
         // Check for email format
         if !isValidEmail(email) {
-            displayErrorAlert(missingField: "an email address in valid format")
+            displayErrorAlert(message: "Please enter an email address in valid format.")
             return
         }
         
         // Check for password length
         if !isValidPassword(password) {
-            displayErrorAlert(missingField: "a password of 6 characters or more")
+            displayErrorAlert(message: "Please enter a password of 6 characters or more.")
             return
         }
         
@@ -83,47 +83,32 @@ class SignUpVC: UIViewController {
                 }
             }
              */
+            var newUser = User(displayName: displayName, groupList: [], profileImageUrl: "")
             
-            
-        }
-        
-        var newUser = User(displayName: displayName, groupList: [], profileImageUrl: "")
-        
-        if (currentUser == nil) {
-            print("unexpected error: current User did not get initialized")
-        } else {
-            //self.performSegue(withIdentifier: "signupToHomeSegue", sender: self)
-            
-            if let homeNavigationController = storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
-                homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
-                present(homeNavigationController, animated: true, completion: nil)
+            if (currentUser == nil) {
+                print("unexpected error: current User did not get initialized")
+            } else {
+                //self.performSegue(withIdentifier: "signupToHomeSegue", sender: self)
+                
+                if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
+                    homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
+                    self.present(homeNavigationController, animated: true, completion: nil)
+                }
             }
+            
         }
     }
     
-    func displayErrorAlert(missingField: String) {
+    func displayErrorAlert(message: String) {
         
         let controller = UIAlertController(
             title: "Error",
-            message: "Please enter \(missingField).",
+            message: message,
             preferredStyle: .alert)
         
         controller.addAction(UIAlertAction(title: "OK", style: .default))
         
         present(controller, animated: true)
-    }
-    
-    func isValidEmail(_ email: String) -> Bool {
-       let emailRegEx =
-           "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-       let emailPred = NSPredicate(format:"SELF MATCHES %@",
-           emailRegEx)
-       return emailPred.evaluate(with: email)
-    }
-      
-    func isValidPassword(_ password: String) -> Bool {
-       let minPasswordLength = 6
-       return password.count >= minPasswordLength
     }
 
 }
