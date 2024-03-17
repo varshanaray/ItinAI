@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 
 class LoginVC: UIViewController {
@@ -20,7 +21,19 @@ class LoginVC: UIViewController {
         passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         // Do any additional setup after loading the view.
     }
+    
 
-
+    @IBAction func loginButtonPressed(_ sender: Any) {
+        
+        Auth.auth().signIn(withEmail: emailField.text!,
+                           password: passwordField.text!) {
+            authResult, error in
+            guard let user = authResult?.user, error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+        }
+    }
+    
 }
 
