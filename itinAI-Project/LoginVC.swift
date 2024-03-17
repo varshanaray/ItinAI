@@ -48,7 +48,14 @@ class LoginVC: UIViewController {
             return
         }
         
-        // Attempt to log in
+        login(email: email, password: password)
+        
+    }
+    
+    func login(email: String, password: String) {
+        print("login was called")
+        
+        // Attempt to authenticate login
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 // Handle errors from Firebase Authentication
@@ -56,8 +63,25 @@ class LoginVC: UIViewController {
                 return
             }
             
-        // login successful
+            // login successful
             
+            // temporary implementation: check email against globalUserList to retrieve info
+            currentUser = nil
+            for user in globalUserList {
+                if user.email == email {
+                    currentUser = user
+                    break
+                }
+            }
+            
+            if currentUser == nil { // temporary implementation: if user did not create account locally
+                currentUser = User(email: email, displayName: "Temporarily Unavailable", groupList: [], profileImageUrl: "")
+            }
+                
+            if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
+                homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
+                self.present(homeNavigationController, animated: true, completion: nil)
+            }
         
         }
     }

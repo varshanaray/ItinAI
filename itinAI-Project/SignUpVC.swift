@@ -60,7 +60,7 @@ class SignUpVC: UIViewController {
     }
     
     func createUser(email: String, password: String, displayName: String) {
-        print("createUser was called!")
+        print("createUser was called")
         
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             guard let user = authResult?.user, error == nil else {
@@ -83,17 +83,14 @@ class SignUpVC: UIViewController {
                 }
             }
              */
-            var newUser = User(displayName: displayName, groupList: [], profileImageUrl: "")
+            var newUser = User(email: email, displayName: displayName, groupList: [], profileImageUrl: "")
+            globalUserList.append(newUser)
+            currentUser = newUser
             
-            if (currentUser == nil) {
-                print("unexpected error: current User did not get initialized")
-            } else {
-                //self.performSegue(withIdentifier: "signupToHomeSegue", sender: self)
-                
-                if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
-                    homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
-                    self.present(homeNavigationController, animated: true, completion: nil)
-                }
+            // segue to home screen
+            if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
+                homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
+                self.present(homeNavigationController, animated: true, completion: nil)
             }
             
         }
