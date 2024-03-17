@@ -16,13 +16,13 @@ var currentUser: User?
 class User {
     
     var displayName: String
-    var profileImage: UIImage
     var groupList: [Group]
+    var profileImageUrl: String
     
-    init(displayName: String, profileImage: UIImage, groupList: [Group]) {
+    init(displayName: String, groupList: [Group], profileImageUrl: String) {
         self.displayName = displayName
-        self.profileImage = profileImage
         self.groupList = groupList
+        self.profileImageUrl = profileImageUrl
         currentUser = self
     }
     
