@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AfO-0d-2Tx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AfO-0d-2Tx">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -277,13 +277,14 @@
                         <viewLayoutGuide key="safeArea" id="qqI-aG-AXn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="rYB-EW-a4u"/>
                     <connections>
                         <outlet property="firstDivider" destination="8tP-c8-UyJ" id="bPX-Ct-Geo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2YC-zQ-0VW" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1938" y="153"/>
+            <point key="canvasLocation" x="2770" y="906"/>
         </scene>
         <!--Group PageVC-->
         <scene sceneID="f7V-RC-ePl">
@@ -339,6 +340,17 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnH-zV-XTE">
+                                        <rect key="frame" x="326" y="122" width="59" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="info.circle.fill" catalog="system">
+                                            <color key="baseForegroundColor" systemColor="linkColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="SFR-uj-AIK" kind="show" identifier="GroupToDetails" id="RvB-vw-9kX"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <viewLayoutGuide key="contentLayoutGuide" id="DiS-OF-Vmv"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="Wky-rx-gNs"/>
@@ -358,7 +370,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="msP-Gq-wfg" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1784" y="906"/>
+            <point key="canvasLocation" x="1783.9694656488548" y="905.63380281690149"/>
         </scene>
         <!--Home PageVC-->
         <scene sceneID="DaS-x1-nEJ">
@@ -531,10 +543,14 @@
     <resources>
         <image name="camera" catalog="system" width="128" height="93"/>
         <image name="defaultProfilePicture.png" width="225" height="225"/>
+        <image name="info.circle.fill" catalog="system" width="128" height="123"/>
         <image name="japan.jpg" width="505.67999267578125" height="337.44000244140625"/>
         <image name="logoItinAI.jpeg" width="371" height="211"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
