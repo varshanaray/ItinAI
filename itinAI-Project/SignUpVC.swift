@@ -26,8 +26,7 @@ class SignUpVC: UIViewController {
     
     @IBAction func signUpButtonPressed(_ sender: Any) {
         
-        // error checking
-        
+        // Check for empty fields
         guard let email = emailField.text, !email.isEmpty else {
                 displayErrorAlert(missingField: "your email")
                 return
@@ -91,7 +90,14 @@ class SignUpVC: UIViewController {
         var newUser = User(displayName: displayName, groupList: [], profileImageUrl: "")
         
         if (currentUser == nil) {
-            print("current User did not get initialized")
+            print("unexpected error: current User did not get initialized")
+        } else {
+            //self.performSegue(withIdentifier: "signupToHomeSegue", sender: self)
+            
+            if let homeNavigationController = storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
+                homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
+                present(homeNavigationController, animated: true, completion: nil)
+            }
         }
     }
     
