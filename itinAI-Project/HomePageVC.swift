@@ -66,6 +66,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     @IBAction func joinButtonPressed(_ sender: Any) {
         print("Join button pressed")
+        setupJoinModalView(title: joinButton.title(for: .normal)!)
+        currentModalView = joinModalView
         animateModalView()
     }
     
@@ -198,6 +200,103 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         // set the title label of modal view
         titleLabel.text = modalTitle
     }
+    
+    // code for join modal view
+    func setupJoinModalView(title: String) {
+        var modalTitle: String = ""
+        let leftMargin: CGFloat = 20.0
+        
+        // Create modal view
+        joinModalView = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: modalHeight))
+        joinModalView.backgroundColor = .white
+        joinModalView.layer.cornerRadius = 15
+        joinModalView.layer.masksToBounds = true
+        
+        // Add a view for a darkened background
+        overlayView = UIView(frame: view.bounds)
+        overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        overlayView.alpha = 0.0 // Initially Invisible
+        view.addSubview(overlayView)
+        
+        // Add a tap gesture recognizer to overlayView
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        overlayView.addGestureRecognizer(tapGesture)
+        
+        // Add a title label for the modal view
+        let titleLabel = UILabel(frame: CGRect(x: 20, y: 20, width: joinModalView.frame.width - 40, height: 30))
+        titleLabel.textAlignment = .left
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.text = "Join a group"
+        joinModalView.addSubview(titleLabel)
+        
+        view.addSubview(joinModalView)
+        
+        // Create Enter group code label
+        var enterGroupCodeLabel = UILabel()
+        enterGroupCodeLabel.text = "Enter a group code"
+        enterGroupCodeLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        enterGroupCodeLabel.frame.origin.x = leftMargin
+        enterGroupCodeLabel.frame = CGRect(x: leftMargin, y: 80.0, width: 200.0, height: 30.0)
+        joinModalView.addSubview(enterGroupCodeLabel)
+        
+        // Enter group code text field
+        let placeHolderText = "7 character code"
+        let placeHolderFont = UIFont.systemFont(ofSize: 12.0)
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: placeHolderFont,
+            .foregroundColor: UIColor.darkGray
+        ]
+        
+        let attributedPlaceholder = NSAttributedString(string: placeHolderText, attributes: attributes)
+        
+        var codeTextField = UITextField()
+        codeTextField.delegate = self
+        codeTextField.attributedPlaceholder = attributedPlaceholder
+        codeTextField.backgroundColor = UIColor.lightGray
+        codeTextField.font = UIFont.systemFont(ofSize: 12.0)
+        codeTextField.layer.cornerRadius = 8.0
+        codeTextField.frame.origin.x = leftMargin
+        codeTextField.frame = CGRect(x: leftMargin, y: 120.0, width: 300.0, height: 30.0)
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: codeTextField.frame.height))
+        
+        codeTextField.leftView = paddingView
+        codeTextField.leftViewMode = .always
+        joinModalView.addSubview(codeTextField)
+        
+        // Create done button for this modal view
+        let joinDoneButton = ProfileDoneButton()
+        joinDoneButton.typeOfButton = .join
+        
+        // TODO: - Find a way to initialize currentUser
+        // TODO: Ensure correct group is being found in joinDoneCallback
+        // TODO: Ensure the group that is found is added to currentUser's groupList
+        joinDoneButton.joinDoneCallback = {
+            print("Join done callback")
+            // need to get correct group based on group code
+            var enteredCode:String = codeTextField.text ?? "0000000"
+            print("The code that was entered is \(enteredCode)")
+            var groupToJoin: Group
+            for group in globalGroupList {
+                if (enteredCode == group.groupCode) {
+                    print("Found a match for the entered code")
+                    groupToJoin = group
+                    currentUser?.groupList.append(groupToJoin)
+                    print("group joined's name: \(groupToJoin.groupName)")
+                    break
+                }
+            }
+        }
+        
+        joinDoneButton.dismissCallback = {
+            // Dismiss modal view
+            self.dismissModalView()
+        }
+        joinDoneButton.frame = CGRect(x: 160.0, y: 200.0, width: 70.0, height: 40.0)
+        
+        joinModalView.addSubview(joinDoneButton)
+    }
 
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         // Dismiss the modal view
@@ -210,7 +309,9 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     
     func handleGroupCreation(name: String, code: String) {
-        globalGroupList.append(Group(groupName: name, groupCode: code, userList: [currentUser!]))
+        var groupToAdd: Group = Group(groupName: name, groupCode: code, userList: [currentUser!])
+        globalGroupList.append(groupToAdd)
+        addGroup(newGroup: groupToAdd)
         
         for group in globalGroupList {
             print("group name:", group.groupName)
@@ -287,6 +388,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     func addGroup(newGroup: Group) {
         // Add group to group list array
         currentUser!.groupList.append(newGroup)
+        print("New group added's name: ", newGroup.groupName)
         // Refreshes table
         groupTableView.reloadData()
     }

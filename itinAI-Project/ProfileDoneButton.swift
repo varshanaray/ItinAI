@@ -31,7 +31,7 @@ class ProfileDoneButton: UIButton {
     
     var typeOfButton: ButtonType = .create
     var createDoneCallback: (() -> Void)?
-    //var joinDoneCallback:
+    var joinDoneCallback: (() -> Void)?
     //var resetDoneCallback:
     var dismissCallback: (() -> Void)?
     
@@ -65,6 +65,7 @@ class ProfileDoneButton: UIButton {
         case .join:
             // hello
             print("Join callback")
+            joinDoneCallback?()
         case .reset:
             // hello
             print("reset callback")
