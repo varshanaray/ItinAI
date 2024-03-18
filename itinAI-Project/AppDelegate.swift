@@ -9,10 +9,12 @@ import UIKit
 import CoreData
 import FirebaseCore
 
+var globalGroupList: [Group] = []
+var globalUserList: [User] = []
+var currentUser: User?
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
