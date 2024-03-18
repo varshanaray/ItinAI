@@ -1,8 +1,4 @@
 //  HomePageVC.swift
-//  itinAI-Project
-//
-//  Created by Varsha Narayanan on 3/16/24.
-//
 
 import UIKit
 import FirebaseAuth
@@ -33,13 +29,11 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     var currentModalView: UIView!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         groupTableView.delegate = self
         groupTableView.dataSource = self
        
-
         // Create Button
         createButton.backgroundColor = UIColor.black
         createButton.setTitle("Create", for: .normal)
@@ -55,14 +49,12 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         joinButton.clipsToBounds = true
     }
     
-
     @IBAction func createButtonPressed(_ sender: Any) {
         print("Create button pressed")
         setupCreateModalView(title: createButton.title(for: .normal)!)
         currentModalView = createModalView
         animateModalView()
     }
-    
     
     @IBAction func joinButtonPressed(_ sender: Any) {
         print("Join button pressed")
@@ -140,7 +132,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         groupTextField.leftViewMode = .always
         createModalView.addSubview(groupTextField)
         
-        
         // Create character count label
         var characterCountLabel = UILabel()
         characterCountLabel.textColor = .red
@@ -148,7 +139,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         characterCountLabel.frame = CGRect(x: leftMargin, y: 100.0, width: 200.0, height: 20.0)
         characterCountLabel.font = UIFont.systemFont(ofSize: 11.0)
         createModalView.addSubview(characterCountLabel)
-        
         
         // Create group code label
         var groupCodeLabel = UILabel()
@@ -192,11 +182,9 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         createModalView.addSubview(createDoneButton)
         
-        
         print("group name frame: \(groupNameLabel.frame)")
         print("group text field frame: \(groupTextField.frame)")
         print("group code label frame: \(groupCodeLabel.frame)")
-        
         
         // set the title label of modal view
         titleLabel.text = modalTitle
@@ -309,7 +297,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
     }
     
-    
     func handleGroupCreation(name: String, code: String) {
         var groupToAdd: Group = Group(groupName: name, groupCode: code, userList: [currentUser!])
         globalGroupList.append(groupToAdd)
@@ -376,7 +363,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         }
     }
     
-    
     // TODO: - Handle tapping outside of keyboard to dismiss it without dismissing the modal view
     // Called when 'return' key pressed
 
@@ -384,7 +370,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
            textField.resignFirstResponder()
            return true
        }
-    
     
     /*
     // MARK: - Navigation
@@ -395,7 +380,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         // Pass the selected object to the new view controller.
     }
     */
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // print("count: ",currentUser!.groupList.count )
@@ -421,7 +405,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         groupTableView.reloadData()
     }
     
-    
     // Prepare for segue to group page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CellToGroupSegue",
@@ -431,7 +414,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             destination.group = currentUser!.groupList[groupIndex]
         }
     }
-    
     
     @IBAction func logoutButtonPressed(_ sender: Any) {
         do {

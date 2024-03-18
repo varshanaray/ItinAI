@@ -1,9 +1,4 @@
-//
 //  AppDelegate.swift
-//  itinAI-Project
-//
-//  Created by Varsha Narayanan on 3/7/24.
-//
 
 import UIKit
 import CoreData
@@ -82,4 +77,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-

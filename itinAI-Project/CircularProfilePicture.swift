@@ -1,9 +1,4 @@
-//
 //  CircularProfilePicture.swift
-//  ItinAI_ProfilePageUI
-//
-//  Created by Erick Albarran on 3/6/24.
-//
 
 import UIKit
 
@@ -24,7 +19,5 @@ class CircularProfilePicture: UIImageView {
         layer.cornerRadius = min(bounds.width, bounds.height) / 2
         clipsToBounds = true
     }
-    
-    
 
 }

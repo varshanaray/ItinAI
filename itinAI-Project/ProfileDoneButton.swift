@@ -1,4 +1,5 @@
 //  ProfileDoneButton.swift
+
 import UIKit
 
 class ProfileDoneButton: UIButton {
@@ -30,7 +31,6 @@ class ProfileDoneButton: UIButton {
         configureDoneButton()
     }
 
-    
     private func configureDoneButton() {
         backgroundColor = .black
         layer.cornerRadius = 10.0
