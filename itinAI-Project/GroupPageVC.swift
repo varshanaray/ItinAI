@@ -24,6 +24,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var group:Group?
     
     var groupProfilePics = [UIImage?]()
+    var displayNames = [String?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,14 +46,20 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // for i in 1...3 {
         // !!!!!!!!! DUMMY DATA
         // before i put 5 it was (group?.userList.count)!
-        var numInGroup: Int? = 5 - 1
+        var numInGroup: Int = group?.userList.count ?? -1
+        print("COUNT IN GROUP: ", group?.userList.count)
         // 1 is default for number in group (counting self)
-        for i in 0...(numInGroup ?? 1) {
+        for i in 0...(numInGroup - 1) {
             print("picture, i: ", i)
             // Would be getting from userList directly but this is for testing:
+            // profileImageUrl
             var thisImage: UIImage? = UIImage(named: "defaultProfilePicture")
-            print("this image: ", thisImage?.size)
+            var thisName: String? = group?.userList[i].email
+            //print("this image: ", thisImage?.size)
             groupProfilePics.append(thisImage)
+            displayNames.append(thisName)
+            print("this Name: ", thisName)
+            
             
             //let profilePic = UIImageView()
             //let xPosition = self.view.frame.width * CGFloat(i/4)
@@ -77,6 +84,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
         
         cell.userImageView.image = groupProfilePics[indexPath.row]
+        cell.userDisplayLabel.text = displayNames[indexPath.row]
         
         return cell
     }
@@ -93,3 +101,4 @@ class PicCell: UICollectionViewCell {
     
     
 }
+
