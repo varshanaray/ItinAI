@@ -49,25 +49,28 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         var numInGroup: Int = group?.userList.count ?? -1
         print("COUNT IN GROUP: ", group?.userList.count)
         // 1 is default for number in group (counting self)
-        for i in 0...(numInGroup - 1) {
-            print("picture, i: ", i)
-            // Would be getting from userList directly but this is for testing:
-            // profileImageUrl
-            var thisImage: UIImage? = UIImage(named: "defaultProfilePicture")
-            var thisName: String? = group?.userList[i].email
-            //print("this image: ", thisImage?.size)
-            groupProfilePics.append(thisImage)
-            displayNames.append(thisName)
-            print("this Name: ", thisName)
-            
-            
-            //let profilePic = UIImageView()
-            //let xPosition = self.view.frame.width * CGFloat(i/4)
-            //imageView.image = thisImage
-            //imageView.frame = CGRect(x: xPosition, y: 40, width: self.view.frame.width/4, height: 30)
-            
-            
+        if (numInGroup > 0) {
+            for i in 0...(numInGroup - 1) {
+                print("picture, i: ", i)
+                // Would be getting from userList directly but this is for testing:
+                // profileImageUrl
+                var thisImage: UIImage? = UIImage(named: "defaultProfilePicture")
+                var thisName: String? = group?.userList[i].email
+                //print("this image: ", thisImage?.size)
+                groupProfilePics.append(thisImage)
+                displayNames.append(thisName)
+                print("this Name: ", thisName)
+                
+                
+                //let profilePic = UIImageView()
+                //let xPosition = self.view.frame.width * CGFloat(i/4)
+                //imageView.image = thisImage
+                //imageView.frame = CGRect(x: xPosition, y: 40, width: self.view.frame.width/4, height: 30)
+                
+                
+            }
         }
+       
             
             
             
