@@ -499,6 +499,15 @@
                                     <segue destination="FkJ-cl-HvY" kind="show" id="aY8-Xr-69z"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFY-wa-eLT">
+                                <rect key="frame" x="157" y="171" width="78" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Logout"/>
+                                <connections>
+                                    <action selector="logoutButtonPressed:" destination="qZc-Bk-4Yo" eventType="touchUpInside" id="8vj-xf-mDg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tac-rO-IBa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

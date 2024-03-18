@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 protocol GroupTableUpdater {
     func addGroup(newGroup: Group)
@@ -403,5 +404,19 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             destination.group = currentUser!.groupList[groupIndex]
         }
     }
-
+    
+    
+    @IBAction func logoutButtonPressed(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            
+            self.dismiss(animated: true)
+            
+            currentUser = nil
+            
+        } catch {
+            print("log out error")
+        }
+    }
+    
 }
