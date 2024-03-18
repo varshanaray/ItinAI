@@ -70,12 +70,16 @@ class LoginVC: UIViewController {
             for user in globalUserList {
                 if user.email == email {
                     currentUser = user
+                    print("found the user")
                     break
                 }
             }
             
             if currentUser == nil { // temporary implementation: if user did not create account locally
-                currentUser = User(email: email, displayName: "Temporarily Unavailable", groupList: [], profileImageUrl: "")
+                print("user was not created locally, therefore initialized new user")
+                var user = User(email: email, displayName: "Temporarily Unavailable", groupList: [], profileImageUrl: "")
+                globalUserList.append(user)
+                currentUser = user
             }
                 
             if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
