@@ -1,22 +1,7 @@
-//
 //  ProfileDoneButton.swift
-//  ItinAI_ProfilePageUI
-//
-//  Created by Erick Albarran on 3/7/24.
-//
-
 import UIKit
 
 class ProfileDoneButton: UIButton {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     enum ButtonType {
         case create, join, reset
         
@@ -51,29 +36,23 @@ class ProfileDoneButton: UIButton {
         layer.cornerRadius = 10.0
         setTitleColor(.white, for: .normal)
         setTitle("Done", for: .normal)
-//        addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
         addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
     }
-    
     
     // TODO: - Figure out how to save stuff from any modal view when the done button is pressed
     @objc private func doneButtonPressed() {
         switch typeOfButton {
         case .create:
-            // execute the callback with the groupname
             createDoneCallback?()
         case .join:
-            // hello
             print("Join callback")
             joinDoneCallback?()
         case .reset:
-            // hello
             print("reset callback")
         default:
             print("default")
         }
-        
-        dismissCallback?()
+        dismissCallback?() // dismiss the modal view at the end
     }
 
 }
