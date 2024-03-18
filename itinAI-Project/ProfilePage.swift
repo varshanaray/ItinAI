@@ -40,12 +40,14 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
     
     @IBAction func resetPasswordButtonPressed(_ sender: Any) {
         print("Reset button pressed")
-        animateModalView()
+        currentModalView = resetModalView
+        //animateModalView()
     }
     
     @IBAction func changePictureButtonPressed(_ sender: Any) {
         print("Change picture button pressed")
-        animateModalView()
+        currentModalView = pictureModalView
+        //animateModalView()
     }
 
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {

@@ -5,6 +5,8 @@ import UIKit
 class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var groupNameLabel: UILabel!
+    @IBOutlet weak var groupCodeLabel: UILabel!
     
     var thisGroup: Group? {
         // Reload table whenever thisGroup is updated
@@ -18,6 +20,8 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 75
+        groupNameLabel.text = thisGroup?.groupName
+        groupCodeLabel.text = "Group Code: " + thisGroup!.groupCode
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
