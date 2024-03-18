@@ -283,8 +283,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 if (enteredCode == group.groupCode) {
                     print("Found a match for the entered code")
                     groupToJoin = group
-                    currentUser?.groupList.append(groupToJoin)
                     print("group joined's name: \(groupToJoin.groupName)")
+                    self.addGroup(newGroup: groupToJoin)
                     break
                 }
             }
@@ -342,7 +342,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 }
             }
         }
-        
+        print("random code: \(randomCode)")
         return randomCode
     }
     
