@@ -1,9 +1,4 @@
-//
-//  Group.swift
-//  itinAI-Project
-//
-//  Created by Eric Yang on 3/18/24.
-//
+// Group.swift
 
 import Foundation
 

@@ -1,9 +1,4 @@
-//
 //  User.swift
-//  itinAI-Project
-//
-//  Created by Eric Yang on 3/18/24.
-//
 
 import Foundation
 

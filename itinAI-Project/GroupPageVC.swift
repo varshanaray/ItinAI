@@ -3,6 +3,7 @@
 import UIKit
 
 class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
@@ -56,13 +57,12 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
+    // Prepare to segue to Details page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GroupToDetails",
            let destination = segue.destination as? GroupDetailsViewController
         {
-            print("in prepare this is group", group!)
             destination.thisGroup = group!
-            
         }
     }
     
