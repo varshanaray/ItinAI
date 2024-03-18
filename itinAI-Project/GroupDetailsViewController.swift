@@ -22,6 +22,8 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         tableView.dataSource = self
         tableView.delegate = self
         thisGroup = currentGroup
+        //tableView.rowHeight = UITableView.automaticDimension
+        tableView.rowHeight = 75
         print("this group name: ", thisGroup?.groupName)
     }
     
@@ -38,8 +40,8 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.width / 3
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return tableView.bounds.width / 3
+//    }
     
 }
