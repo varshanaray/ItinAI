@@ -55,4 +55,15 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "GroupToDetails",
+           let destination = segue.destination as? GroupDetailsViewController
+        {
+            print("in prepare this is group", group!)
+            destination.thisGroup = group!
+            
+        }
+    }
+    
 }

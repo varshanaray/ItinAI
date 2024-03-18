@@ -13,7 +13,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     
     var thisGroup: Group? {
         didSet {
-            tableView.reloadData()
+            tableView?.reloadData()
         }
     }
     
@@ -21,7 +21,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        thisGroup = currentGroup
         //tableView.rowHeight = UITableView.automaticDimension
         tableView.rowHeight = 75
         print("this group name: ", thisGroup?.groupName)
