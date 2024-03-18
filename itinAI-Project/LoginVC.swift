@@ -1,13 +1,7 @@
-//
 //  ViewController.swift
-//  itinAI-Project
-//
-//  Created by Varsha Narayanan on 3/7/24.
-//
 
 import UIKit
 import FirebaseAuth
-
 
 class LoginVC: UIViewController {
 
@@ -19,42 +13,33 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         emailField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
-        // Do any additional setup after loading the view.
     }
-    
 
     @IBAction func loginButtonPressed(_ sender: Any) {
-        
         // Check for empty fields
         guard let email = emailField.text, !email.isEmpty else {
                 displayErrorAlert(message: "Please enter your email.")
                 return
             }
-        
         guard let password = passwordField.text, !password.isEmpty else {
             displayErrorAlert(message: "Please enter your password.")
             return
         }
-        
         // Check for email format
         if !isValidEmail(email) {
             displayErrorAlert(message: "Please enter an email address in valid format.")
             return
         }
-        
         // Check for password length
         if !isValidPassword(password) {
             displayErrorAlert(message: "Please enter a password of 6 characters or more.")
             return
         }
-        
         login(email: email, password: password)
-        
     }
     
     func login(email: String, password: String) {
         print("login was called")
-        
         // Attempt to authenticate login
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -62,9 +47,7 @@ class LoginVC: UIViewController {
                 self.displayErrorAlert(message: error.localizedDescription)
                 return
             }
-            
             // login successful
-            
             // temporary implementation: check email against globalUserList to retrieve info
             currentUser = nil
             for user in globalUserList {
@@ -74,19 +57,16 @@ class LoginVC: UIViewController {
                     break
                 }
             }
-            
             if currentUser == nil { // temporary implementation: if user did not create account locally
                 print("user was not created locally, therefore initialized new user")
                 var user = User(email: email, displayName: "Temporarily Unavailable", groupList: [], profileImageUrl: "")
                 globalUserList.append(user)
                 currentUser = user
             }
-                
             if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
                 homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
                 self.present(homeNavigationController, animated: true, completion: nil)
             }
-        
         }
     }
     
@@ -116,17 +96,13 @@ class LoginVC: UIViewController {
     } */
 
     func displayErrorAlert(message: String) {
-        
         let controller = UIAlertController(
             title: "Error",
             message: message,
             preferredStyle: .alert)
-        
         controller.addAction(UIAlertAction(title: "OK", style: .default))
-        
         present(controller, animated: true)
     }
-    
 }
 
 func isValidEmail(_ email: String) -> Bool {
