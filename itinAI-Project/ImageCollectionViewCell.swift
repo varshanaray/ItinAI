@@ -1,16 +1,11 @@
-//
 //  ImageCollectionViewCell.swift
-//  itinAI-Project
-//
-//  Created by Varsha Narayanan on 3/17/24.
-//
 
 import UIKit
 
+// Class to store custom properties of collection view cell in people carousel
 class ImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var userImageView: UIImageView!
-    
     @IBOutlet weak var userDisplayLabel: UILabel!
 }
 
