@@ -1,3 +1,5 @@
+// CustomPeopleTableViewCell.swift
+
 import UIKit
 
 class CustomPeopleTableViewCell: UITableViewCell {
@@ -7,7 +9,7 @@ class CustomPeopleTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        // Programmatically create constraints
         name.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             name.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 10),
@@ -17,20 +19,16 @@ class CustomPeopleTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        // Set a fixed size for the image view
-        let imageSize: CGFloat = 50 // Example size, adjust as needed
+        // Set a fixed image size
+        let imageSize: CGFloat = 50
         iconImageView.frame = CGRect(x: 12, y: 10, width: imageSize, height: imageSize)
-        // Set the corner radius to half the width/height to make it circular
+        // Set the corner radius to make image circular
         iconImageView.layer.cornerRadius = imageSize / 2
         iconImageView.clipsToBounds = true
     }
 
-
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

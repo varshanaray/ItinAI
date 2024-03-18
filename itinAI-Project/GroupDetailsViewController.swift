@@ -1,9 +1,4 @@
-//
-//  GroupDetailsViewController.swift
-//  itinAI-Project
-//
-//  Created by Gurman Kalkat on 3/17/24.
-//
+// GroupDetailsViewController.swift
 
 import UIKit
 
@@ -12,6 +7,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var tableView: UITableView!
     
     var thisGroup: Group? {
+        // Reload table whenever thisGroup is updated
         didSet {
             tableView?.reloadData()
         }
@@ -21,9 +17,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        //tableView.rowHeight = UITableView.automaticDimension
         tableView.rowHeight = 75
-        print("this group name: ", thisGroup?.groupName)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,10 +31,5 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         cell.iconImageView.image = UIImage(named: "defaultProfilePicture")
         return cell
     }
-    
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return tableView.bounds.width / 3
-//    }
     
 }
