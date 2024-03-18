@@ -19,7 +19,6 @@
 		28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28C786522B9A3C87003C757D /* LaunchScreen.storyboard */; };
 		28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C7865B2B9A3E4C003C757D /* SignUpVC.swift */; };
 		3BB6B56E2B9B6EA80057C691 /* Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB6B56D2B9B6EA80057C691 /* Classes.swift */; };
-		3BB6D1BC2BA7C8F600886F77 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB6D1BB2BA7C8F600886F77 /* ImageCollectionViewCell.swift */; };
 		3BB9936A2BA65057003AC721 /* GroupPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB993692BA65057003AC721 /* GroupPageVC.swift */; };
 		3BB9936C2BA6516A003AC721 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */; };
 		3BB993712BA65384003AC721 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3BB993702BA65384003AC721 /* FirebaseAnalytics */; };
@@ -75,7 +74,6 @@
 		3B1123D52B9B70BF00DF05D8 /* ProfileDoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDoneButton.swift; sourceTree = "<group>"; };
 		3B1123D62B9B70BF00DF05D8 /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		3BB6B56D2B9B6EA80057C691 /* Classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classes.swift; sourceTree = "<group>"; };
-		3BB6D1BB2BA7C8F600886F77 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		3BB993692BA65057003AC721 /* GroupPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPageVC.swift; sourceTree = "<group>"; };
 		3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProfilePicture.swift; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 				3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */,
 				28C6B51E2B9B651200E2DBC3 /* japan.jpg */,
 				28C7864A2B9A3C81003C757D /* Main.storyboard */,
-				3BB6D1BB2BA7C8F600886F77 /* ImageCollectionViewCell.swift */,
 				9D2BF0032BA777130029E742 /* GroupDetailsViewController.swift */,
 				28C6B5242BA6151700E2DBC3 /* logoItinAI.jpeg */,
 				28C786502B9A3C87003C757D /* Assets.xcassets */,
@@ -297,7 +294,6 @@
 				9D2BF0082BA7831E0029E742 /* CustomPeopleTableViewCell.swift in Sources */,
 				3BB6B56E2B9B6EA80057C691 /* Classes.swift in Sources */,
 				28C786472B9A3C81003C757D /* SceneDelegate.swift in Sources */,
-				3BB6D1BC2BA7C8F600886F77 /* ImageCollectionViewCell.swift in Sources */,
 				82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */,
 				28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */,
 				28C7864F2B9A3C81003C757D /* itinAI_Project.xcdatamodeld in Sources */,
