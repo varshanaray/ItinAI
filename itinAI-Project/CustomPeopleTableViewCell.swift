@@ -1,10 +1,3 @@
-//
-//  CustomPeopleTableViewCell.swift
-//  itinAI-Project
-//
-//  Created by Gurman Kalkat on 3/17/24.
-//
-
 import UIKit
 
 class CustomPeopleTableViewCell: UITableViewCell {

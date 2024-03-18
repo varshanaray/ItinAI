@@ -19,6 +19,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var citiesTableView: UITableView!
     @IBOutlet weak var announcementsTableView: UITableView!
     
+
     @IBOutlet weak var collectionViewPeople: UICollectionView!
     var group:Group?
     
@@ -50,6 +51,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             print("picture, i: ", i)
             // Would be getting from userList directly but this is for testing:
             var thisImage: UIImage? = UIImage(named: "defaultProfilePicture")
+            print("this image: ", thisImage?.size)
             groupProfilePics.append(thisImage)
             
             //let profilePic = UIImageView()
@@ -72,9 +74,10 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionViewPeople.dequeueReusableCell(withReuseIdentifier: "collViewCell", for: indexPath) as! PicCell
-        let row = indexPath.row
-        cell.profileImageView.image = groupProfilePics[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
+        
+        cell.userImageView.image = groupProfilePics[indexPath.row]
+        
         return cell
     }
     

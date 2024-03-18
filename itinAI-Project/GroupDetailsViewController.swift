@@ -12,7 +12,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
 
     @IBOutlet weak var tableView: UITableView!
     
-    var thisGroup: Group
+    var thisGroup: Group?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,14 +22,14 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return thisGroup.userList.count
+        return thisGroup?.userList.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let person = thisGroup.userList[indexPath.row]
+        let person = thisGroup?.userList[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "peopleCell", for: indexPath) as! CustomPeopleTableViewCell
-        cell.name.text = person.displayName
-        cell.iconImageView.image = UIImage(named: person.profileImageUrl)
+        cell.name.text = person?.displayName
+        cell.iconImageView.image = UIImage(named: person?.profileImageUrl ?? "defaultProfilePicture")
         return cell
     }
     
