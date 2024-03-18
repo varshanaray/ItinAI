@@ -18,7 +18,6 @@
 		28C786512B9A3C87003C757D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28C786502B9A3C87003C757D /* Assets.xcassets */; };
 		28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28C786522B9A3C87003C757D /* LaunchScreen.storyboard */; };
 		28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C7865B2B9A3E4C003C757D /* SignUpVC.swift */; };
-		3BB6B56E2B9B6EA80057C691 /* Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB6B56D2B9B6EA80057C691 /* Classes.swift */; };
 		3BB9936A2BA65057003AC721 /* GroupPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB993692BA65057003AC721 /* GroupPageVC.swift */; };
 		3BB9936C2BA6516A003AC721 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */; };
 		3BB993712BA65384003AC721 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3BB993702BA65384003AC721 /* FirebaseAnalytics */; };
@@ -48,6 +47,9 @@
 		3BB993A12BA65384003AC721 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3BB993A02BA65384003AC721 /* FirebaseRemoteConfigSwift */; };
 		3BB993A32BA65384003AC721 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3BB993A22BA65384003AC721 /* FirebaseStorage */; };
 		3BB993A52BA65384003AC721 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3BB993A42BA65384003AC721 /* FirebaseStorageCombine-Community */; };
+		3BD878CA2BA8DFE600B51C3F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD878C92BA8DFE600B51C3F /* User.swift */; };
+		3BD878CC2BA8DFED00B51C3F /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD878CB2BA8DFED00B51C3F /* Group.swift */; };
+		3BD878CE2BA8E00100B51C3F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD878CD2BA8E00100B51C3F /* ImageCollectionViewCell.swift */; };
 		82E7BBC12B9B70F100EE2CED /* CircularProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */; };
 		82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */; };
 		82E7BBC32B9B70F100EE2CED /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */; };
@@ -73,9 +75,11 @@
 		3B1123D42B9B70BF00DF05D8 /* CircularProfilePicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProfilePicture.swift; sourceTree = "<group>"; };
 		3B1123D52B9B70BF00DF05D8 /* ProfileDoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDoneButton.swift; sourceTree = "<group>"; };
 		3B1123D62B9B70BF00DF05D8 /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
-		3BB6B56D2B9B6EA80057C691 /* Classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classes.swift; sourceTree = "<group>"; };
 		3BB993692BA65057003AC721 /* GroupPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPageVC.swift; sourceTree = "<group>"; };
 		3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3BD878C92BA8DFE600B51C3F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		3BD878CB2BA8DFED00B51C3F /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		3BD878CD2BA8E00100B51C3F /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProfilePicture.swift; sourceTree = "<group>"; };
 		82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDoneButton.swift; sourceTree = "<group>"; };
 		82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
@@ -150,18 +154,20 @@
 				9DC44AB32BA65E8C002906C8 /* HomePageVC.swift */,
 				28C786482B9A3C81003C757D /* LoginVC.swift */,
 				28C7865B2B9A3E4C003C757D /* SignUpVC.swift */,
+				3BD878CD2BA8E00100B51C3F /* ImageCollectionViewCell.swift */,
 				3BB993692BA65057003AC721 /* GroupPageVC.swift */,
 				3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */,
 				28C6B51E2B9B651200E2DBC3 /* japan.jpg */,
 				28C7864A2B9A3C81003C757D /* Main.storyboard */,
+				3BD878CB2BA8DFED00B51C3F /* Group.swift */,
 				9D2BF0032BA777130029E742 /* GroupDetailsViewController.swift */,
+				3BD878C92BA8DFE600B51C3F /* User.swift */,
 				28C6B5242BA6151700E2DBC3 /* logoItinAI.jpeg */,
 				28C786502B9A3C87003C757D /* Assets.xcassets */,
 				28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */,
 				28C786522B9A3C87003C757D /* LaunchScreen.storyboard */,
 				28C786552B9A3C87003C757D /* Info.plist */,
 				28C7864D2B9A3C81003C757D /* itinAI_Project.xcdatamodeld */,
-				3BB6B56D2B9B6EA80057C691 /* Classes.swift */,
 				3B1123D42B9B70BF00DF05D8 /* CircularProfilePicture.swift */,
 				3B1123D52B9B70BF00DF05D8 /* ProfileDoneButton.swift */,
 				3B1123D62B9B70BF00DF05D8 /* ProfilePage.swift */,
@@ -284,15 +290,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BD878CA2BA8DFE600B51C3F /* User.swift in Sources */,
 				3BB9936A2BA65057003AC721 /* GroupPageVC.swift in Sources */,
 				9DC44AB42BA65E8C002906C8 /* HomePageVC.swift in Sources */,
 				82E7BBC32B9B70F100EE2CED /* ProfilePage.swift in Sources */,
 				82E7BBC12B9B70F100EE2CED /* CircularProfilePicture.swift in Sources */,
 				28C786492B9A3C81003C757D /* LoginVC.swift in Sources */,
+				3BD878CE2BA8E00100B51C3F /* ImageCollectionViewCell.swift in Sources */,
 				28C786452B9A3C81003C757D /* AppDelegate.swift in Sources */,
+				3BD878CC2BA8DFED00B51C3F /* Group.swift in Sources */,
 				9D2BF0042BA777130029E742 /* GroupDetailsViewController.swift in Sources */,
 				9D2BF0082BA7831E0029E742 /* CustomPeopleTableViewCell.swift in Sources */,
-				3BB6B56E2B9B6EA80057C691 /* Classes.swift in Sources */,
 				28C786472B9A3C81003C757D /* SceneDelegate.swift in Sources */,
 				82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */,
 				28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */,

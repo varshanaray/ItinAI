@@ -17,5 +17,4 @@ class Group {
         self.userList = userList
     }
 
-
 }
