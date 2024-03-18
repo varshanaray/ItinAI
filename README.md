@@ -1,5 +1,5 @@
 # ItinAI
-**Contributions**
+**Contributions**<br>
 Varsha Narayanan (25%)
 - Home page UI & functionality
     - Adding a list of all groups a user is part of 
@@ -27,6 +27,6 @@ Gurman Kalkat (25%)
 - Group details page UI & functionality for people table
     - All users in group show up with pictures & email
     
-**Deviations**
+**Deviations**<br>
 Because we changed our design from what we initally thought it would be during the proposal, it did not make sense for us to ask the user their travel destination, dates, and deadline. Instead, we began on the trip/group details page we initally planned for Beta. We will ask the user for their travel destination, dates, and deadline in Beta when we work on the add cities functionality and the survey during Beta.
 
