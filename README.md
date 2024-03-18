@@ -8,7 +8,7 @@ Varsha Narayanan (25%)
 - Login & signup UI
 
 Erick Albarran (25%)
-- Profile picture UI
+- Profile page UI
 - Swipe up UI for creating group & functionality
     - Can create a group with a randomly generated code
 - Swipe up UI for joining group & functionality
