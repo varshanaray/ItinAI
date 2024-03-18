@@ -12,6 +12,7 @@ import UIKit
 var globalGroupList: [Group] = []
 var globalUserList: [User] = []
 var currentUser: User?
+var currentGroup: Group?
 
 class User {
     

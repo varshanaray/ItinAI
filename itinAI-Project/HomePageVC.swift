@@ -12,7 +12,6 @@ protocol GroupTableUpdater {
 }
 
 class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, GroupTableUpdater, UITextFieldDelegate {
-
     
     @IBOutlet weak var joinButton: UIButton!
     @IBOutlet weak var createButton: UIButton!
@@ -33,6 +32,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     var resetModalView: UIView!
     
     var currentModalView: UIView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -285,6 +285,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                     groupToJoin = group
                     print("group joined's name: \(groupToJoin.groupName)")
                     self.addGroup(newGroup: groupToJoin)
+                    currentGroup?.userList.append(currentUser!)
                     break
                 }
             }
@@ -313,7 +314,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         var groupToAdd: Group = Group(groupName: name, groupCode: code, userList: [currentUser!])
         globalGroupList.append(groupToAdd)
         addGroup(newGroup: groupToAdd)
-        
+        currentGroup?.userList.append(currentUser!)
         for group in globalGroupList {
             print("group name:", group.groupName)
         }
@@ -429,6 +430,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
            let groupIndex = groupTableView.indexPathForSelectedRow?.row
         {
             destination.group = currentUser!.groupList[groupIndex]
+            currentGroup = currentUser!.groupList[groupIndex]
         }
     }
     

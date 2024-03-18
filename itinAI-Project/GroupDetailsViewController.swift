@@ -8,17 +8,21 @@
 import UIKit
 
 class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
 
     @IBOutlet weak var tableView: UITableView!
     
-    var thisGroup: Group?
+    var thisGroup: Group? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        thisGroup = Group(groupName: "temp", groupCode: "", userList: [])
+        thisGroup = currentGroup
+        print("this group name: ", thisGroup?.groupName)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -27,24 +31,15 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let person = thisGroup?.userList[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "peopleCell", for: indexPath) as! CustomPeopleTableViewCell
-        cell.name.text = person?.displayName
-        cell.iconImageView.image = UIImage(named: person?.profileImageUrl ?? "defaultProfilePicture")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell", for: indexPath) as! CustomPeopleTableViewCell
+        cell.name.text = person?.email
+        cell.iconImageView.image = UIImage(named: "defaultProfilePicture")
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return tableView.bounds.width / 3
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
