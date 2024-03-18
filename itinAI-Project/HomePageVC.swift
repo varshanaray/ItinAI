@@ -1,4 +1,3 @@
-//
 //  HomePageVC.swift
 //  itinAI-Project
 //
@@ -160,7 +159,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         // Create code display label
         var codeDisplayLabel = UILabel()
-        codeDisplayLabel.text = "ABCDEFG"
+        var codeToGenerate:String = genCode()
+        codeDisplayLabel.text = codeToGenerate
         var code : String = codeDisplayLabel.text!
         codeDisplayLabel.font = UIFont.systemFont(ofSize: 16.0)
         codeDisplayLabel.frame = CGRect(x: 190.0, y: 150.0, width: 200.0, height: 30.0)
@@ -318,7 +318,34 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             print("group name:", group.groupName)
         }
     }
+    
+    func genCode() -> String {
+        let lettersAndNumbers = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let codeLength = 7
         
+        var randomCode = ""
+        var isUnique = false
+        
+        while !isUnique {
+            randomCode = ""
+            for _ in 0..<codeLength {
+                let randomIndex = Int(arc4random_uniform(UInt32(lettersAndNumbers.count)))
+                let randomCharacter = lettersAndNumbers[lettersAndNumbers.index(lettersAndNumbers.startIndex, offsetBy: randomIndex)]
+                randomCode.append(randomCharacter)
+            }
+            
+            // Check if the generated code already exists in the global array
+            isUnique = true
+            for group in globalGroupList {
+                if (group.groupCode == randomCode) {
+                    isUnique = false
+                }
+            }
+        }
+        
+        return randomCode
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else {return true}
         
