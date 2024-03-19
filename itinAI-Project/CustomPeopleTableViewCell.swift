@@ -1,4 +1,6 @@
-// CustomPeopleTableViewCell.swift
+// Project: itinAI-Alpha
+// EID: ezy78, gkk298, esa549, vn4597
+// Course: CS371L
 
 import UIKit
 
