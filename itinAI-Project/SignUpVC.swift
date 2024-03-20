@@ -55,20 +55,20 @@ class SignUpVC: UIViewController {
                 return
             }
             print("got past auth()")
-            /*
-             Firestore code
              
-            let db = Firestore.firestore()
-            db.collection("users").document(user.uid).setData([
-                "realName": realName
-            ]) { error in
-                if let error = error {
-                    print("Error writing document: \(error)")
-                } else {
-                    print("Document successfully written!")
-                }
-            }
-             */
+             let db = Firestore.firestore()
+            db.collection("Users").document(user.uid).setData([
+                 "name": displayName,
+                 "profileImageURL": "",
+                 "email": email
+             ]) { err in
+                 if let err = err {
+                     print("Error writing document: \(err)")
+                 } else {
+                     print("Document successfully written!")
+                 }
+             }
+
             var newUser = User(email: email, displayName: displayName, groupList: [], profileImageUrl: "")
             globalUserList.append(newUser)
             currentUser = newUser
@@ -88,4 +88,5 @@ class SignUpVC: UIViewController {
         controller.addAction(UIAlertAction(title: "OK", style: .default))
         present(controller, animated: true)
     }
+    
 }
