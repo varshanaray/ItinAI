@@ -4,6 +4,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 protocol GroupTableUpdater {
     func addGroup(newGroup: Group)
@@ -306,6 +307,26 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         for group in globalGroupList {
             print("group name:", group.groupName)
         }
+        
+        let db = Firestore.firestore()
+        
+        let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+       db.collection("Groups").document(code).setData([
+            "groupName": name,
+            "code": code,
+            "userList": [userRef]
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
+        
+        let groupRef = db.collection("Groups").document(code)
+        userRef.updateData([
+            "groupRefs": FieldValue.arrayUnion([groupRef])
+        ])
     }
     
     func genCode() -> String {
