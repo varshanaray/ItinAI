@@ -280,6 +280,10 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                     break
                 }
             }
+            
+            // handle joining group in firestore
+            self.handleJoinGroup(code: enteredCode)
+            
         }
         
         joinDoneButton.dismissCallback = {
@@ -311,7 +315,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         let db = Firestore.firestore()
         
         let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
-       db.collection("Groups").document(code).setData([
+        db.collection("Groups").document(code).setData([
             "groupName": name,
             "code": code,
             "userList": [Auth.auth().currentUser!.uid]
@@ -327,6 +331,69 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         userRef.updateData([
             "groupRefs": FieldValue.arrayUnion([groupRef])
         ])
+    }
+    
+    // takes care of adding a User to a Group in Firestore
+    func handleJoinGroup(code: String!) {
+        print("In handleJoinGroup")
+        print("Group Code: ", code!)
+        let db = Firestore.firestore()
+            
+        // Reference to the user's document
+        let userDocumentRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+        
+        // Update group document
+        db.collection("Groups").document(code).getDocument { (document, error) in
+            if let error = error {
+                print("Error fetching group document: \(error)")
+                return
+            }
+            
+            guard let document = document else {
+                print("Group document does not exist")
+                return
+            }
+            
+            if document.exists {
+                print("Group document exists")
+                
+                // Check if user already exists in group
+                if let userList = document.data()?["userList"] as? [DocumentReference] {
+                    if userList.contains(userDocumentRef) {
+                        print("User is already a member of this group")
+                        return
+                    } else {
+                        print("User is not already a member of this group")
+                    }
+                }
+                
+                // Document found, add user's document reference to group
+                let groupRef = db.collection("Groups").document(code)
+                groupRef.updateData([
+                    "userList": FieldValue.arrayUnion([userDocumentRef])
+                ]) { error in
+                    if let error = error {
+                        print("Error updating group document: \(error)")
+                    } else {
+                        print("User added to group successfully")
+                        
+                        // Add group reference to user's groupRefs field
+                        let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+                        userRef.updateData([
+                            "groupRefs": FieldValue.arrayUnion([groupRef])
+                        ]) { error in
+                            if let error = error {
+                                print("Error updating user document: \(error)")
+                            } else {
+                                print("Group reference added to user successfully")
+                            }
+                        }
+                    }
+                }
+            } else {
+                print("Group document does not exist")
+            }
+        }
     }
     
     func genCode() -> String {
