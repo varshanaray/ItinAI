@@ -314,7 +314,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
        db.collection("Groups").document(code).setData([
             "groupName": name,
             "code": code,
-            "userList": [userRef]
+            "userList": [Auth.auth().currentUser!.uid]
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")

@@ -3,6 +3,7 @@
 // Course: CS371L
 
 import UIKit
+import FirebaseFirestore
 
 class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -16,6 +17,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var group:Group?
     var groupProfilePics = [UIImage?]()
     var displayNames = [String?]()
+    var thisGroupUsers = [User?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +47,18 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 print("this Name: ", thisName)
             }
         }
+        
+        // Get from firestore
+        fetchUserList()
+        
+    }
+    
+    func fetchUserList() -> [User]{
+        var result: [User] = []
+        let db = Firestore.firestore()
+        print("Group Code! ", (group?.groupCode)!)
+        let groupRef = db.collection("Groups").document((group?.groupCode)!)
+        return result
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
