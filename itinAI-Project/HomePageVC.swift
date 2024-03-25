@@ -32,10 +32,16 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     var currentModalView: UIView!
     
+    // String var that will hold the code to copy to clipboard
+    var codeToCopy: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         groupTableView.delegate = self
         groupTableView.dataSource = self
+        
+        // reset codeToCopy to blank
+        codeToCopy = ""
        
         // Create Button
         createButton.backgroundColor = UIColor.black
@@ -163,7 +169,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         var clipboardButton = UIButton(type: .system)
         let clipboardImage = UIImage(systemName: "clipboard")
         clipboardButton.setImage(clipboardImage, for: .normal)
-//        clipboardButton.addTarget(self, action: #selector(copyCodeToClipboard(code: code)), for: .touchUpInside)
+        codeToCopy = code
+        clipboardButton.addTarget(self, action: #selector(copyCodeToClipboard(_:)), for: .touchUpInside)
         var buttonWidth: CGFloat = 30.0
         var buttonHeight: CGFloat = buttonWidth
         clipboardButton.frame = CGRect(x: 270.0, y: 150.0, width: buttonWidth, height: buttonHeight)
@@ -300,8 +307,12 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         dismissModalView()
     }
     
-    @objc func copyCodeToClipboard(code: String) {
-        
+    // handle copying whatever is currently the group code in the create group modal view to the user's clipboard
+    @objc func copyCodeToClipboard(_ sender: UIButton) {
+        let clipboardCode = self.codeToCopy
+        UIPasteboard.general.string = clipboardCode
+        print("Code copied to clipboard: \(clipboardCode!)")
+        codeToCopy = ""
     }
     
     func handleGroupCreation(name: String, code: String) {
