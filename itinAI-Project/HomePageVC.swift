@@ -35,6 +35,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     // String var that will hold the code to copy to clipboard
     var codeToCopy: String?
     
+    var groupNames: [Group?] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         groupTableView.delegate = self
@@ -56,6 +58,9 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         joinButton.setTitleColor(UIColor.white, for: .normal)
         joinButton.layer.cornerRadius = 10
         joinButton.clipsToBounds = true
+        
+        // Populate group array
+        //groupNames = currentUser?.groupList
     }
     
     @IBAction func createButtonPressed(_ sender: Any) {
@@ -325,7 +330,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         let db = Firestore.firestore()
         
-        let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+        let userRef = db.collection("Users").document(Auth.auth().currentUser!.email!)
         db.collection("Groups").document(code).setData([
             "groupName": name,
             "code": code,
@@ -352,7 +357,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         let db = Firestore.firestore()
             
         // Reference to the user's document
-        let userDocumentRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+        let userDocumentRef = db.collection("Users").document(Auth.auth().currentUser!.email!)
         
         // Update group document
         db.collection("Groups").document(code).getDocument { (document, error) in
@@ -531,3 +536,4 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
 }
+

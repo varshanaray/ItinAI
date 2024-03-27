@@ -4,6 +4,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class LoginVC: UIViewController {
 
@@ -60,7 +61,50 @@ class LoginVC: UIViewController {
             }
             if currentUser == nil { // temporary implementation: if user did not create account locally
                 print("user was not created locally, therefore initialized new user")
+                
+                
+                let db = Firestore.firestore()
+                var userRef = db.collection("Users").document(email)
+                print("The type of userRef is \(type(of: userRef))")
                 var user = User(email: email, displayName: "Temporarily Unavailable", groupList: [], profileImageUrl: "")
+                userRef.getDocument { (document, error) in
+                    if let document = document, document.exists {
+                        let data = document.data()
+                        user.email = data?["email"] as? String ?? ""
+                        user.displayName = data?["name"] as? String ?? ""
+                        user.profileImageUrl = data?["profileImageURL"] as? String ?? ""
+                        if let groupRefs = document.get("groupRefs") as? [DocumentReference] {
+                            for groupRef in groupRefs {
+                                // Fetch each group document by its reference
+                                groupRef.getDocument { (groupDocument, error) in
+                                    if let groupDocument = groupDocument, groupDocument.exists {
+                                        // Access the group document data
+                                        let groupData = groupDocument.data()
+                                        let otherUsers = document.get("userList") as? [DocumentReference]
+                                    
+                                        user.groupList.append(Group(groupName: groupData?["groupName"] as! String, groupCode: groupDocument.documentID, userList: groupData?["userList"] as! [User]))
+                                        print(groupData) // Or do something with the data
+                                    } else {
+                                        print("Group document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
+                                    }
+                                }
+                            }
+                        } else {
+                            print("Group references not found or not in expected format")
+                        }
+                        // Now you have the email, you can use it as needed
+//                        print("Display name: \(name ?? "No display name found")")
+//                        print("User email: \(email ?? "No email found")")
+//                        print("Profile Image URL: \(profileImageURL ?? "No profile image URL found")")
+                        print("Group List: ", user.groupList)
+                    } else {
+                        print("Document does not exist")
+                        if let error = error {
+                            print("Error fetching document: \(error)")
+                        }
+                    }
+                }
+                
                 globalUserList.append(user)
                 currentUser = user
             }
@@ -118,3 +162,4 @@ func isValidPassword(_ password: String) -> Bool {
    let minPasswordLength = 6
    return password.count >= minPasswordLength
 }
+
