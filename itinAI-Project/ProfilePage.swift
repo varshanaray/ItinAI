@@ -77,7 +77,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
     }
     
     // TODO: - Handle tapping outside of keyboard to dismiss it without dismissing the modal view
-
    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
        textField.resignFirstResponder()
        return true
