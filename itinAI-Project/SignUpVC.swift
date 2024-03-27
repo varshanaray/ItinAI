@@ -17,6 +17,17 @@ class SignUpVC: UIViewController {
         emailField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         nameField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
+        
+        Auth.auth().addStateDidChangeListener()
+        {
+            (auth, user) in
+            if user != nil {
+                self.performSegue(withIdentifier: "signupSegue", sender: self)
+                self.passwordField.text = nil
+                self.nameField.text = nil
+                self.emailField.text = nil
+            }
+        }
     }
     
     @IBAction func signUpButtonPressed(_ sender: Any) {
@@ -73,10 +84,11 @@ class SignUpVC: UIViewController {
             globalUserList.append(newUser)
             currentUser = newUser
             // segue to home screen
+            /*
             if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
                 homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
                 self.present(homeNavigationController, animated: true, completion: nil)
-            }
+            }*/
         }
     }
     

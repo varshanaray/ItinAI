@@ -15,6 +15,16 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         emailField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
+        
+        Auth.auth().addStateDidChangeListener()
+        {
+            (auth, user) in
+            if user != nil {
+                self.performSegue(withIdentifier: "loginSegue", sender: self)
+                self.passwordField.text = nil
+                self.emailField.text = nil
+            }
+        }
     }
 
     @IBAction func loginButtonPressed(_ sender: Any) {
@@ -108,10 +118,12 @@ class LoginVC: UIViewController {
                 globalUserList.append(user)
                 currentUser = user
             }
+            
+            /*
             if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
                 homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
                 self.present(homeNavigationController, animated: true, completion: nil)
-            }
+            }*/
         }
     }
     
