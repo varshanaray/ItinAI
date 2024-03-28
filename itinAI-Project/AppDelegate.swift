@@ -7,10 +7,6 @@ import CoreData
 import FirebaseCore
 import IQKeyboardManagerSwift
 
-var globalGroupList: [Group] = []
-var globalUserList: [User] = []
-var currentUser: User?
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

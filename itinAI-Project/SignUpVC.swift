@@ -80,9 +80,6 @@ class SignUpVC: UIViewController {
                  }
              }
 
-            var newUser = User(email: email, displayName: displayName, groupList: [], profileImageUrl: "")
-            globalUserList.append(newUser)
-            currentUser = newUser
             // segue to home screen
             /*
             if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {

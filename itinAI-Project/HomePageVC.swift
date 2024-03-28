@@ -35,7 +35,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     // String var that will hold the code to copy to clipboard
     var codeToCopy: String?
     
-    var groupNames: [Group?] = []
+    var groupList: [Group?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -281,17 +281,18 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             // need to get correct group based on group code
             var enteredCode:String = codeTextField.text ?? "0000000"
             print("The code that was entered is \(enteredCode)")
-            var groupToJoin: Group
-            for group in globalGroupList {
-                if (enteredCode == group.groupCode) {
-                    print("Found a match for the entered code")
-                    groupToJoin = group
-                    print("group joined's name: \(groupToJoin.groupName)")
-                    self.addGroup(newGroup: groupToJoin)
-                    groupToJoin.userList.append(currentUser!)
-                    break
-                }
-            }
+            //var groupToJoin: Group
+            
+//            for group in globalGroupList {
+//                if (enteredCode == group.groupCode) {
+//                    print("Found a match for the entered code")
+//                    groupToJoin = group
+//                    print("group joined's name: \(groupToJoin.groupName)")
+//                    self.addGroup(newGroup: groupToJoin)
+//                    groupToJoin.userList.append(currentUser!)
+//                    break
+//                }
+//            }
             
             // handle joining group in firestore
             self.handleJoinGroup(code: enteredCode)
@@ -321,16 +322,14 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     func handleGroupCreation(name: String, code: String) {
-        var groupToAdd: Group = Group(groupName: name, groupCode: code, userList: [currentUser!])
-        globalGroupList.append(groupToAdd)
-        addGroup(newGroup: groupToAdd)
-        for group in globalGroupList {
-            print("group name:", group.groupName)
-        }
+//        var groupToAdd: Group = Group(groupName: name, groupCode: code, userList: [currentUser!])
+//        globalGroupList.append(groupToAdd)
+//        addGroup(newGroup: groupToAdd)
+
         
         let db = Firestore.firestore()
         
-        let userRef = db.collection("Users").document(Auth.auth().currentUser!.email!)
+        let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
         db.collection("Groups").document(code).setData([
             "groupName": name,
             "code": code,
@@ -357,7 +356,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         let db = Firestore.firestore()
             
         // Reference to the user's document
-        let userDocumentRef = db.collection("Users").document(Auth.auth().currentUser!.email!)
+        let userDocumentRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
         
         // Update group document
         db.collection("Groups").document(code).getDocument { (document, error) in
@@ -430,11 +429,12 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             
             // Check if the generated code already exists in the global array
             isUnique = true
-            for group in globalGroupList {
-                if (group.groupCode == randomCode) {
-                    isUnique = false
-                }
-            }
+            // TODO: Merge functionality with Firestore to check if a group with a code already exists
+//            for group in globalGroupList {
+//                if (group.groupCode == randomCode) {
+//                    isUnique = false
+//                }
+//            }
         }
         print("random code: \(randomCode)")
         return randomCode
@@ -490,23 +490,23 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // print("count: ",currentUser!.groupList.count )
-        return currentUser!.groupList.count
+        return groupList.count
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let thisGroupList = currentUser!.groupList
         // dummy
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTableCell", for: indexPath)
         let row = indexPath.row
-        let cellText = thisGroupList[row].groupName
+        let cellText = groupList[row]!.groupName
         cell.textLabel?.text = cellText
         return cell
     }
     
     func addGroup(newGroup: Group) {
         // Add group to group list array
-        currentUser!.groupList.append(newGroup)
+        groupList.append(newGroup)
         print("New group added's name: ", newGroup.groupName)
         // Refreshes table
         groupTableView.reloadData()
@@ -518,7 +518,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
            let destination = segue.destination as? GroupPageVC,
            let groupIndex = groupTableView.indexPathForSelectedRow?.row
         {
-            destination.group = currentUser!.groupList[groupIndex]
+            destination.group = groupList[groupIndex]
         }
     }
     
@@ -528,7 +528,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             
             self.dismiss(animated: true)
             
-            currentUser = nil
             
         } catch {
             print("log out error")
