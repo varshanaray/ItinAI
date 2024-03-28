@@ -3,12 +3,15 @@
 // Course: CS371L
 
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
 
 class ProfilePage: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var profilePicture: CircularProfilePicture!
     @IBOutlet weak var resetPasswordButton: UIButton!
     @IBOutlet weak var changePictureButton: UIButton!
+    @IBOutlet weak var displayNameLabel: UILabel!
     
     var overlayView: UIView = UIView()
     
@@ -38,6 +41,24 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
         
         // Reset Password button
         resetPasswordButton.setTitle("Reset password", for: .normal)
+        
+        // Set the display name
+        let db = Firestore.firestore()
+        let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+        userRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                // Extract the "displayName" field
+                if let displayName = document.get("name") as? String {
+                    print("Display Name: \(displayName)")
+                    self.displayNameLabel.text = displayName
+                    // You can now use the displayName variable as needed
+                } else {
+                    print("Display name not found or not in expected format")
+                }
+            } else {
+                print("User document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
     }
     
     @IBAction func resetPasswordButtonPressed(_ sender: Any) {

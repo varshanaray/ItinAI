@@ -63,6 +63,12 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         // Populate group array
         //groupNames = currentUser?.groupList
+        
+        print("viewDidLoad() called")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear called")
     }
     
     @IBAction func createButtonPressed(_ sender: Any) {
