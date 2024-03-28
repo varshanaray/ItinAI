@@ -42,6 +42,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         groupTableView.delegate = self
         groupTableView.dataSource = self
         
+        fetchGroups()
+        
         // reset codeToCopy to blank
         codeToCopy = ""
        
@@ -326,7 +328,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 //        globalGroupList.append(groupToAdd)
 //        addGroup(newGroup: groupToAdd)
 
-        
         let db = Firestore.firestore()
         
         let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
@@ -381,6 +382,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                     } else {
                         print("User is not already a member of this group")
                     }
+                } else {
+                    print("Couldn't find userList")
                 }
                 
                 // Document found, add user's document reference to group
@@ -406,8 +409,50 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                         }
                     }
                 }
+                self.fetchGroups()
             } else {
                 print("Group document does not exist")
+            }
+        }
+    }
+    
+    func fetchGroups() {
+        print("fetchGroups() called")
+        let db = Firestore.firestore()
+        let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+        
+        userRef.getDocument { (document, error) in
+            guard let document = document, document.exists else {
+                print("User document does not exists")
+                return
+            }
+            self.groupList = []
+            if let groupRefs = document.data()?["groupRefs"] as? [DocumentReference] {
+                let dispatchGroup = DispatchGroup()
+                for groupRef in groupRefs {
+                    dispatchGroup.enter()
+                    print("groupRefs found")
+                    groupRef.getDocument { (groupDoc, error) in
+                        defer {
+                            dispatchGroup.leave()
+                        }
+                        if let groupDoc = groupDoc, groupDoc.exists, let groupName =  groupDoc.data()?["groupName"] as? String {
+                            let group = Group(groupName: groupName, groupCode: groupDoc.documentID)
+                            self.groupList.append(group)
+                        } else {
+                            print("Group document does not exists in User")
+                        }
+                    }
+                }
+                dispatchGroup.notify(queue: .main) {
+                    print("Printing groupList after fetching groupRefs")
+                    for group in self.groupList {
+                        print(group?.groupName)
+                        print(group?.groupCode)
+                    }
+                    self.groupTableView.reloadData()
+                }
+                    
             }
         }
     }

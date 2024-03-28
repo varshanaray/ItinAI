@@ -34,14 +34,14 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         announcementsTableView.layer.borderWidth = 1
         announcementsTableView.layer.borderColor = UIColor.darkGray.cgColor
         
-        var numInGroup: Int = group?.userList.count ?? -1
+        var numInGroup: Int = 0 //group?.userList.count ?? -1
         // If less than or equal to 0, do nothing
         if (numInGroup > 0) {
             for i in 0...(numInGroup - 1) {
                 print("picture, i: ", i)
                 // Default image until database is set up
                 var thisImage: UIImage? = UIImage(named: "defaultProfilePicture")
-                var thisName: String? = group?.userList[i].email
+                var thisName: String? = "" //group?.userList[i].email
                 groupProfilePics.append(thisImage)
                 displayNames.append(thisName)
                 print("this Name: ", thisName)

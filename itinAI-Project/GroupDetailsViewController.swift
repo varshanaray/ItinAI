@@ -27,13 +27,13 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return thisGroup?.userList.count ?? 0
+        return 0 //thisGroup?.userList.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let person = thisGroup?.userList[indexPath.row]
+        //let person = thisGroup?.userList[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell", for: indexPath) as! CustomPeopleTableViewCell
-        cell.name.text = person?.email
+        cell.name.text = "" //person?.email
         cell.iconImageView.image = UIImage(named: "defaultProfilePicture")
         return cell
     }
