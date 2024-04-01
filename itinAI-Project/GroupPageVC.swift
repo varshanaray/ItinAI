@@ -4,8 +4,9 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseAuth
 
-class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -18,6 +19,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var groupProfilePics = [UIImage?]()
     var displayNames = [String?]()
     var thisGroupUsers = [User?]()
+    var citiesArray = [String?] () // temporary for debugging
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +54,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         fetchUserList()
         
     }
+
+    
     
     func fetchUserList() -> [User]{
         var result: [User] = []
@@ -73,12 +77,41 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
-    // Prepare to segue to Details page
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return citiesArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Dequeue a reusable cell from the table view.
+        let cell = citiesTableView.dequeueReusableCell(withIdentifier: "CitiesCell", for: indexPath)
+
+        // Get the city name for the current row.
+        let cityName = citiesArray[indexPath.row]
+
+        // Set the city name to the cell's text label.
+        cell.textLabel?.text = cityName
+
+        return cell
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Prepare to segue to Details page
         if segue.identifier == "GroupToDetails",
            let destination = segue.destination as? GroupDetailsViewController
         {
             destination.thisGroup = group!
+        }
+        
+        // Prepare to seugue to Survey page
+//        if segue.identifier == "SurveyPageSegue" {
+//            let destination = segue.destination as? SurveyPageVC
+//        }
+        
+        if segue.identifier == "TestSurveySegue" {
+            if let destination = segue.destination as? SurveyPageVC {
+                destination.cityName = "Tokyo"
+            }
         }
     }
     
