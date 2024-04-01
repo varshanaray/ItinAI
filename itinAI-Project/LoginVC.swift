@@ -5,6 +5,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import OpenAI
 
 class LoginVC: UIViewController {
 
@@ -15,6 +16,12 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         emailField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
+        
+        /*
+        Task {
+            print("testing query")
+            await queryItinerary()
+        }*/
         
         Auth.auth().addStateDidChangeListener()
         {
@@ -116,5 +123,45 @@ func isValidEmail(_ email: String) -> Bool {
 func isValidPassword(_ password: String) -> Bool {
    let minPasswordLength = 6
    return password.count >= minPasswordLength
+}
+
+
+func queryItinerary() async {
+    let openAI = OpenAI(apiToken: "hidden")
+
+    let prompt = """
+    Generate a detailed travel itinerary for a 3-day trip to Tokyo. Please format the itinerary as follows:
+
+    For each day, bold the day number and provide the beginning and end dates in a subtitle format. Then, list the activities with specific times and detailed descriptions. Ensure the itinerary is practical, considering travel time between locations.
+
+    Example of the desired format:
+
+    **Day 1**
+    *Subtitle: date 1 to date 2*
+
+    9:00 AM: Start the day at the Meiji Shrine, a serene escape in the heart of Tokyo, surrounded by a lush forest.
+    11:00 AM: Head over to the bustling Harajuku for a glimpse into Tokyo's youth fashion and pop culture.
+    1:00 PM: Visit the Shibuya Crossing, the world's busiest pedestrian crossing, and snap some iconic photos.
+    3:00 PM: Explore the trendy shops and cafes in Omotesando, often referred to as Tokyo's Champs-Élysées.
+    5:00 PM: End your day with a visit to Tokyo Tower for panoramic views of the city as the sun sets.
+
+    Please create a similar itinerary, ensuring each day offers a unique and enriching experience.
+    """
+    
+    let query = ChatQuery(messages: [.init(role: .user, content: prompt)!], model: .gpt3_5Turbo)
+    
+    do {
+        let result = try await openAI.chats(query: query)
+        
+        print("Itinerary: \(result)")
+        for choice in result.choices {
+                DispatchQueue.main.async {
+                    print("content: \(choice.message.content)")
+                }
+            }
+    } catch {
+        // Handle errors here
+        print("An error occurred: \(error)")
+    }
 }
 
