@@ -473,14 +473,14 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XR1-M0-G8s">
-                                                                    <rect key="frame" x="21" y="8" width="51" height="51"/>
+                                                                    <rect key="frame" x="24" y="8" width="51" height="51"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="51" id="eXz-DC-jWr"/>
                                                                         <constraint firstAttribute="height" constant="51" id="iRM-su-QMh"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vit-3D-buH">
-                                                                    <rect key="frame" x="0.6666666666666643" y="59" width="91.666666666666686" height="5.3333333333333286"/>
+                                                                    <rect key="frame" x="3.3333333333333357" y="59" width="92.333333333333314" height="5.3333333333333286"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="98" id="rUA-2I-mf8"/>
                                                                     </constraints>
@@ -764,10 +764,10 @@
             </objects>
             <point key="canvasLocation" x="-324.4274809160305" y="905.63380281690149"/>
         </scene>
-        <!--View Controller-->
+        <!--Itinerary PageVC-->
         <scene sceneID="MZ5-pb-O4e">
             <objects>
-                <viewController id="L8q-sA-sCp" sceneMemberID="viewController">
+                <viewController id="L8q-sA-sCp" customClass="ItineraryPageVC" customModule="itinAI_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lbK-cy-ABi">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -862,6 +862,12 @@
                         <viewLayoutGuide key="safeArea" id="3QX-JB-vvx"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <outlet property="bgImageView" destination="rUa-fQ-MRe" id="dsS-Fe-omz"/>
+                        <outlet property="mainContentView" destination="3Ql-fM-Z5H" id="Ve8-5X-Knr"/>
+                        <outlet property="scrollView" destination="aAy-39-SIB" id="vcz-34-lNP"/>
+                        <outlet property="titleLabel" destination="hFl-cY-8uW" id="VET-Ci-Aci"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nLm-Lb-S47" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -882,22 +888,22 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="separatorColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29803921570000003" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
