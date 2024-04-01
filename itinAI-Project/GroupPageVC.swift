@@ -36,7 +36,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         announcementsTableView.layer.borderWidth = 1
         announcementsTableView.layer.borderColor = UIColor.darkGray.cgColor
         
-        var numInGroup: Int = 0 //group?.userList.count ?? -1
+        /*var numInGroup: Int = 0 //group?.userList.count ?? -1
         // If less than or equal to 0, do nothing
         if (numInGroup > 0) {
             for i in 0...(numInGroup - 1) {
@@ -48,21 +48,55 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 displayNames.append(thisName)
                 print("this Name: ", thisName)
             }
-        }
+        } */
         
         // Get from firestore
-        fetchUserList()
+        print("group code!: ", (group?.groupCode)!)
+        fetchUsers(groupCode: (group?.groupCode)!)
         
     }
 
     
     
-    func fetchUserList() -> [User]{
-        var result: [User] = []
+    func fetchUsers(groupCode: String) {
+        print("fetchusers() called")
         let db = Firestore.firestore()
-        print("Group Code! ", (group?.groupCode)!)
-        let groupRef = db.collection("Groups").document((group?.groupCode)!)
-        return result
+        let groupRef = db.collection("Groups").document(groupCode)
+        
+        groupRef.getDocument { (document, error) in
+            guard let document = document, document.exists else {
+                print("Group document does not exists")
+                return
+            }
+            if let userRefs = document.data()?["userList"] as? [DocumentReference] {
+                print("User doc is there")
+                let dispatchGroup = DispatchGroup()
+                for userRef in userRefs {
+                    dispatchGroup.enter()
+                    print("userRefs found")
+                    userRef.getDocument { (userDoc, error) in
+                        defer {
+                            dispatchGroup.leave()
+                        }
+                        if let userDoc = userDoc, userDoc.exists, let email =  userDoc.data()?["email"] as? String, let name =  userDoc.data()?["name"] as? String {
+                            //let user = User(email: email, displayName: name, profileImageUrl: "")
+                            print("!!! name: ", name)
+                            self.displayNames.append(name)
+                            var thisImage: UIImage? = UIImage(named: "defaultProfilePicture")
+                            self.groupProfilePics.append(thisImage)
+                            print("group profile pics count: ", self.groupProfilePics.count)
+                        } else {
+                            print("User document does not exists in User")
+                        }
+                    }
+                }
+                dispatchGroup.notify(queue: .main) {
+                    print("reload collection view for people")
+                    self.collectionViewPeople.reloadData()
+                }
+                    
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
