@@ -37,6 +37,9 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     var groupList: [Group?] = []
     
+    var groupNameHere = ""
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         groupTableView.delegate = self
@@ -123,10 +126,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         groupNameLabel.frame.origin.x = leftMargin
         groupNameLabel.frame = CGRect(x: leftMargin, y: 60.0, width: 200.0, height: 30.0)
         createModalView.addSubview(groupNameLabel)
-//        NSLayoutConstraint.activate([
-//            groupNameLabel.leadingAnchor.constraint(equalTo: createModalView.leadingAnchor, constant: 20),
-//            groupNameLabel.topAnchor.constraint(equalTo: createModalView.topAnchor, constant: -100)
-//        ])
         
         // Group name text field
         let placeHolderText = "Max 20 characters"
@@ -153,6 +152,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         groupTextField.leftView = paddingView
         groupTextField.leftViewMode = .always
         createModalView.addSubview(groupTextField)
+        
+        groupNameHere = groupTextField.text!
         
         // Create character count label
         var characterCountLabel = UILabel()
@@ -336,6 +337,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
         let db = Firestore.firestore()
         
+        // append to user's groupList
         let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
         db.collection("Groups").document(code).setData([
             "groupName": name,
@@ -353,7 +355,14 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         let groupRef = db.collection("Groups").document(code)
         userRef.updateData([
             "groupRefs": FieldValue.arrayUnion([groupRef])
-        ])
+        ])  { error in
+            if let error = error {
+                print("Error updating user document: \(error)")
+            } else {
+                self.fetchGroups()
+                print("Group reference added to user successfully")
+            }
+        }
     }
     
     // takes care of adding a User to a Group in Firestore
@@ -410,17 +419,64 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                             if let error = error {
                                 print("Error updating user document: \(error)")
                             } else {
+                                self.fetchGroups()
                                 print("Group reference added to user successfully")
                             }
                         }
                     }
                 }
-                self.fetchGroups()
+//                let group = Group(groupName: self.groupNameHere, groupCode: code)
+                // self.addGroupToTable(newGroup: Group(groupName: self.groupNameHere, groupCode: code))
+               
+                //self.fetchGroups()
             } else {
                 print("Group document does not exist")
             }
         }
     }
+    
+    /*
+    func fetchGroups() {
+        print("fetchGroups() called")
+        let db = Firestore.firestore()
+        let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+        
+        userRef.getDocument { (document, error) in
+            guard let document = document, document.exists else {
+                print("User document does not exists")
+                return
+            }
+            self.groupList = []
+            if let groupRefs = document.data()?["groupRefs"] as? [DocumentReference] {
+                let dispatchGroup = DispatchGroup()
+                for groupRef in groupRefs {
+                    dispatchGroup.enter()
+                    print("groupRefs found")
+                    groupRef.getDocument { (groupDoc, error) in
+                        defer {
+                            dispatchGroup.leave()
+                        }
+                        if let groupDoc = groupDoc, groupDoc.exists, let groupName =  groupDoc.data()?["groupName"] as? String {
+                            let group = Group(groupName: groupName, groupCode: groupDoc.documentID)
+                            self.groupList.append(group)
+                        } else {
+                            print("Group document does not exists in User")
+                        }
+                    }
+                }
+                dispatchGroup.notify(queue: .main) {
+                    print("Printing groupList after fetching groupRefs")
+                    for group in self.groupList {
+                        print(group?.groupName)
+                        print(group?.groupCode)
+                    }
+                    self.groupTableView.reloadData()
+                }
+                    
+            }
+        }
+    }
+    */
     
     func fetchGroups() {
         print("fetchGroups() called")
