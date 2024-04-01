@@ -50,6 +50,7 @@
 		3BD878CA2BA8DFE600B51C3F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD878C92BA8DFE600B51C3F /* User.swift */; };
 		3BD878CC2BA8DFED00B51C3F /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD878CB2BA8DFED00B51C3F /* Group.swift */; };
 		3BD878CE2BA8E00100B51C3F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD878CD2BA8E00100B51C3F /* ImageCollectionViewCell.swift */; };
+		3BF2F9F72BBB501400C90D2B /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 3BF2F9F62BBB501400C90D2B /* OpenAI */; };
 		82E7BBC12B9B70F100EE2CED /* CircularProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */; };
 		82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */; };
 		82E7BBC32B9B70F100EE2CED /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */; };
@@ -111,6 +112,7 @@
 				3BB9938F2BA65384003AC721 /* FirebaseFunctions in Frameworks */,
 				3BB993A52BA65384003AC721 /* FirebaseStorageCombine-Community in Frameworks */,
 				3BB9939F2BA65384003AC721 /* FirebaseRemoteConfig in Frameworks */,
+				3BF2F9F72BBB501400C90D2B /* OpenAI in Frameworks */,
 				3BB9937B2BA65384003AC721 /* FirebaseAppDistribution-Beta in Frameworks */,
 				3BB9937F2BA65384003AC721 /* FirebaseAuthCombine-Community in Frameworks */,
 				3BB9939D2BA65384003AC721 /* FirebasePerformance in Frameworks */,
@@ -227,6 +229,7 @@
 				3BB993A02BA65384003AC721 /* FirebaseRemoteConfigSwift */,
 				3BB993A22BA65384003AC721 /* FirebaseStorage */,
 				3BB993A42BA65384003AC721 /* FirebaseStorageCombine-Community */,
+				3BF2F9F62BBB501400C90D2B /* OpenAI */,
 			);
 			productName = "itinAI-Project";
 			productReference = 28C786412B9A3C81003C757D /* itinAI-Project.app */;
@@ -258,6 +261,7 @@
 			mainGroup = 28C786382B9A3C81003C757D;
 			packageReferences = (
 				3BB9936F2BA65384003AC721 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3BF2F9F52BBB501400C90D2B /* XCRemoteSwiftPackageReference "OpenAI" */,
 			);
 			productRefGroup = 28C786422B9A3C81003C757D /* Products */;
 			projectDirPath = "";
@@ -537,6 +541,14 @@
 				minimumVersion = 10.22.1;
 			};
 		};
+		3BF2F9F52BBB501400C90D2B /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.7;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -674,6 +686,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3BB9936F2BA65384003AC721 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		3BF2F9F62BBB501400C90D2B /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3BF2F9F52BBB501400C90D2B /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 
