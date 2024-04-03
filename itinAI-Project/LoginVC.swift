@@ -17,11 +17,13 @@ class LoginVC: UIViewController {
         emailField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         
+        // testing GPT API
         /*
         Task {
-            print("testing query")
-            await queryItinerary()
+            print("calling generateCityItinerary")
+            await generateCityItinerary("", "Tokyo", ["I want to shop", "I want to eat sushi", "I want to see Tokyo Tower", "I want to go to Shibuya Crossing", "I want to go to a club"], "April 2nd", "April 5th")
         }*/
+        
         
         Auth.auth().addStateDidChangeListener()
         {
@@ -126,42 +128,134 @@ func isValidPassword(_ password: String) -> Bool {
 }
 
 
-func queryItinerary() async {
+func fetchCityInput(cityDocId: String) {
+
+    let db = Firestore.firestore()
+    
+    let docRef = db.collection("Cities").document(cityDocId)
+    
+    // Attempt to fetch the document
+    docRef.getDocument { (document, error) in
+        // Error handling
+        if let error = error {
+            print("Error getting document: \(error.localizedDescription)")
+            return
+        }
+        
+        guard let document = document, document.exists else {
+            print("Document does not exist")
+            return
+        }
+        
+        // Attempt to retrieve the 'cityName' and 'inputList' from the document
+        let data = document.data()
+        
+        // Retrieve 'cityName' as a String
+        guard let cityName = data?["cityName"] as? String else {
+            print("City name not found or is not a string")
+            return
+        }
+        
+        guard let cityName = data?["cityName"] as? String,
+              let inputList = data?["inputList"] as? [String],
+              let startDateTimestamp = data?["startDate"] as? Timestamp,
+              let endDateTimestamp = data?["endDate"] as? Timestamp else {
+            print("One or more fields not found or is not in the expected format")
+            return
+        }
+        
+        // Convert Firestore Timestamps to Date
+        let startDate = startDateTimestamp.dateValue()
+        let endDate = endDateTimestamp.dateValue()
+        
+        print("Successfully retrieved city data")
+        print("City Name: \(cityName)")
+        print("Input List: \(inputList)")
+        print("Start Date: \(startDate)")
+        print("End Date: \(endDate)")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        let startDateString = dateFormatter.string(from: startDate)
+        let endDateString = dateFormatter.string(from: endDate)
+
+        
+        Task {
+            print("calling generateCityItinerary")
+            await generateCityItinerary(cityDocId, cityName, inputList, startDateString, endDateString)
+        }
+    }
+}
+
+// calls GPT API to generate itinerary and save to Firestore
+
+func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList: [String], _ startDate: String, _ endDate: String) async {
+    
     let openAI = OpenAI(apiToken: "hidden")
-
+    
     let prompt = """
-    Generate a detailed travel itinerary for a 3-day trip to Tokyo. Please format the itinerary as follows:
-
-    For each day, bold the day number and provide the beginning and end dates in a subtitle format. Then, list the activities with specific times and detailed descriptions. Ensure the itinerary is practical, considering travel time between locations.
+    Generate a detailed travel itinerary for a trip to \(cityName), from \(startDate) to \(endDate). The response should only include the itinerary details, without any additional text. Utilize custom separators to clearly distinguish between different parts of the itinerary. For each day, use '###Day:X###' as a marker where X is the day number, followed by '###Date:Y###' for the date, and use '---' to separate individual itinerary items. Ensure the itinerary is practical, considering travel time between locations, and aligns with the user's interests.
 
     Example of the desired format:
 
-    **Day 1**
-    *Subtitle: date 1 to date 2*
+    ###Day:1### ###Date:April 2nd### --- 9:00 AM: Start the day at the Meiji Shrine, a serene escape in the heart of Tokyo, surrounded by a lush forest. --- 11:00 AM: Head over to the bustling Harajuku for a glimpse into Tokyo's youth fashion and pop culture. --- 1:00 PM: Visit the Shibuya Crossing, the world's busiest pedestrian crossing, and snap some iconic photos. --- 5:00 PM: End your day with a visit to Tokyo Tower for panoramic views of the city as the sun sets.
 
-    9:00 AM: Start the day at the Meiji Shrine, a serene escape in the heart of Tokyo, surrounded by a lush forest.
-    11:00 AM: Head over to the bustling Harajuku for a glimpse into Tokyo's youth fashion and pop culture.
-    1:00 PM: Visit the Shibuya Crossing, the world's busiest pedestrian crossing, and snap some iconic photos.
-    3:00 PM: Explore the trendy shops and cafes in Omotesando, often referred to as Tokyo's Champs-Élysées.
-    5:00 PM: End your day with a visit to Tokyo Tower for panoramic views of the city as the sun sets.
-
-    Please create a similar itinerary, ensuring each day offers a unique and enriching experience.
+    Please create a similar itinerary, ensuring each day offers a unique and enriching experience and make sure to consider all of the user's preferences.
     """
     
-    let query = ChatQuery(messages: [.init(role: .user, content: prompt)!], model: .gpt3_5Turbo)
+    // User preferences are considered after the initial prompt, each as a separate message
+    var messages: [ChatQuery.ChatCompletionMessageParam] = [ChatQuery.ChatCompletionMessageParam(role: .user, content: prompt)!]
+    
+    messages.append(contentsOf: inputList.map {ChatQuery.ChatCompletionMessageParam(role: .user, content: $0)! })
+    
+    let query = ChatQuery(messages: messages, model: .gpt3_5Turbo)
     
     do {
+        print("begin querying GPT API")
         let result = try await openAI.chats(query: query)
         
-        print("Itinerary: \(result)")
+        print("Itinerary full result:\n \(result)")
         for choice in result.choices {
-                DispatchQueue.main.async {
-                    print("content: \(choice.message.content)")
-                }
+            DispatchQueue.main.async {
+                print("content: \(choice.message.content)")
+                
+                // save to Firestore [itineraryDays]
             }
+        }
     } catch {
         // Handle errors here
-        print("An error occurred: \(error)")
+        print("An error occurred: \(error.localizedDescription)")
+    }
+}
+
+func parseItinerary(response: String) -> [ItineraryDay] {
+    let daySections = response.components(separatedBy: "###Day:")
+    var itineraryDays: [ItineraryDay] = []
+
+    for daySection in daySections where !daySection.isEmpty {
+        let components = daySection.components(separatedBy: "###Date:")
+        let dayNumber = components[0].trimmingCharacters(in: .whitespacesAndNewlines)
+        let rest = components[1].split(separator: "###", maxSplits: 1, omittingEmptySubsequences: true)[0]
+        let dateAndContent = rest.split(separator: "---", maxSplits: 1, omittingEmptySubsequences: true).map(String.init)
+        let date = dateAndContent[0].trimmingCharacters(in: .whitespacesAndNewlines)
+        let content = dateAndContent[1].split(separator: "---").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+
+        itineraryDays.append(ItineraryDay(dayNumber: dayNumber, date: date, content: content))
+    }
+
+    return itineraryDays
+}
+
+class ItineraryDay {
+    var dayNumber: String
+    var date: String
+    var content: [String]
+
+    init(dayNumber: String, date: String, content: [String]) {
+        self.dayNumber = dayNumber
+        self.date = date
+        self.content = content
     }
 }
 
