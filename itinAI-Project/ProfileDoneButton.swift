@@ -55,6 +55,7 @@ class ProfileDoneButton: UIButton {
             print("reset callback")
         case .cities:
             print("add city callback")
+            citiesDoneCallback?()
         default:
             print("default")
         }

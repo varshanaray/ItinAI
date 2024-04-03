@@ -258,8 +258,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let citiesDoneButton = ProfileDoneButton()
         citiesDoneButton.translatesAutoresizingMaskIntoConstraints = false
         
-        citiesDoneButton.citiesDoneCallback = {
+        citiesDoneButton.citiesDoneCallback = { [self] in
             print("cities done callback")
+            self.handleCityCreation(name: destinationTextField.text!, startDate: startDatePicker, endDate: endDatePicker, deadline: surveyDeadlinePicker)
         }
         
         citiesDoneButton.dismissCallback = {
@@ -276,6 +277,44 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             citiesDoneButton.widthAnchor.constraint(equalToConstant: 100)
             
         ])
+    }
+    
+    func handleCityCreation(name: String, startDate: UIDatePicker, endDate: UIDatePicker, deadline: UIDatePicker) {
+//        var groupToAdd: Group = Group(groupName: name, groupCode: code, userList: [currentUser!])
+//        globalGroupList.append(groupToAdd)
+//        addGroup(newGroup: groupToAdd)
+
+        let db = Firestore.firestore()
+        let cityId = group!.groupCode + name
+        print("CITY ID: ", cityId)
+        // append to user's groupList
+        // let cityRef = db.collection("Cities").document(cityId)
+        db.collection("Cities").document(cityId).setData([
+            "cityName": name,
+            "startDate": startDate,
+            "endDate": endDate,
+            "deadline": deadline
+            //"userList": [Auth.auth().currentUser!.uid]
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
+        /*
+        let groupRef = db.collection("Groups").document(code)
+        userRef.updateData([
+            "groupRefs": FieldValue.arrayUnion([groupRef])
+        ])  { error in
+            if let error = error {
+                print("Error updating user document: \(error)")
+            } else {
+                self.fetchGroups()
+                print("Group reference added to user successfully")
+            }
+        }
+         */
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
