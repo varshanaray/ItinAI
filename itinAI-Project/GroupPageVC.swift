@@ -256,6 +256,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         // Create done button for this modal view
         let citiesDoneButton = ProfileDoneButton()
+        citiesDoneButton.typeOfButton = .cities
         citiesDoneButton.translatesAutoresizingMaskIntoConstraints = false
         
         citiesDoneButton.citiesDoneCallback = { [self] in
