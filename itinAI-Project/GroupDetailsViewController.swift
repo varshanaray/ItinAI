@@ -10,32 +10,37 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var groupCodeLabel: UILabel!
     
-    var thisGroup: Group? {
-        // Reload table whenever thisGroup is updated
-        didSet {
-            tableView?.reloadData()
+    var groupProfilePics = [UIImage?]()
+        var displayNames = [String?]()
+        var group:Group?
+        
+        var thisGroup: Group? {
+            // Reload table whenever thisGroup is updated
+            didSet {
+                tableView?.reloadData()
+            }
         }
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            tableView.dataSource = self
+            tableView.delegate = self
+            tableView.rowHeight = 75
+            groupNameLabel.text = group?.groupName
+            groupCodeLabel.text = "Group Code: " + group!.groupCode
+        }
+        
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return groupProfilePics.count //thisGroup?.userList.count ?? 0
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            //let person = thisGroup?.userList[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell", for: indexPath) as! CustomPeopleTableViewCell
+            cell.name.text = displayNames[indexPath.row]
+            cell.iconImageView.image = groupProfilePics[indexPath.row]
+            return cell
+        }
+        
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = 75
-        groupNameLabel.text = thisGroup?.groupName
-        groupCodeLabel.text = "Group Code: " + thisGroup!.groupCode
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0 //thisGroup?.userList.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let person = thisGroup?.userList[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell", for: indexPath) as! CustomPeopleTableViewCell
-        cell.name.text = "" //person?.email
-        cell.iconImageView.image = UIImage(named: "defaultProfilePicture")
-        return cell
-    }
-    
-}
+

@@ -362,10 +362,13 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Prepare to segue to Details page
         if segue.identifier == "GroupToDetails",
-           let destination = segue.destination as? GroupDetailsViewController
-        {
-            destination.thisGroup = group!
-        }
+                   let destination = segue.destination as? GroupDetailsViewController
+                {
+                    destination.groupProfilePics = groupProfilePics
+                    destination.displayNames = displayNames
+                    destination.group = group
+                }
+
         
         // Prepare to seugue to Survey page
 //        if segue.identifier == "SurveyPageSegue" {
