@@ -21,9 +21,8 @@ class LoginVC: UIViewController {
         /*
         Task {
             print("calling generateCityItinerary")
-            await generateCityItinerary("", "Tokyo", ["I want to shop", "I want to eat sushi", "I want to see Tokyo Tower", "I want to go to Shibuya Crossing", "I want to go to a club"], "April 2nd", "April 5th")
+            await generateCityItinerary("4Mn1JSpDubai", "Dubai", ["I want to shop", "I want to eat sushi", "I want to see Tokyo Tower", "I want to go to Shibuya Crossing", "I want to go to a club"], "April 2nd", "April 5th")
         }*/
-        
         
         Auth.auth().addStateDidChangeListener()
         {
@@ -195,14 +194,19 @@ func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList:
     let openAI = OpenAI(apiToken: "hidden")
     
     let prompt = """
-    Generate a detailed travel itinerary for a trip to \(cityName), from \(startDate) to \(endDate). The response should only include the itinerary details, without any additional text. Utilize custom separators to clearly distinguish between different parts of the itinerary. For each day, use '###Day:X###' as a marker where X is the day number, followed by '###Date:Y###' for the date, and use '---' to separate individual itinerary items. Ensure the itinerary is practical, considering travel time between locations, and aligns with the user's interests.
+        Generate a detailed travel itinerary for a trip to \(cityName), from \(startDate) to \(endDate). The response should only include the itinerary details, without any additional text. Utilize custom separators to clearly distinguish between different parts of the itinerary. For each day, prefix the day number with '###Day:', followed by '###Date:' for the date. Each itinerary item should be prefixed with '###Content:'. Do not include any new line characters, leav everything in one single line so it's easily parsable. Ensure the itinerary is practical, considering travel time between locations, and aligns with the user's interests.
 
-    Example of the desired format:
+        Example of the desired format:
 
-    ###Day:1### ###Date:April 2nd### --- 9:00 AM: Start the day at the Meiji Shrine, a serene escape in the heart of Tokyo, surrounded by a lush forest. --- 11:00 AM: Head over to the bustling Harajuku for a glimpse into Tokyo's youth fashion and pop culture. --- 1:00 PM: Visit the Shibuya Crossing, the world's busiest pedestrian crossing, and snap some iconic photos. --- 5:00 PM: End your day with a visit to Tokyo Tower for panoramic views of the city as the sun sets.
+        ###Day:1 ###Date:April 2nd ###Content:9:00 AM: Start your day with a visit to the iconic Tsukiji Fish Market to experience the bustling atmosphere and enjoy some fresh seafood. ###Content:12:00 PM: Head to the upscale Ginza district for high-end shopping at luxury boutiques and department stores. ###Content:3:00 PM: Indulge in a sushi feast at a renowned sushi restaurant in Ginza to satisfy your craving for fresh and delicious sushi. ###Content:6:00 PM: Make your way to Tokyo Tower to marvel at the city skyline from this iconic landmark as it lights up in the evening.
 
-    Please create a similar itinerary, ensuring each day offers a unique and enriching experience and make sure to consider all of the user's preferences.
-    """
+        ###Day:2 ###Date:April 3rd ###Content:10:00 AM: Explore the vibrant Takeshita Street in Harajuku for quirky fashion finds and unique souvenirs. ###Content:1:00 PM: Have a sushi lunch at one of the local sushi joints near Harajuku to continue enjoying delicious sushi. ###Content:4:00 PM: Visit the Meiji Shrine for a peaceful stroll through the serene forest and to learn about Japanese culture and history. ###Content:8:00 PM: Experience Tokyo's nightlife scene at a popular club in Shibuya to dance the night away and enjoy the electric atmosphere.
+        
+        Recall to do this for however many days from \(startDate) to \(endDate). And note that we do not need to strictly visit 4 places per day.
+
+        Please create a similar itinerary, ensuring each day offers a unique and enriching experience and make sure to consider all of the user's preferences. Translate the entire itinerary to spanish but remember to retain the formatting.
+        """
+
     
     // User preferences are considered after the initial prompt, each as a separate message
     var messages: [ChatQuery.ChatCompletionMessageParam] = [ChatQuery.ChatCompletionMessageParam(role: .user, content: prompt)!]
@@ -216,11 +220,14 @@ func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList:
         let result = try await openAI.chats(query: query)
         
         print("Itinerary full result:\n \(result)")
+        print("\n\n\n")
         for choice in result.choices {
             DispatchQueue.main.async {
-                print("content: \(choice.message.content)")
+                //print("full content: \(choice.message.content)")
                 
-                // save to Firestore [itineraryDays]
+                print("calling parseItinerary")
+                parseItinerary(cityDocId: cityDocId, response: "\(choice.message.content)")
+                
             }
         }
     } catch {
@@ -229,23 +236,58 @@ func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList:
     }
 }
 
-func parseItinerary(response: String) -> [ItineraryDay] {
-    let daySections = response.components(separatedBy: "###Day:")
-    var itineraryDays: [ItineraryDay] = []
+func parseItinerary(cityDocId: String, response: String) {
+    let modifiedResponse = response.hasSuffix("\"))") ? String(response.dropLast(3)) : response
+    let parts = modifiedResponse.components(separatedBy: "###").filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
 
-    for daySection in daySections where !daySection.isEmpty {
-        let components = daySection.components(separatedBy: "###Date:")
-        let dayNumber = components[0].trimmingCharacters(in: .whitespacesAndNewlines)
-        let rest = components[1].split(separator: "###", maxSplits: 1, omittingEmptySubsequences: true)[0]
-        let dateAndContent = rest.split(separator: "---", maxSplits: 1, omittingEmptySubsequences: true).map(String.init)
-        let date = dateAndContent[0].trimmingCharacters(in: .whitespacesAndNewlines)
-        let content = dateAndContent[1].split(separator: "---").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+    let db = Firestore.firestore()
+    var dayNumber = ""
+    var date = ""
+    var content: [String] = []
 
-        itineraryDays.append(ItineraryDay(dayNumber: dayNumber, date: date, content: content))
+    for part in parts {
+        let trimmedPart = part.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedPart.starts(with: "Day:") {
+            if !content.isEmpty {
+                // Upload the accumulated content for the previous day to Firestore before starting a new day
+                uploadDayItineraryToFirestore(db: db, cityDocId: cityDocId, dayNumber: dayNumber, date: date, content: content)
+                content = [] // Reset content for the new day
+            }
+            dayNumber = String(trimmedPart.dropFirst("Day:".count)).trimmingCharacters(in: .whitespacesAndNewlines)
+        } else if trimmedPart.starts(with: "Date:") {
+            date = String(trimmedPart.dropFirst("Date:".count)).trimmingCharacters(in: .whitespacesAndNewlines)
+        } else if trimmedPart.starts(with: "Content:") {
+            let contentItem = String(trimmedPart.dropFirst("Content:".count))
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: "\\n", with: "")
+                .replacingOccurrences(of: "\\", with: "")
+            content.append(contentItem)
+        }
     }
 
-    return itineraryDays
+    // Don't forget to upload the last day's content to Firestore
+    if !content.isEmpty {
+        uploadDayItineraryToFirestore(db: db, cityDocId: cityDocId, dayNumber: dayNumber, date: date, content: content)
+    }
 }
+
+// Helper function to upload a single day's itinerary to Firestore
+func uploadDayItineraryToFirestore(db: Firestore, cityDocId: String, dayNumber: String, date: String, content: [String]) {
+    let docRef = db.collection("Cities").document(cityDocId).collection("ItineraryDays").document("Day\(dayNumber)")
+    docRef.setData([
+        "dayNumber": dayNumber,
+        "date": date,
+        "content": content
+    ]) { err in
+        if let err = err {
+            print("Error adding document: \(err)")
+        } else {
+            print("Document successfully added for Day \(dayNumber)!")
+        }
+    }
+}
+
+
 
 class ItineraryDay {
     var dayNumber: String
@@ -258,4 +300,3 @@ class ItineraryDay {
         self.content = content
     }
 }
-
