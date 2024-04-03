@@ -6,13 +6,14 @@ import UIKit
 
 class ProfileDoneButton: UIButton {
     enum ButtonType {
-        case create, join, reset
+        case create, join, reset, cities
         
         var title: String {
             switch self {
             case .create: return "Create"
             case .join: return "Join"
             case .reset: return "Reset"
+            case .cities: return "Cities"
             }
         }
     }
@@ -22,6 +23,7 @@ class ProfileDoneButton: UIButton {
     var joinDoneCallback: (() -> Void)?
     //var resetDoneCallback:
     var dismissCallback: (() -> Void)?
+    var citiesDoneCallback: (() -> Void)?
     
     init() {
         super.init(frame: .zero)
@@ -51,6 +53,8 @@ class ProfileDoneButton: UIButton {
             joinDoneCallback?()
         case .reset:
             print("reset callback")
+        case .cities:
+            print("add city callback")
         default:
             print("default")
         }

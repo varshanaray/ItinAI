@@ -19,6 +19,9 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     var overlayView: UIView = UIView()
     
     let modalHeight: CGFloat = 300
+    
+    var currentModalView: UIView!
+    
     var createModalView: UIView!
     
     // modal view for Join
@@ -29,8 +32,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     // modal view for Reset password
     var resetModalView: UIView!
-    
-    var currentModalView: UIView!
     
     // String var that will hold the code to copy to clipboard
     var codeToCopy: String?
