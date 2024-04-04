@@ -29,6 +29,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     var currentModalView: UIView!
     
+    var cityList = [City?]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionViewPeople.delegate = self
@@ -62,6 +64,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         print("group code!: ", (group?.groupCode)!)
         fetchUsers(groupCode: (group?.groupCode)!)
         
+        fetchCities()
+        
+        
     }
 
     
@@ -90,6 +95,73 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             self.currentModalView.frame.origin.y = self.view.frame.height - self.modalHeight
         }
     }
+    
+    func fetchCities() {
+        print("fetchCities() called")
+        let db = Firestore.firestore()
+        let groupRef = db.collection("Groups").document((group?.groupCode)!)
+        
+        groupRef.getDocument { (document, error) in
+            guard let document = document, document.exists else {
+                print("Group document does not exists")
+                return
+            }
+            self.cityList = []
+            if let cityRefs = document.data()?["cityList"] as? [DocumentReference] {
+                let dispatchGroup = DispatchGroup()
+                for cityRef in cityRefs {
+                    dispatchGroup.enter()
+                    print("cityRefs found")
+                    cityRef.getDocument { (cityDoc, error) in
+                        defer {
+                            dispatchGroup.leave()
+                        }
+                        print("type of deadline: " ,type(of: cityDoc?.get("deadline")))
+                        print("type of citydoc: ", type(of: cityDoc))
+                       if let cityDoc = cityDoc, cityDoc.exists, let cityName =  cityDoc.data()?["cityName"] as? String,
+                          let deadline = cityDoc.data()?["deadline"] as? Timestamp,
+                            let startDate = cityDoc.data()?["startDate"] as? Timestamp,
+                          let endDate = cityDoc.data()?["endDate"] as? Timestamp {
+                           let city = City(name: cityName, startDate: startDate.dateValue(), endDate: endDate.dateValue(), deadline: deadline.dateValue(), imageURL: "")
+                           self.cityList.append(city)
+                           print("Appended to city list in fetchCities, leng of cityList: ", self.cityList.count)
+                       }
+                        /*
+                        if let cityDoc = cityDoc, cityDoc.exists {
+                            print("it exists")
+                            
+                        } 
+                        else {
+                            print("does not")
+                        }
+                        if let cityName = cityDoc?.data()?["cityName"] as? String {
+                            print("City name: \(cityName)")
+                        } 
+                        else {
+                            print("City name not found or not a string")
+                        }
+                        if let deadline = cityDoc?.get("deadline") as? Date {
+                            print("Deadline: \(deadline)")
+                        }
+                        else {
+                            print("Deadline not found or not a date")
+                        }
+                        */
+                    }
+                }
+                dispatchGroup.notify(queue: .main) {
+                    print("Printing city after fetching cityRefs")
+                    for city in self.cityList {
+                        print("HELLOOOOOOOOOOOOOOO")
+                        print(city?.name)
+                    }
+                    self.citiesTableView.reloadData()
+                }
+                    
+            }
+        }
+    }
+     
     
     func setupCitiesModalView(title: String) {
         var modalTitle: String = ""
@@ -262,6 +334,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         citiesDoneButton.citiesDoneCallback = { [self] in
             print("cities done callback")
             self.handleCityCreation(name: destinationTextField.text!, startDate: startDatePicker, endDate: endDatePicker, deadline: surveyDeadlinePicker)
+            
         }
         
         citiesDoneButton.dismissCallback = {
@@ -287,14 +360,17 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
         let db = Firestore.firestore()
         let cityId = group!.groupCode + name
+        let startTimestamp = Timestamp(date: startDate.date)
+        let endTimestamp = Timestamp(date: endDate.date)
+        let deadlineTimestamp = Timestamp(date: deadline.date)
         print("CITY ID: ", cityId)
         // append to user's groupList
         // let cityRef = db.collection("Cities").document(cityId)
         db.collection("Cities").document(cityId).setData([
             "cityName": name,
-            "startDate": startDate,
-            "endDate": endDate,
-            "deadline": deadline
+            "startDate": startTimestamp,
+            "endDate": endTimestamp,
+            "deadline": deadlineTimestamp
             //"userList": [Auth.auth().currentUser!.uid]
         ]) { err in
             if let err = err {
@@ -303,19 +379,20 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 print("Document successfully written!")
             }
         }
-        /*
-        let groupRef = db.collection("Groups").document(code)
-        userRef.updateData([
-            "groupRefs": FieldValue.arrayUnion([groupRef])
+    
+        let cityRef = db.collection("Cities").document(cityId)
+        let groupRef = db.collection("Groups").document((group?.groupCode)!)
+        groupRef.updateData([
+            "cityList": FieldValue.arrayUnion([cityRef])
         ])  { error in
             if let error = error {
-                print("Error updating user document: \(error)")
+                print("Error updating group document with new city: \(error)")
             } else {
-                self.fetchGroups()
-                print("Group reference added to user successfully")
+                self.fetchCities()
+                print("City reference added to group successfully")
             }
         }
-         */
+
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
@@ -382,7 +459,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return citiesArray.count
+        print("CITY COUNT: ", cityList.count)
+        return cityList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -390,12 +468,14 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let cell = citiesTableView.dequeueReusableCell(withIdentifier: "CitiesCell", for: indexPath)
 
         // Get the city name for the current row.
-        let cityName = citiesArray[indexPath.row]
+        let thisCity = cityList[indexPath.row]
 
         // Set the city name to the cell's text label.
-        cell.textLabel?.text = cityName
+        cell.textLabel?.text = thisCity!.name
+        print("CITY TEXT: ", thisCity?.name)
 
         return cell
+    
     }
     
     
