@@ -8,11 +8,14 @@ import FirebaseAuth
 
 class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
+
+    
+    
+    @IBOutlet weak var citiesTableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var citiesTableView: UITableView!
-    @IBOutlet weak var announcementsTableView: UITableView!
+   // @IBOutlet weak var announcementsTableView: UITableView!
     @IBOutlet weak var collectionViewPeople: UICollectionView!
     @IBOutlet weak var addCitiesButton: UIButton!
     
@@ -29,7 +32,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     var currentModalView: UIView!
     
-    var cityList = [City?]()
+    var cityList: [City?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +45,12 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         citiesTableView.layer.borderWidth = 1
         citiesTableView.layer.borderColor = UIColor.darkGray.cgColor
         
-        announcementsTableView.layer.cornerRadius = 20
-        announcementsTableView.layer.borderWidth = 1
-        announcementsTableView.layer.borderColor = UIColor.darkGray.cgColor
+        citiesTableView.delegate = self
+        citiesTableView.dataSource = self
+        
+       // announcementsTableView.layer.cornerRadius = 20
+        //announcementsTableView.layer.borderWidth = 1
+        //announcementsTableView.layer.borderColor = UIColor.darkGray.cgColor
         
         /*var numInGroup: Int = 0 //group?.userList.count ?? -1
         // If less than or equal to 0, do nothing
@@ -64,11 +70,34 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         print("group code!: ", (group?.groupCode)!)
         fetchUsers(groupCode: (group?.groupCode)!)
         
+        print("City list in ViewDidLoad:")
+        for city in cityList {
+            print("  city name: ", city?.name)
+        }
+        
         fetchCities()
         
         
     }
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("CITY COUNT: ", cityList.count)
+        return cityList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Dequeue a reusable cell from the table view.
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CitiesCell", for: indexPath)
+
+        // Get the city name for the current row.
+        let thisCity = cityList[indexPath.row]
+
+        // Set the city name to the cell's text label.
+        cell.textLabel?.text = thisCity!.name
+        print("CITY TEXT: ", thisCity?.name)
+
+        return cell
+    }
     
     @IBAction func addButton(_ sender: Any) {
         print("add button pressed!")
@@ -122,12 +151,14 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                           let deadline = cityDoc.data()?["deadline"] as? Timestamp,
                             let startDate = cityDoc.data()?["startDate"] as? Timestamp,
                           let endDate = cityDoc.data()?["endDate"] as? Timestamp {
+                           print("start date value: ", startDate.dateValue())
+                           print("start type: ", type(of: startDate.dateValue()))
                            let city = City(name: cityName, startDate: startDate.dateValue(), endDate: endDate.dateValue(), deadline: deadline.dateValue(), imageURL: "")
                            self.cityList.append(city)
                            print("Appended to city list in fetchCities, leng of cityList: ", self.cityList.count)
                        }
-                        /*
-                        if let cityDoc = cityDoc, cityDoc.exists {
+                        
+                   /*     if let cityDoc = cityDoc, cityDoc.exists {
                             print("it exists")
                             
                         } 
@@ -140,13 +171,19 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         else {
                             print("City name not found or not a string")
                         }
-                        if let deadline = cityDoc?.get("deadline") as? Date {
+                        if let deadline = cityDoc?.data()?["deadline"] as? Timestamp {
                             print("Deadline: \(deadline)")
                         }
                         else {
                             print("Deadline not found or not a date")
                         }
-                        */
+                        if let start = cityDoc?.data()?["startDate"] as? Timestamp {
+                            print("Start: \(start)")
+                        }
+                        else {
+                            print("start not found or not a date")
+                        } */
+                        
                     }
                 }
                 dispatchGroup.notify(queue: .main) {
@@ -458,7 +495,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+   /* func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("CITY COUNT: ", cityList.count)
         return cityList.count
     }
@@ -476,7 +513,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
         return cell
     
-    }
+    } */
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
