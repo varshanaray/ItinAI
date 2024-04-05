@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class SurveyPageVC: UIViewController {
     
@@ -15,6 +16,9 @@ class SurveyPageVC: UIViewController {
     var cityImageUrl: String?
     @IBOutlet var topView: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
+    
+    let textField1 = UITextView()
+    let textField2 = UITextView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +83,6 @@ class SurveyPageVC: UIViewController {
         detailLabel1.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(detailLabel1)
         
-        let textField1 = UITextView()
         textField1.translatesAutoresizingMaskIntoConstraints = false
         textField1.layer.borderColor = UIColor.gray.cgColor // Set border color
         textField1.layer.borderWidth = 1.0 // Set border width
@@ -119,7 +122,6 @@ class SurveyPageVC: UIViewController {
         detailLabel2.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(detailLabel2)
         
-        let textField2 = UITextView()
         textField2.translatesAutoresizingMaskIntoConstraints = false
         textField2.layer.borderColor = UIColor.gray.cgColor // Set border color
         textField2.layer.borderWidth = 1.0 // Set border width
@@ -162,9 +164,24 @@ class SurveyPageVC: UIViewController {
             submitButton.topAnchor.constraint(equalTo: textField2.bottomAnchor, constant: 20)
         ])
         
+        submitButton.addTarget(self, action: #selector(submitButtonPressed(sender: )), for: .touchUpInside)
+        
     }
     
-
+    @objc func submitButtonPressed(sender: UIButton) {
+        
+        let db = Firestore.firestore()
+        let cityRef = db.collection("Cities").document(cityId!)
+        cityRef.updateData([
+            "surveyResponses": FieldValue.arrayUnion([textField1.text, textField2.text])
+        ])  { error in
+            if let error = error {
+                print("Error submitting survey responses: \(error.localizedDescription)")
+            } else {
+                print("survey response submitted successfully")
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 

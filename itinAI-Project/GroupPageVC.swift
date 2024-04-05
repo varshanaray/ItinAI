@@ -117,6 +117,13 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 var pass = currDate >= deadlineDate
                 if pass {
                     print("deadline has passed")
+                    
+                    // call fetch itinarery if not done already
+                    
+                    if let itineraryVC = self.storyboard?.instantiateViewController(withIdentifier: "ItineraryVCID") as? ItineraryPageVC {
+                        print("segue to itinerary page")
+                        self.navigationController?.pushViewController(itineraryVC, animated: true)
+                    }
                 } else {
                     // deadline not passed
                     print("segue to survey")
