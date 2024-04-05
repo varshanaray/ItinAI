@@ -24,7 +24,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var groupProfilePics = [UIImage?]()
     var displayNames = [String?]()
     var thisGroupUsers = [User?]()
-    var citiesArray = [String?] () // temporary for debugging
     var overlayView: UIView = UIView()
     var citiesModalView: UIView = UIView()
     let modalHeight: CGFloat = 400
@@ -74,10 +73,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         for city in cityList {
             print("  city name: ", city?.name)
         }
-        
+        	
         fetchCities()
-        
-        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -97,6 +94,53 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         print("CITY TEXT: ", thisCity?.name)
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let db = Firestore.firestore()
+        var groupCode = (group?.groupCode)!
+        var cityName = (cityList[indexPath.row]?.name)!
+        
+        //var cityId = "\(group?.groupCode)  \(cityList[indexPath.row]?.name)"
+        var cityId = groupCode + cityName
+        print("city id: ", cityId)
+        let cityRef =  db.collection("Cities").document(cityId)
+        
+        cityRef.getDocument { (document, error) in
+            guard let document = document, document.exists else {
+                print("City document does not exists")
+                return
+            }
+            if let deadlineTimestamp = document.data()?["deadline"] as? Timestamp {
+                var deadlineDate = deadlineTimestamp.dateValue()
+                var currDate = Date()
+                var pass = currDate >= deadlineDate
+                if pass {
+                    print("deadline has passed")
+                } else {
+                    // deadline not passed
+                    print("segue to survey")
+                    if let surveyVC = self.storyboard?.instantiateViewController(withIdentifier: "SurveyVCID") as? SurveyPageVC {
+                        surveyVC.cityId = cityId
+                        surveyVC.cityName = cityName
+                        self.navigationController?.pushViewController(surveyVC, animated: true)
+                    }
+                    
+                }
+                
+            } else {
+                print("Issue finding deadline in firestore")
+            }
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
     @IBAction func addButton(_ sender: Any) {
@@ -532,11 +576,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
 //            let destination = segue.destination as? SurveyPageVC
 //        }
         
-        if segue.identifier == "TestSurveySegue" {
-            if let destination = segue.destination as? SurveyPageVC {
-                destination.cityName = "Tokyo"
-            }
-        }
+
+        
+
     }
     
 }

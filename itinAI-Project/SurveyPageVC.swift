@@ -11,18 +11,19 @@ class SurveyPageVC: UIViewController {
     
     
     var cityName: String?
+    var cityId: String?
     var cityImageUrl: String?
     @IBOutlet var topView: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("In survey page, city name: " + cityName!)
+        print("In survey page")
 
         // Do any additional setup after loading the view.
         // Create the label
         let titleLabel = UILabel()
-        titleLabel.text = "City, Country"
+        titleLabel.text = cityName
         titleLabel.font = UIFont.boldSystemFont(ofSize: 35)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
