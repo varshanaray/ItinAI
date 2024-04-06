@@ -46,6 +46,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         groupTableView.delegate = self
         groupTableView.dataSource = self
         
+        UITabBar.appearance().tintColor = .white
+        UITabBar.appearance().unselectedItemTintColor = .white
         fetchGroups()
         
         // reset codeToCopy to blank

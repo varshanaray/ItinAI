@@ -31,8 +31,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
         let defaultImage = UIImage(named: "defaultProfilePicture")
         profilePicture.image = defaultImage
         
