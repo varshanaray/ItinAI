@@ -19,6 +19,9 @@
 		28C786512B9A3C87003C757D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28C786502B9A3C87003C757D /* Assets.xcassets */; };
 		28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28C786522B9A3C87003C757D /* LaunchScreen.storyboard */; };
 		28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C7865B2B9A3E4C003C757D /* SignUpVC.swift */; };
+		3B64443D2BC34798006CBBAC /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B64443C2BC34798006CBBAC /* StyledButton.swift */; };
+		3B6444402BC3481C006CBBAC /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B64443E2BC3481C006CBBAC /* Poppins-Regular.ttf */; };
+		3B6444412BC3481C006CBBAC /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B64443F2BC3481C006CBBAC /* Poppins-Bold.ttf */; };
 		3BB9936A2BA65057003AC721 /* GroupPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB993692BA65057003AC721 /* GroupPageVC.swift */; };
 		3BB9936C2BA6516A003AC721 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */; };
 		3BB993712BA65384003AC721 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3BB993702BA65384003AC721 /* FirebaseAnalytics */; };
@@ -82,6 +85,9 @@
 		3B1123D42B9B70BF00DF05D8 /* CircularProfilePicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProfilePicture.swift; sourceTree = "<group>"; };
 		3B1123D52B9B70BF00DF05D8 /* ProfileDoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDoneButton.swift; sourceTree = "<group>"; };
 		3B1123D62B9B70BF00DF05D8 /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
+		3B64443C2BC34798006CBBAC /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
+		3B64443E2BC3481C006CBBAC /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		3B64443F2BC3481C006CBBAC /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		3BB993692BA65057003AC721 /* GroupPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPageVC.swift; sourceTree = "<group>"; };
 		3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3BD878C92BA8DFE600B51C3F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -173,6 +179,9 @@
 				3BB993692BA65057003AC721 /* GroupPageVC.swift */,
 				28C7864A2B9A3C81003C757D /* Main.storyboard */,
 				9D8D6E8A2BBB51A7002DDF75 /* ItineraryPageVC.swift */,
+				3B64443C2BC34798006CBBAC /* StyledButton.swift */,
+				3B64443F2BC3481C006CBBAC /* Poppins-Bold.ttf */,
+				3B64443E2BC3481C006CBBAC /* Poppins-Regular.ttf */,
 				3BD878CB2BA8DFED00B51C3F /* Group.swift */,
 				9D2BF0032BA777130029E742 /* GroupDetailsViewController.swift */,
 				9D8D6E882BBB50F1002DDF75 /* SurveyPageVC.swift */,
@@ -293,12 +302,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				28C6B5212B9B660E00E2DBC3 /* defaultProfilePicture.png in Resources */,
+				3B6444412BC3481C006CBBAC /* Poppins-Bold.ttf in Resources */,
 				3BB9936C2BA6516A003AC721 /* GoogleService-Info.plist in Resources */,
 				28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */,
 				28C6B5252BA6151700E2DBC3 /* logoItinAI.jpeg in Resources */,
 				28C786512B9A3C87003C757D /* Assets.xcassets in Resources */,
 				28C6B51F2B9B651200E2DBC3 /* japan.jpg in Resources */,
 				28C7864C2B9A3C81003C757D /* Main.storyboard in Resources */,
+				3B6444402BC3481C006CBBAC /* Poppins-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +332,7 @@
 				28C786452B9A3C81003C757D /* AppDelegate.swift in Sources */,
 				3BD878CC2BA8DFED00B51C3F /* Group.swift in Sources */,
 				9D2BF0042BA777130029E742 /* GroupDetailsViewController.swift in Sources */,
+				3B64443D2BC34798006CBBAC /* StyledButton.swift in Sources */,
 				9D2BF0082BA7831E0029E742 /* CustomPeopleTableViewCell.swift in Sources */,
 				28C786472B9A3C81003C757D /* SceneDelegate.swift in Sources */,
 				28756D432BC3128C000CAB6C /* NavTabVC.swift in Sources */,
