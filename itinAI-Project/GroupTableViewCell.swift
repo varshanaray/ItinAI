@@ -18,7 +18,7 @@ class GroupTableViewCell: UITableViewCell {
         // Initialization code
         
         // Customize the appearance of the image view
-        groupImageView.layer.borderWidth = 2.5
+        groupImageView.layer.borderWidth = 0.5
         groupImageView.layer.borderColor = UIColor.black.cgColor
         groupImageView.contentMode = .scaleAspectFill
         groupImageView.layer.cornerRadius = 10 // Optional: Add rounded corners
