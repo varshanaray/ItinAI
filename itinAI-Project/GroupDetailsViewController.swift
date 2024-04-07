@@ -4,16 +4,17 @@
 
 import UIKit
 
-class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var groupCodeLabel: UILabel!
+    @IBOutlet weak var descript: UITextView!
     
     var groupProfilePics = [UIImage?]()
         var displayNames = [String?]()
         var group:Group?
-        
+    
         var thisGroup: Group? {
             // Reload table whenever thisGroup is updated
             didSet {
@@ -28,6 +29,10 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             tableView.rowHeight = 75
             groupNameLabel.text = group?.groupName
             groupCodeLabel.text = "Group Code: " + group!.groupCode
+            
+//            descript.delegate = self
+//            NSString.self *savedText = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferenceName"];
+//            descript.text = savedText;
         }
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,6 +45,12 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             cell.name.text = displayNames[indexPath.row]
             cell.iconImageView.image = groupProfilePics[indexPath.row]
             return cell
+        }
+    
+        func textViewDidEndEditing(_ textView: UITextView) {
+//            NSString *textToSave = descript.text;
+//            [[NSUserDefaults standardUserDefaults] setObject:textToSave forKey:@"preferenceName"];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
         }
         
     }

@@ -281,7 +281,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mre-DY-wL2">
-                                <rect key="frame" x="16" y="256" width="116" height="20"/>
+                                <rect key="frame" x="16" y="256" width="291" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="17"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -383,6 +383,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="rYB-EW-a4u"/>
                     <connections>
+                        <outlet property="descript" destination="QPq-bY-hP9" id="dyZ-AZ-Vaq"/>
                         <outlet property="groupCodeLabel" destination="4rC-LF-y2F" id="uVK-ue-899"/>
                         <outlet property="groupNameLabel" destination="Mre-DY-wL2" id="G8j-DK-VVc"/>
                         <outlet property="tableView" destination="5EZ-6e-ekN" id="0nl-De-IM2"/>
