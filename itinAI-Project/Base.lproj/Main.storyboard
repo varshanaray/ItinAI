@@ -922,23 +922,20 @@
             </objects>
             <point key="canvasLocation" x="2612.9770992366412" y="227.46478873239437"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Nav TabVC-->
         <scene sceneID="GTY-Oz-Rsg">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="vKP-K6-aD3" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="vKP-K6-aD3" customClass="NavTabVC" customModule="itinAI_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="p1n-hv-Rpf"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="uYj-Hl-SVC">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="selectedIndex">
-                            <integer key="value" value="1"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="Ogk-dp-7tv" kind="relationship" relationship="viewControllers" id="26X-XX-1Sy"/>
                         <segue destination="qZc-Bk-4Yo" kind="relationship" relationship="viewControllers" id="MhA-Rq-wAO"/>

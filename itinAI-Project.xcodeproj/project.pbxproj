@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28756D432BC3128C000CAB6C /* NavTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28756D422BC3128C000CAB6C /* NavTabVC.swift */; };
 		28C6B51F2B9B651200E2DBC3 /* japan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B51E2B9B651200E2DBC3 /* japan.jpg */; };
 		28C6B5212B9B660E00E2DBC3 /* defaultProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */; };
 		28C6B5252BA6151700E2DBC3 /* logoItinAI.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B5242BA6151700E2DBC3 /* logoItinAI.jpeg */; };
@@ -63,6 +64,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28756D422BC3128C000CAB6C /* NavTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavTabVC.swift; sourceTree = "<group>"; };
 		28C6B51E2B9B651200E2DBC3 /* japan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = japan.jpg; sourceTree = "<group>"; };
 		28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProfilePicture.png; sourceTree = "<group>"; };
 		28C6B5242BA6151700E2DBC3 /* logoItinAI.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logoItinAI.jpeg; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				9DC44AB32BA65E8C002906C8 /* HomePageVC.swift */,
 				28C786482B9A3C81003C757D /* LoginVC.swift */,
 				28C7865B2B9A3E4C003C757D /* SignUpVC.swift */,
+				28756D422BC3128C000CAB6C /* NavTabVC.swift */,
 				3BD878CD2BA8E00100B51C3F /* ImageCollectionViewCell.swift */,
 				3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */,
 				28C6B51E2B9B651200E2DBC3 /* japan.jpg */,
@@ -317,6 +320,7 @@
 				9D2BF0042BA777130029E742 /* GroupDetailsViewController.swift in Sources */,
 				9D2BF0082BA7831E0029E742 /* CustomPeopleTableViewCell.swift in Sources */,
 				28C786472B9A3C81003C757D /* SceneDelegate.swift in Sources */,
+				28756D432BC3128C000CAB6C /* NavTabVC.swift in Sources */,
 				82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */,
 				9D8D6E8B2BBB51A7002DDF75 /* ItineraryPageVC.swift in Sources */,
 				28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */,
