@@ -438,49 +438,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         }
     }
     
-    /*
-    func fetchGroups() {
-        print("fetchGroups() called")
-        let db = Firestore.firestore()
-        let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
-        
-        userRef.getDocument { (document, error) in
-            guard let document = document, document.exists else {
-                print("User document does not exists")
-                return
-            }
-            self.groupList = []
-            if let groupRefs = document.data()?["groupRefs"] as? [DocumentReference] {
-                let dispatchGroup = DispatchGroup()
-                for groupRef in groupRefs {
-                    dispatchGroup.enter()
-                    print("groupRefs found")
-                    groupRef.getDocument { (groupDoc, error) in
-                        defer {
-                            dispatchGroup.leave()
-                        }
-                        if let groupDoc = groupDoc, groupDoc.exists, let groupName =  groupDoc.data()?["groupName"] as? String {
-                            let group = Group(groupName: groupName, groupCode: groupDoc.documentID)
-                            self.groupList.append(group)
-                        } else {
-                            print("Group document does not exists in User")
-                        }
-                    }
-                }
-                dispatchGroup.notify(queue: .main) {
-                    print("Printing groupList after fetching groupRefs")
-                    for group in self.groupList {
-                        print(group?.groupName)
-                        print(group?.groupCode)
-                    }
-                    self.groupTableView.reloadData()
-                }
-                    
-            }
-        }
-    }
-    */
-    
     func fetchGroups() {
         print("fetchGroups() called")
         let db = Firestore.firestore()
@@ -607,11 +564,18 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // dummy
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTableCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTableCell", for: indexPath) as! GroupTableViewCell
         let row = indexPath.row
-        let cellText = groupList[row]!.groupName
-        cell.textLabel?.text = cellText
+        let groupName = groupList[row]!.groupName
+        cell.groupNameLabel.text = groupName
+        cell.groupImageView.image = UIImage(named: "japan")
+        cell.datesRangeLabel.text = "Date range"
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
     }
     
     func addGroup(newGroup: Group) {

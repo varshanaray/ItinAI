@@ -141,13 +141,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             
         }
         
-        
-        
-        
-        
-        
-        
-        
     }
     
     @IBAction func addButton(_ sender: Any) {
