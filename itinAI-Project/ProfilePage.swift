@@ -9,7 +9,6 @@ import FirebaseAuth
 class ProfilePage: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var profilePicture: CircularProfilePicture!
-    @IBOutlet weak var resetPasswordButton: UIButton!
     @IBOutlet weak var changePictureButton: UIButton!
     @IBOutlet weak var displayNameLabel: UILabel!
     
@@ -38,8 +37,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
         // Change Picture button
         changePictureButton.setTitle("", for: .normal)
         
-        // Reset Password button
-        resetPasswordButton.setTitle("Reset password", for: .normal)
         
         // Set the display name
         let db = Firestore.firestore()
@@ -58,12 +55,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
                 print("User document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
-    }
-    
-    @IBAction func resetPasswordButtonPressed(_ sender: Any) {
-        print("Reset button pressed")
-        currentModalView = resetModalView
-        //animateModalView()
     }
     
     @IBAction func changePictureButtonPressed(_ sender: Any) {
@@ -101,5 +92,17 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
        textField.resignFirstResponder()
        return true
    }
+    
+    @IBAction func logoutButtonPressed(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            
+            self.dismiss(animated: true)
+            
+            
+        } catch {
+            print("log out error")
+        }
+    }
 }
 					

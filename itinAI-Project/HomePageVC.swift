@@ -15,6 +15,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     @IBOutlet weak var joinButton: UIButton!
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var groupTableView: UITableView!
+    @IBOutlet weak var myGroupsLabel: UILabel!
     
     var overlayView: UIView = UIView()
     
@@ -57,18 +58,20 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         createButton.backgroundColor = UIColor.black
         createButton.setTitle("Create", for: .normal)
         createButton.setTitleColor(UIColor.white, for: .normal)
-        createButton.layer.cornerRadius = 10
+        createButton.layer.cornerRadius = 15
         createButton.clipsToBounds = true
         
         // Join Button
         joinButton.backgroundColor = UIColor.black
         joinButton.setTitle("Join", for: .normal)
         joinButton.setTitleColor(UIColor.white, for: .normal)
-        joinButton.layer.cornerRadius = 10
+        joinButton.layer.cornerRadius = 15
         joinButton.clipsToBounds = true
         
         // Populate group array
         //groupNames = currentUser?.groupList
+    
+        myGroupsLabel.font = UIFont(name: "Poppins-Bold", size: 20)
         
         print("viewDidLoad() called")
     }
@@ -577,7 +580,9 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+
     
+
     func addGroup(newGroup: Group) {
         // Add group to group list array
         groupList.append(newGroup)
@@ -593,18 +598,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
            let groupIndex = groupTableView.indexPathForSelectedRow?.row
         {
             destination.group = groupList[groupIndex]
-        }
-    }
-    
-    @IBAction func logoutButtonPressed(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            
-            self.dismiss(animated: true)
-            
-            
-        } catch {
-            print("log out error")
         }
     }
     

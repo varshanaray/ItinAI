@@ -17,6 +17,10 @@ class GroupTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        self.layer.cornerRadius = 15
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1
+        //self.layoutMargins = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
         // Customize the appearance of the image view
         groupImageView.layer.borderWidth = 0.5
         groupImageView.layer.borderColor = UIColor.black.cgColor
