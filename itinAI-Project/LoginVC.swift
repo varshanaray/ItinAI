@@ -8,7 +8,7 @@ import FirebaseFirestore
 import OpenAI
 
 class LoginVC: UIViewController {
-
+    
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var emailField: UITextField!
