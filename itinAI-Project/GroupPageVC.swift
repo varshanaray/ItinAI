@@ -128,49 +128,114 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let db = Firestore.firestore()
-        var groupCode = (group?.groupCode)!
-        var cityName = (cityList[indexPath.row]?.name)!
+        let groupCode = group?.groupCode ?? ""
+        let cityName = cityList[indexPath.row]?.name ?? ""
         
-        //var cityId = "\(group?.groupCode)  \(cityList[indexPath.row]?.name)"
-        var cityId = groupCode + cityName
-        print("city id: ", cityId)
-        let cityRef =  db.collection("Cities").document(cityId)
+        let cityId = "\(groupCode)\(cityName)"
+        print("City ID:", cityId)
+        let cityRef = db.collection("Cities").document(cityId)
         
         cityRef.getDocument { (document, error) in
             guard let document = document, document.exists else {
-                print("City document does not exists")
+                print("City document does not exist")
                 return
             }
+            
             if let deadlineTimestamp = document.data()?["deadline"] as? Timestamp {
-                var deadlineDate = deadlineTimestamp.dateValue()
-                var currDate = Date()
-                var pass = currDate >= deadlineDate
-                if pass {
-                    print("deadline has passed")
-                    
-                    // call fetch itinarery if not done already
-                    
-                    if let itineraryVC = self.storyboard?.instantiateViewController(withIdentifier: "ItineraryVCID") as? ItineraryPageVC {
-                        print("segue to itinerary page")
-                        self.navigationController?.pushViewController(itineraryVC, animated: true)
+                let deadlineDate = deadlineTimestamp.dateValue()
+                if Date() >= deadlineDate {
+                    // Deadline has passed, check if itinerary is generated
+                    self.checkIfItineraryGenerated(cityId: cityId) { isGenerated in
+                        if isGenerated {
+                            // If generated, segue to Itinerary page directly
+                            self.navigateToItineraryPage(cityId: cityId, cityName: cityName)
+                        } else {
+                            // If not generated, generate itinerary first
+                            self.showLoadingOverlay() // Show a loading indicator to the user
+                            
+                            self.generateItinerary(cityId: cityId) { success in
+                                self.hideLoadingOverlay() // Hide the loading indicator
+                                
+                                if success {
+                                    self.navigateToItineraryPage(cityId: cityId, cityName: cityName)
+                                } else {
+                                    // Handle failure to generate itinerary
+                                    print("Failed to generate itinerary")
+                                }
+                            }
+                        }
                     }
                 } else {
-                    // deadline not passed
-                    print("segue to survey")
-                    if let surveyVC = self.storyboard?.instantiateViewController(withIdentifier: "SurveyVCID") as? SurveyPageVC {
-                        surveyVC.cityId = cityId
-                        surveyVC.cityName = cityName
-                        self.navigationController?.pushViewController(surveyVC, animated: true)
-                    }
-                    
+                    // Deadline not passed, segue to Survey page
+                    self.navigateToSurveyPage(cityId: cityId, cityName: cityName)
                 }
-                
             } else {
-                print("Issue finding deadline in firestore")
+                print("Issue finding deadline in Firestore")
             }
-            
         }
+    }
+
+    func checkIfItineraryGenerated(cityId: String, completion: @escaping (Bool) -> Void) {
+        print("calling checkIfItineraryGenerated")
+        let db = Firestore.firestore()
+        db.collection("Cities").document(cityId).collection("ItineraryDays").limit(to: 1).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error checking itinerary generation: \(err)")
+                completion(false)
+            } else if let documents = querySnapshot?.documents, !documents.isEmpty {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+
+    func generateItinerary(cityId: String, completion: @escaping (Bool) -> Void) {
+        print("calling generateItinerary")
+        Task {
+            let success = await fetchSurveyResponsesAndGenerate(cityDocId: cityId)
+            completion(success)
+        }
+    }
+
+    func showLoadingOverlay() {
+        let overlay = UIView(frame: self.view.bounds)
+        overlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        overlay.tag = 100 // Arbitrary tag to identify the overlay later
+
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.center = overlay.center
+        overlay.addSubview(indicator)
+        indicator.startAnimating()
         
+        self.view.addSubview(overlay)
+        self.view.isUserInteractionEnabled = false // Disables interaction with the underlying view
+    }
+
+    func hideLoadingOverlay() {
+        if let overlay = self.view.viewWithTag(100) {
+            overlay.removeFromSuperview()
+        }
+        self.view.isUserInteractionEnabled = true // Re-enables interaction
+    }
+
+    
+    func navigateToItineraryPage(cityId: String, cityName: String) {
+        if let itineraryVC = self.storyboard?.instantiateViewController(withIdentifier: "ItineraryVCID") as? ItineraryPageVC {
+            print("segueing to itinerary page")
+            itineraryVC.cityId = cityId
+            itineraryVC.cityName = cityName
+            self.navigationController?.pushViewController(itineraryVC, animated: true)
+        }
+    }
+
+    func navigateToSurveyPage(cityId: String, cityName: String) {
+        print("segue to survey")
+        if let surveyVC = self.storyboard?.instantiateViewController(withIdentifier: "SurveyVCID") as? SurveyPageVC {
+            surveyVC.cityId = cityId
+            surveyVC.cityName = cityName
+            self.navigationController?.pushViewController(surveyVC, animated: true)
+        }
     }
     
     @IBAction func addButton(_ sender: Any) {
