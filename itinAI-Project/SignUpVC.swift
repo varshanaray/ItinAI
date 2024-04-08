@@ -1,4 +1,4 @@
-// Project: itinAI-Alpha
+// Project: itinAI-Beta
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -66,7 +66,6 @@ class SignUpVC: UIViewController {
                 return
             }
             print("got past auth()")
-             
              let db = Firestore.firestore()
             db.collection("Users").document(user.uid).setData([
                  "name": displayName,
@@ -79,13 +78,6 @@ class SignUpVC: UIViewController {
                      print("Document successfully written!")
                  }
              }
-
-            // segue to home screen
-            /*
-            if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
-                homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
-                self.present(homeNavigationController, animated: true, completion: nil)
-            }*/
         }
     }
     
@@ -97,5 +89,4 @@ class SignUpVC: UIViewController {
         controller.addAction(UIAlertAction(title: "OK", style: .default))
         present(controller, animated: true)
     }
-    
 }

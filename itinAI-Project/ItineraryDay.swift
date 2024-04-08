@@ -1,24 +1,8 @@
-//
-//  ItineraryDay.swift
-//  itinAI-Project
-//
-//  Created by Eric Yang on 4/8/24.
-//
+// Project: itinAI-Beta
+// EID: ezy78, gkk298, esa549, vn4597
+// Course: CS371L
 
 import Foundation
-
-/*class ItineraryDay {
-    var dayNumber: String
-    var date: String
-    var content: [String]
-
-    init(dayNumber: String, date: String, content: [String]) {
-        self.dayNumber = dayNumber
-        self.date = date
-        self.content = content
-    }
-}*/
-
 
 struct ItineraryDay {
     var dayNumber: String
@@ -30,7 +14,6 @@ struct ItineraryDay {
         guard let dayNumber = documentData["dayNumber"] as? String,
               let date = documentData["date"] as? String,
               let content = documentData["content"] as? [String] else { return nil }
-        
         self.dayNumber = dayNumber
         self.date = date
         self.content = content
