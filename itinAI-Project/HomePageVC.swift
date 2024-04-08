@@ -128,7 +128,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         let titleLabel = UILabel()
         titleLabel.text = "Create A Group"
         titleLabel.textAlignment = .left
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 25)
+        titleLabel.font = UIFont(name: "Poppins-Bold", size: 25)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         createModalView.addSubview(titleLabel)
         
@@ -145,7 +145,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         var groupNameLabel = UILabel()
         groupNameLabel.text = "Group Name"
         groupNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        groupNameLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        groupNameLabel.font = UIFont(name: "Poppins-Bold", size: 16)
         groupNameLabel.frame.origin.x = leftMargin
 //        groupNameLabel.frame = CGRect(x: leftMargin, y: 60.0, width: 200.0, height: 30.0)
         createModalView.addSubview(groupNameLabel)
@@ -159,7 +159,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         // Group name text field
         let placeHolderText = "Max 20 characters"
-        let placeHolderFont = UIFont.systemFont(ofSize: 12.0)
+        let placeHolderFont = UIFont(name: "Poppins-Regular", size: 12)
         
         let attributes: [NSAttributedString.Key: Any] = [
             .font: placeHolderFont,
@@ -172,10 +172,10 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         groupTextField.delegate = self
         groupTextField.attributedPlaceholder = attributedPlaceholder
         groupTextField.backgroundColor = UIColor(red: 242/255.0, green: 241/255.0, blue: 241/255.0, alpha: 1)
-        groupTextField.font = UIFont.systemFont(ofSize: 12.0)
+        groupTextField.font = UIFont(name: "Poppins-Regular", size: 12)
         groupTextField.layer.cornerRadius = 8.0
         groupTextField.frame.origin.x = leftMargin
-        groupTextField.frame = CGRect(x: leftMargin, y: 90.0, width: 350.0, height: 30.0)
+        groupTextField.frame = CGRect(x: leftMargin, y: 100.0, width: 350.0, height: 30.0)
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: groupTextField.frame.height))
         
@@ -197,13 +197,13 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         characterCountLabel.textColor = .red
         characterCountLabel.isHidden = true
         characterCountLabel.frame = CGRect(x: leftMargin, y: 100.0, width: 200.0, height: 20.0)
-        characterCountLabel.font = UIFont.systemFont(ofSize: 11.0)
+        characterCountLabel.font = UIFont(name: "Poppins-Bold", size: 11)
         createModalView.addSubview(characterCountLabel)
         
         // Create group code label
         var groupCodeLabel = UILabel()
         groupCodeLabel.text = "Group Code:"
-        groupCodeLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        groupCodeLabel.font = UIFont(name: "Poppins-Bold", size: 16)
         groupCodeLabel.frame = CGRect(x: leftMargin, y: 150.0, width: 200.0, height: 30.0)
         createModalView.addSubview(groupCodeLabel)
         
@@ -212,8 +212,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         var codeToGenerate:String = genCode()
         codeDisplayLabel.text = codeToGenerate
         var code : String = codeDisplayLabel.text!
-        codeDisplayLabel.font = UIFont.systemFont(ofSize: 16.0)
-        codeDisplayLabel.frame = CGRect(x: 120.0, y: 150.0, width: 200.0, height: 30.0)
+        codeDisplayLabel.font = UIFont(name: "Poppins-Regular", size: 16)
+        codeDisplayLabel.frame = CGRect(x: 125.0, y: 150.0, width: 200.0, height: 30.0)
         createModalView.addSubview(codeDisplayLabel)
         
         // Create clipboard button
@@ -224,7 +224,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         clipboardButton.addTarget(self, action: #selector(copyCodeToClipboard(_:)), for: .touchUpInside)
         var buttonWidth: CGFloat = 30.0
         var buttonHeight: CGFloat = buttonWidth
-        clipboardButton.frame = CGRect(x: 190.0, y: 150.0, width: buttonWidth, height: buttonHeight)
+        clipboardButton.frame = CGRect(x: 200.0, y: 150.0, width: buttonWidth, height: buttonHeight)
         createModalView.addSubview(clipboardButton)
         
         // Create done button for this modal view
@@ -282,21 +282,21 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         // Add a title label for the modal view
         let titleLabel = UILabel(frame: CGRect(x: 20, y: 20, width: joinModalView.frame.width - 40, height: 30))
         titleLabel.textAlignment = .left
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 25)
+        titleLabel.font = UIFont(name: "Poppins-Bold", size: 25)
         titleLabel.text = "Join a group"
         joinModalView.addSubview(titleLabel)
         
         // Create Enter group code label
         var enterGroupCodeLabel = UILabel()
         enterGroupCodeLabel.text = "Enter a group code"
-        enterGroupCodeLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        enterGroupCodeLabel.font = UIFont(name: "Poppins-Bold", size: 16)
         enterGroupCodeLabel.frame.origin.x = leftMargin
         enterGroupCodeLabel.frame = CGRect(x: leftMargin, y: 80.0, width: 200.0, height: 30.0)
         joinModalView.addSubview(enterGroupCodeLabel)
         
         // Enter group code text field
         let placeHolderText = "7 character code"
-        let placeHolderFont = UIFont.systemFont(ofSize: 12.0)
+        let placeHolderFont = UIFont(name: "Poppins-Regular", size: 12)
         
         let attributes: [NSAttributedString.Key: Any] = [
             .font: placeHolderFont,
@@ -309,7 +309,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         codeTextField.delegate = self
         codeTextField.attributedPlaceholder = attributedPlaceholder
         codeTextField.backgroundColor = UIColor(red: 242/255.0, green: 241/255.0, blue: 241/255.0, alpha: 1)
-        codeTextField.font = UIFont.systemFont(ofSize: 12.0)
+        codeTextField.font = UIFont(name: "Poppins-Regular", size: 12)
         codeTextField.layer.cornerRadius = 8.0
         codeTextField.frame.origin.x = leftMargin
         codeTextField.frame = CGRect(x: leftMargin, y: 120.0, width: 350.0, height: 30.0)

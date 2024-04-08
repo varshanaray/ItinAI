@@ -371,7 +371,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // Create and configure titleLabel
         let titleLabel = UILabel()
         titleLabel.textAlignment = .left
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.font = UIFont(name: "Poppins-Bold", size: 20)
         titleLabel.text = "Add City" // Set the title
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         citiesModalView.addSubview(titleLabel)
@@ -387,7 +387,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let destinationLabel = UILabel()
         destinationLabel.translatesAutoresizingMaskIntoConstraints = false
         destinationLabel.text = "Destination"
-        destinationLabel.font = .boldSystemFont(ofSize: 16)
+        destinationLabel.font = UIFont(name: "Poppins-Bold", size: 16)
         destinationLabel.textColor = .black
         citiesModalView.addSubview(destinationLabel)
 
@@ -431,7 +431,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let surveyDeadlineLabel = UILabel()
         surveyDeadlineLabel.translatesAutoresizingMaskIntoConstraints = false
         surveyDeadlineLabel.text = "Survey Deadline"
-        surveyDeadlineLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        surveyDeadlineLabel.font = UIFont(name: "Poppins-Bold", size: 16)
         surveyDeadlineLabel.textColor = .black
         citiesModalView.addSubview(surveyDeadlineLabel)
 
@@ -453,7 +453,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let tripDatesLabel = UILabel()
         tripDatesLabel.translatesAutoresizingMaskIntoConstraints = false
         tripDatesLabel.text = "Trip Dates"
-        tripDatesLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        tripDatesLabel.font = UIFont(name: "Poppins-Bold", size: 16)
         tripDatesLabel.textColor = .black
         citiesModalView.addSubview(tripDatesLabel)
 
@@ -478,7 +478,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let toLabel = UILabel()
         toLabel.translatesAutoresizingMaskIntoConstraints = false
         toLabel.text = "to"
-        toLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        toLabel.font = UIFont(name: "Poppins-Bold", size: 16)
         toLabel.textColor = .black
         citiesModalView.addSubview(toLabel)
 

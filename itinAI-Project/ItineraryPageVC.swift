@@ -11,11 +11,9 @@ import OpenAI
 
 class ItineraryPageVC: UIViewController {
 
-    
     @IBOutlet weak var bgImageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var mainContentView: UIView!
     
     var cityId: String?
     var cityName: String?
@@ -47,7 +45,6 @@ class ItineraryPageVC: UIViewController {
             }
         }
     }
-
     
     func populateScrollView() {
         print("populating the scroll view")
@@ -65,16 +62,19 @@ class ItineraryPageVC: UIViewController {
         let blockView = UIView(frame: CGRect(x: 0, y: yOffset, width: scrollView.frame.width, height: 200)) // Adjust height as needed
         
         let dayLabel = UILabel(frame: CGRect(x: 10, y: 10, width: blockView.frame.width - 20, height: 20))
-        dayLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        dayLabel.font = UIFont(name: "Poppins-Bold", size: 20)
         dayLabel.text = "Day \(day.dayNumber)"
         blockView.addSubview(dayLabel)
         
         let dateLabel = UILabel(frame: CGRect(x: 10, y: 40, width: blockView.frame.width - 20, height: 20))
         dateLabel.text = day.date
+        dateLabel.font = UIFont(name: "Poppins-Regular", size: 16)
+        dateLabel.textColor = UIColor.darkGray
         blockView.addSubview(dateLabel)
         
         let contentView = UITextView(frame: CGRect(x: 10, y: 70, width: blockView.frame.width - 20, height: 120))
         contentView.text = day.content.joined(separator: "\n")
+        contentView.font = UIFont(name: "Poppins-Regular", size: 16)
         contentView.isEditable = true // Adjust based on your requirements
         blockView.addSubview(contentView)
         
@@ -82,7 +82,6 @@ class ItineraryPageVC: UIViewController {
     }
     
 }
-
 
 func fetchSurveyResponsesAndGenerate(cityDocId: String) async -> Bool {
         let db = Firestore.firestore()
@@ -122,9 +121,6 @@ func fetchSurveyResponsesAndGenerate(cityDocId: String) async -> Bool {
         }
     }
 
-
-// calls GPT API to generate itinerary and save to Firestore
-
 func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList: [String], _ startDate: String, _ endDate: String) async {
     
     let openAI = OpenAI(apiToken: "hidden")
@@ -143,7 +139,6 @@ func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList:
         Please create a similar itinerary, ensuring each day offers a unique and enriching experience and make sure to consider all of the user's preferences. Translate the entire itinerary to spanish but remember to retain the formatting.
         """
 
-    
     // User preferences are considered after the initial prompt, each as a separate message
     var messages: [ChatQuery.ChatCompletionMessageParam] = [ChatQuery.ChatCompletionMessageParam(role: .user, content: prompt)!]
     

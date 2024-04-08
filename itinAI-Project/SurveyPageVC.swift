@@ -27,8 +27,8 @@ class SurveyPageVC: UIViewController {
         // Do any additional setup after loading the view.
         // Create the label
         let titleLabel = UILabel()
-        titleLabel.text = cityName
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 35)
+        titleLabel.text = cityName?.capitalized
+        titleLabel.font = UIFont(name: "Poppins-Bold", size: 35)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
@@ -50,7 +50,6 @@ class SurveyPageVC: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40)
         ])
         
-        
         // Create the white view
         let whiteView = UIView()
         whiteView.backgroundColor = .white
@@ -71,14 +70,14 @@ class SurveyPageVC: UIViewController {
         // Create UI elements for the first survey question
         let boldLabel1 = UILabel()
         boldLabel1.text = "Any places you're interested in visting?"
-        boldLabel1.font = UIFont.boldSystemFont(ofSize: 18)
+        boldLabel1.font = UIFont(name: "Poppins-Bold", size: 20)
         boldLabel1.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(boldLabel1)
         
         let detailLabel1 = UILabel()
         detailLabel1.text = "E.g. museums, historical sites, art galleries, landmarks, theme parks, local markets, neighborhoods, etc."
         detailLabel1.textColor = .gray
-        detailLabel1.font = UIFont.systemFont(ofSize: 12.0)
+        detailLabel1.font = UIFont(name: "Poppins-Regular", size: 12)
         detailLabel1.numberOfLines = 0 // Make it multiline
         detailLabel1.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(detailLabel1)
@@ -110,14 +109,14 @@ class SurveyPageVC: UIViewController {
         // Create UI elements for the first survey question
         let boldLabel2 = UILabel()
         boldLabel2.text = "Any types of activities you're interested in?"
-        boldLabel2.font = UIFont.boldSystemFont(ofSize: 18)
+        boldLabel2.font = UIFont(name: "Poppins-Bold", size: 20)
         boldLabel2.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(boldLabel2)
         
         let detailLabel2 = UILabel()
         detailLabel2.text = "E.g. sightseeing, shopping, hiking, attending shows or concerts, relaxation/spa days, boat rides, etc."
         detailLabel2.textColor = .gray
-        detailLabel2.font = UIFont.systemFont(ofSize: 12.0)
+        detailLabel2.font = UIFont(name: "Poppins-Regular", size: 12)
         detailLabel2.numberOfLines = 0 // Make it multiline
         detailLabel2.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(detailLabel2)
@@ -147,7 +146,7 @@ class SurveyPageVC: UIViewController {
         // Create Submit button
         let submitButton = UIButton(type: .system)
         submitButton.setTitle("Submit", for: .normal)
-        submitButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        submitButton.titleLabel?.font = UIFont(name: "Poppins-Bold", size: 16)
         submitButton.setTitleColor(.black, for: .normal)
         submitButton.backgroundColor = .lightGray
         submitButton.layer.cornerRadius = 10
