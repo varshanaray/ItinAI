@@ -411,7 +411,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         ])
 
         surveyDeadlinePicker.translatesAutoresizingMaskIntoConstraints = false
-        surveyDeadlinePicker.datePickerMode = .date
+        surveyDeadlinePicker.datePickerMode = .dateAndTime
         citiesModalView.addSubview(surveyDeadlinePicker)
         
         NSLayoutConstraint.activate([
