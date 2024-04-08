@@ -416,7 +416,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         NSLayoutConstraint.activate([
             surveyDeadlinePicker.topAnchor.constraint(equalTo: surveyDeadlineLabel.bottomAnchor, constant: 10),
-            surveyDeadlinePicker.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: -20) // Left-aligned
+            surveyDeadlinePicker.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20), // Left-aligned
+            surveyDeadlinePicker.widthAnchor.constraint(equalToConstant: 200)
         ])
 
         // Trip Dates Label
