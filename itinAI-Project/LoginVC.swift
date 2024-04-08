@@ -158,7 +158,7 @@ func fetchCityInput(cityDocId: String) {
         }
         
         guard let cityName = data?["cityName"] as? String,
-              let inputList = data?["inputList"] as? [String],
+              let inputList = data?["inputList"] as? [String], //city responses
               let startDateTimestamp = data?["startDate"] as? Timestamp,
               let endDateTimestamp = data?["endDate"] as? Timestamp else {
             print("One or more fields not found or is not in the expected format")

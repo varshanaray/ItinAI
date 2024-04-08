@@ -22,6 +22,7 @@
 		3B64443D2BC34798006CBBAC /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B64443C2BC34798006CBBAC /* StyledButton.swift */; };
 		3B6444402BC3481C006CBBAC /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B64443E2BC3481C006CBBAC /* Poppins-Regular.ttf */; };
 		3B6444412BC3481C006CBBAC /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B64443F2BC3481C006CBBAC /* Poppins-Bold.ttf */; };
+		3B6DF8762BC360E700B6E7C2 /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6DF8752BC360E700B6E7C2 /* CityCell.swift */; };
 		3BB9936A2BA65057003AC721 /* GroupPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB993692BA65057003AC721 /* GroupPageVC.swift */; };
 		3BB9936C2BA6516A003AC721 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */; };
 		3BB993712BA65384003AC721 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3BB993702BA65384003AC721 /* FirebaseAnalytics */; };
@@ -88,6 +89,7 @@
 		3B64443C2BC34798006CBBAC /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
 		3B64443E2BC3481C006CBBAC /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		3B64443F2BC3481C006CBBAC /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		3B6DF8752BC360E700B6E7C2 /* CityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCell.swift; sourceTree = "<group>"; };
 		3BB993692BA65057003AC721 /* GroupPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPageVC.swift; sourceTree = "<group>"; };
 		3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3BD878C92BA8DFE600B51C3F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				3BB9936B2BA6516A003AC721 /* GoogleService-Info.plist */,
 				3BB993692BA65057003AC721 /* GroupPageVC.swift */,
 				28C7864A2B9A3C81003C757D /* Main.storyboard */,
+				3B6DF8752BC360E700B6E7C2 /* CityCell.swift */,
 				9D8D6E8A2BBB51A7002DDF75 /* ItineraryPageVC.swift */,
 				3B64443C2BC34798006CBBAC /* StyledButton.swift */,
 				3B64443F2BC3481C006CBBAC /* Poppins-Bold.ttf */,
@@ -338,6 +341,7 @@
 				28756D432BC3128C000CAB6C /* NavTabVC.swift in Sources */,
 				82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */,
 				9D8D6E8B2BBB51A7002DDF75 /* ItineraryPageVC.swift in Sources */,
+				3B6DF8762BC360E700B6E7C2 /* CityCell.swift in Sources */,
 				28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */,
 				28C7864F2B9A3C81003C757D /* itinAI_Project.xcdatamodeld in Sources */,
 				827389732BC328EE0000730D /* GroupTableViewCell.swift in Sources */,

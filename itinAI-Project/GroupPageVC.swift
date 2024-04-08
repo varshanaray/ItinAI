@@ -13,7 +13,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     @IBOutlet weak var citiesTableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
    // @IBOutlet weak var announcementsTableView: UITableView!
     @IBOutlet weak var collectionViewPeople: UICollectionView!
@@ -38,9 +37,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         collectionViewPeople.delegate = self
         collectionViewPeople.dataSource = self
         
-        contentView.layer.cornerRadius = 20
+        contentView.layer.cornerRadius = 15
         
-        citiesTableView.layer.cornerRadius = 20
+        citiesTableView.layer.cornerRadius = 15
         citiesTableView.layer.borderWidth = 1
         citiesTableView.layer.borderColor = UIColor.darkGray.cgColor
         
@@ -84,16 +83,29 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Dequeue a reusable cell from the table view.
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CitiesCell", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CityCell", for: indexPath) as! CityCell
+        
+        let newWidth = cell.contentView.frame.width * 0.8
+        let margin = (cell.contentView.frame.width - newWidth) / 2.0
+        
+        cell.contentView.frame = CGRect(x: margin, y: 0, width: newWidth, height: cell.contentView.frame.height)
+        
+        //cell.contentView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
         // Get the city name for the current row.
         let thisCity = cityList[indexPath.row]
 
         // Set the city name to the cell's text label.
-        cell.textLabel?.text = thisCity!.name
+        cell.layer.cornerRadius = 15
+        cell.cityNameLabel?.text = thisCity!.name.uppercased()
+        cell.cityImageView?.image = UIImage(named: "japan")
         print("CITY TEXT: ", thisCity?.name)
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -535,7 +547,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
         cell.userImageView.image = groupProfilePics[indexPath.row]
-        cell.userDisplayLabel.text = displayNames[indexPath.row]
+        //cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
     }
     

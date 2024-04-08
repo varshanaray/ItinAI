@@ -8,5 +8,14 @@ import UIKit
 class ImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var userImageView: UIImageView!
-    @IBOutlet weak var userDisplayLabel: UILabel!
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // Set a fixed image size
+        let imageSize: CGFloat = userImageView.frame.size.width
+        userImageView.frame = CGRect(x: 12, y: 10, width: imageSize, height: imageSize)
+        // Set the corner radius to make image circular
+        userImageView.layer.cornerRadius = imageSize / 2
+        userImageView.clipsToBounds = true
+    }
 }
