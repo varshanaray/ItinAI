@@ -23,7 +23,9 @@ class ItineraryPageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.text = cityName
+        titleLabel.text = cityName?.uppercased()
+        titleLabel.font = UIFont(name: "Poppins-Bold", size: 40)
+        titleLabel.textColor = .white
 
         fetchItineraryData (cityDocId: cityId!){ [weak self] in
             self?.populateScrollView()

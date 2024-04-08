@@ -1,4 +1,4 @@
-// Project: itinAI-Alpha
+// Project: itinAI-Beta
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -7,8 +7,6 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
-    
-
     
     @IBOutlet weak var announceCell: UITableViewCell!
     
@@ -88,7 +86,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         	
         fetchCities()
     }
-    
     
     @IBAction func announceClicked(_ sender: Any) {
         performSegue(withIdentifier: "GroupToAnnounce", sender: self)
@@ -296,33 +293,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                            self.cityList.append(city)
                            print("Appended to city list in fetchCities, leng of cityList: ", self.cityList.count)
                        }
-                        
-                   /*     if let cityDoc = cityDoc, cityDoc.exists {
-                            print("it exists")
-                            
-                        } 
-                        else {
-                            print("does not")
-                        }
-                        if let cityName = cityDoc?.data()?["cityName"] as? String {
-                            print("City name: \(cityName)")
-                        } 
-                        else {
-                            print("City name not found or not a string")
-                        }
-                        if let deadline = cityDoc?.data()?["deadline"] as? Timestamp {
-                            print("Deadline: \(deadline)")
-                        }
-                        else {
-                            print("Deadline not found or not a date")
-                        }
-                        if let start = cityDoc?.data()?["startDate"] as? Timestamp {
-                            print("Start: \(start)")
-                        }
-                        else {
-                            print("start not found or not a date")
-                        } */
-                        
                     }
                 }
                 dispatchGroup.notify(queue: .main) {
@@ -510,7 +480,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         citiesDoneButton.citiesDoneCallback = { [self] in
             print("cities done callback")
             self.handleCityCreation(name: destinationTextField.text!, startDate: startDatePicker, endDate: endDatePicker, deadline: surveyDeadlinePicker)
-            
         }
         
         citiesDoneButton.dismissCallback = {
@@ -525,15 +494,10 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             citiesDoneButton.bottomAnchor.constraint(equalTo: citiesModalView.bottomAnchor, constant: -30),
             citiesDoneButton.heightAnchor.constraint(equalToConstant: 50),
             citiesDoneButton.widthAnchor.constraint(equalToConstant: 100)
-            
         ])
     }
     
     func handleCityCreation(name: String, startDate: UIDatePicker, endDate: UIDatePicker, deadline: UIDatePicker) {
-//        var groupToAdd: Group = Group(groupName: name, groupCode: code, userList: [currentUser!])
-//        globalGroupList.append(groupToAdd)
-//        addGroup(newGroup: groupToAdd)
-
         let db = Firestore.firestore()
         let cityId = group!.groupCode + name
         let startTimestamp = Timestamp(date: startDate.date)
@@ -634,27 +598,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
-   /* func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("CITY COUNT: ", cityList.count)
-        return cityList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Dequeue a reusable cell from the table view.
-        let cell = citiesTableView.dequeueReusableCell(withIdentifier: "CitiesCell", for: indexPath)
-
-        // Get the city name for the current row.
-        let thisCity = cityList[indexPath.row]
-
-        // Set the city name to the cell's text label.
-        cell.textLabel?.text = thisCity!.name
-        print("CITY TEXT: ", thisCity?.name)
-
-        return cell
-    
-    } */
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Prepare to segue to Details page
         if segue.identifier == "GroupToDetails",
@@ -664,16 +607,5 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     destination.displayNames = displayNames
                     destination.group = group
                 }
-        
-        
-        // Prepare to seugue to Survey page
-//        if segue.identifier == "SurveyPageSegue" {
-//            let destination = segue.destination as? SurveyPageVC
-//        }
-        
-
-        
-
     }
-    
 }

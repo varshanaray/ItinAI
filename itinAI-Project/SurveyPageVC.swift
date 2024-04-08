@@ -10,7 +10,6 @@ import FirebaseFirestore
 
 class SurveyPageVC: UIViewController {
     
-    
     var cityName: String?
     var cityId: String?
     var cityImageUrl: String?
@@ -27,11 +26,13 @@ class SurveyPageVC: UIViewController {
         // Do any additional setup after loading the view.
         // Create the label
         let titleLabel = UILabel()
-        titleLabel.text = cityName?.capitalized
-        titleLabel.font = UIFont(name: "Poppins-Bold", size: 35)
+        titleLabel.text = cityName?.uppercased()
+        titleLabel.font = UIFont(name: "Poppins-Bold", size: 40)
+        titleLabel.textColor = .white
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
+        /*
         // Determine the background color's lightness/darkness
         let backgroundColor = backgroundImage.image?.averageColor
         if let backgroundColor = backgroundColor {
@@ -42,7 +43,7 @@ class SurveyPageVC: UIViewController {
         } else {
             // Default text color if background image is not available
             titleLabel.textColor = .white
-        }
+        }*/
         
         // Add constraints for the label
         NSLayoutConstraint.activate([
@@ -69,8 +70,8 @@ class SurveyPageVC: UIViewController {
         
         // Create UI elements for the first survey question
         let boldLabel1 = UILabel()
-        boldLabel1.text = "Any places you're interested in visting?"
-        boldLabel1.font = UIFont(name: "Poppins-Bold", size: 20)
+        boldLabel1.text = "Places you're interested in visting?"
+        boldLabel1.font = UIFont(name: "Poppins-Bold", size: 18)
         boldLabel1.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(boldLabel1)
         
@@ -108,8 +109,8 @@ class SurveyPageVC: UIViewController {
         // ...
         // Create UI elements for the first survey question
         let boldLabel2 = UILabel()
-        boldLabel2.text = "Any types of activities you're interested in?"
-        boldLabel2.font = UIFont(name: "Poppins-Bold", size: 20)
+        boldLabel2.text = "Activities you're interested in?"
+        boldLabel2.font = UIFont(name: "Poppins-Bold", size: 18)
         boldLabel2.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(boldLabel2)
         
