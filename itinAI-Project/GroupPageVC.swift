@@ -10,6 +10,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
 
     
+    @IBOutlet weak var announceCell: UITableViewCell!
     
     @IBOutlet weak var citiesTableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
@@ -18,6 +19,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var collectionViewPeople: UICollectionView!
     @IBOutlet weak var addCitiesButton: UIButton!
     
+    @IBOutlet weak var announceImage: UIImageView!
     
     var group:Group?
     var groupProfilePics = [UIImage?]()
@@ -45,6 +47,17 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         citiesTableView.delegate = self
         citiesTableView.dataSource = self
+        
+        announceCell.layer.cornerRadius = 15
+        announceCell.layer.borderWidth = 1
+        announceCell.layer.borderColor = UIColor.darkGray.cgColor
+        
+        let imageSize: CGFloat = 50
+        announceImage.image = UIImage(named: "defaultProfilePicture")
+        announceImage.frame = CGRect(x: 12, y: 10, width: imageSize, height: imageSize)
+        // Set the corner radius to make image circular
+        announceImage.layer.cornerRadius = imageSize / 2
+        announceImage.clipsToBounds = true
         
        // announcementsTableView.layer.cornerRadius = 20
         //announcementsTableView.layer.borderWidth = 1
@@ -75,7 +88,12 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         	
         fetchCities()
     }
-
+    
+    
+    @IBAction func announceClicked(_ sender: Any) {
+        performSegue(withIdentifier: "GroupToAnnounce", sender: self)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("CITY COUNT: ", cityList.count)
         return cityList.count
@@ -581,7 +599,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     destination.displayNames = displayNames
                     destination.group = group
                 }
-
+        
         
         // Prepare to seugue to Survey page
 //        if segue.identifier == "SurveyPageSegue" {
