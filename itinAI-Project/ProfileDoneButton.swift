@@ -4,7 +4,7 @@
 
 import UIKit
 
-class ProfileDoneButton: UIButton {
+class ProfileDoneButton: StyledButton {
     enum ButtonType {
         case create, join, reset, cities
         
@@ -36,9 +36,9 @@ class ProfileDoneButton: UIButton {
     }
 
     private func configureDoneButton() {
-        backgroundColor = .black
-        layer.cornerRadius = 10.0
-        setTitleColor(.white, for: .normal)
+        //backgroundColor = .black
+        //layer.cornerRadius = 10.0
+        //setTitleColor(.white, for: .normal)
         setTitle("Done", for: .normal)
         addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
     }

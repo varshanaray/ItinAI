@@ -103,6 +103,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         createModalView.backgroundColor = .white
         createModalView.layer.cornerRadius = 15
         createModalView.layer.masksToBounds = true
+        createModalView.translatesAutoresizingMaskIntoConstraints = false
         
         // Add a view for a darkened background
         overlayView = UIView(frame: view.bounds)
@@ -113,25 +114,48 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         // Add a tap gesture recognizer to overlayView
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         overlayView.addGestureRecognizer(tapGesture)
-        
-        // Add a title label for the modal view
-        let titleLabel = UILabel(frame: CGRect(x: 20, y: 20, width: createModalView.frame.width - 40, height: 30))
-        titleLabel.textAlignment = .left
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        createModalView.addSubview(titleLabel)
-        
         view.addSubview(createModalView)
         
-        modalTitle = "Create a group"
-        print("Create modal view")
         
-        // Create Group Name label
+        NSLayoutConstraint.activate([
+            createModalView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            createModalView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            createModalView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            createModalView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.35)
+        ])
+        
+        // Create Group label
+        let titleLabel = UILabel()
+        titleLabel.text = "Create A Group"
+        titleLabel.textAlignment = .left
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 25)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        createModalView.addSubview(titleLabel)
+        
+        // Add constraints for the label
+        
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: createModalView.topAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: createModalView.leadingAnchor, constant: 20),
+        ])
+        
+        print("Create modal view")
+           
+        // Create groupNameLabel
         var groupNameLabel = UILabel()
-        groupNameLabel.text = "Enter your group's name"
+        groupNameLabel.text = "Group Name"
+        groupNameLabel.translatesAutoresizingMaskIntoConstraints = false
         groupNameLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         groupNameLabel.frame.origin.x = leftMargin
-        groupNameLabel.frame = CGRect(x: leftMargin, y: 60.0, width: 200.0, height: 30.0)
+//        groupNameLabel.frame = CGRect(x: leftMargin, y: 60.0, width: 200.0, height: 30.0)
         createModalView.addSubview(groupNameLabel)
+        
+        NSLayoutConstraint.activate([
+            groupNameLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
+            groupNameLabel.leadingAnchor.constraint(equalTo: createModalView.leadingAnchor, constant: 20),
+            groupNameLabel.widthAnchor.constraint(equalToConstant: 200.0),
+            groupNameLabel.heightAnchor.constraint(equalToConstant: 25.0)
+        ])
         
         // Group name text field
         let placeHolderText = "Max 20 characters"
@@ -147,19 +171,26 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         var groupTextField = UITextField()
         groupTextField.delegate = self
         groupTextField.attributedPlaceholder = attributedPlaceholder
-        groupTextField.backgroundColor = UIColor.lightGray
+        groupTextField.backgroundColor = UIColor(red: 242/255.0, green: 241/255.0, blue: 241/255.0, alpha: 1)
         groupTextField.font = UIFont.systemFont(ofSize: 12.0)
         groupTextField.layer.cornerRadius = 8.0
         groupTextField.frame.origin.x = leftMargin
-        groupTextField.frame = CGRect(x: leftMargin, y: 90.0, width: 300.0, height: 30.0)
+        groupTextField.frame = CGRect(x: leftMargin, y: 90.0, width: 350.0, height: 30.0)
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: groupTextField.frame.height))
         
         groupTextField.leftView = paddingView
         groupTextField.leftViewMode = .always
-        createModalView.addSubview(groupTextField)
         
         groupNameHere = groupTextField.text!
+        
+        createModalView.addSubview(groupTextField)
+        
+//        NSLayoutConstraint.activate([
+//            groupTextField.topAnchor.constraint(equalTo: groupNameLabel.bottomAnchor, constant: 20.0),
+//            groupTextField.leadingAnchor.constraint(equalTo: groupNameLabel.leadingAnchor),
+//            groupTextField.widthAnchor.constraint(equalTo: view.widthAnchor)
+//        ])
         
         // Create character count label
         var characterCountLabel = UILabel()
@@ -182,7 +213,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         codeDisplayLabel.text = codeToGenerate
         var code : String = codeDisplayLabel.text!
         codeDisplayLabel.font = UIFont.systemFont(ofSize: 16.0)
-        codeDisplayLabel.frame = CGRect(x: 190.0, y: 150.0, width: 200.0, height: 30.0)
+        codeDisplayLabel.frame = CGRect(x: 120.0, y: 150.0, width: 200.0, height: 30.0)
         createModalView.addSubview(codeDisplayLabel)
         
         // Create clipboard button
@@ -193,7 +224,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         clipboardButton.addTarget(self, action: #selector(copyCodeToClipboard(_:)), for: .touchUpInside)
         var buttonWidth: CGFloat = 30.0
         var buttonHeight: CGFloat = buttonWidth
-        clipboardButton.frame = CGRect(x: 270.0, y: 150.0, width: buttonWidth, height: buttonHeight)
+        clipboardButton.frame = CGRect(x: 190.0, y: 150.0, width: buttonWidth, height: buttonHeight)
         createModalView.addSubview(clipboardButton)
         
         // Create done button for this modal view
@@ -215,9 +246,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         print("group name frame: \(groupNameLabel.frame)")
         print("group text field frame: \(groupTextField.frame)")
         print("group code label frame: \(groupCodeLabel.frame)")
-        
-        // set the title label of modal view
-        titleLabel.text = modalTitle
     }
     
     // code for join modal view
@@ -230,25 +258,33 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         joinModalView.backgroundColor = .white
         joinModalView.layer.cornerRadius = 15
         joinModalView.layer.masksToBounds = true
+        joinModalView.translatesAutoresizingMaskIntoConstraints = false
         
         // Add a view for a darkened background
         overlayView = UIView(frame: view.bounds)
         overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         overlayView.alpha = 0.0 // Initially Invisible
         view.addSubview(overlayView)
-        
+
         // Add a tap gesture recognizer to overlayView
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         overlayView.addGestureRecognizer(tapGesture)
         
+        view.addSubview(joinModalView)
+        
+        NSLayoutConstraint.activate([
+            joinModalView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            joinModalView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            joinModalView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            joinModalView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.35)
+        ])
+        
         // Add a title label for the modal view
         let titleLabel = UILabel(frame: CGRect(x: 20, y: 20, width: joinModalView.frame.width - 40, height: 30))
         titleLabel.textAlignment = .left
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 25)
         titleLabel.text = "Join a group"
         joinModalView.addSubview(titleLabel)
-        
-        view.addSubview(joinModalView)
         
         // Create Enter group code label
         var enterGroupCodeLabel = UILabel()
@@ -272,11 +308,11 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         var codeTextField = UITextField()
         codeTextField.delegate = self
         codeTextField.attributedPlaceholder = attributedPlaceholder
-        codeTextField.backgroundColor = UIColor.lightGray
+        codeTextField.backgroundColor = UIColor(red: 242/255.0, green: 241/255.0, blue: 241/255.0, alpha: 1)
         codeTextField.font = UIFont.systemFont(ofSize: 12.0)
         codeTextField.layer.cornerRadius = 8.0
         codeTextField.frame.origin.x = leftMargin
-        codeTextField.frame = CGRect(x: leftMargin, y: 120.0, width: 300.0, height: 30.0)
+        codeTextField.frame = CGRect(x: leftMargin, y: 120.0, width: 350.0, height: 30.0)
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: codeTextField.frame.height))
         
