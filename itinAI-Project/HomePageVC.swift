@@ -1,4 +1,4 @@
-// Project: itinAI-Alpha
+// Project: itinAI-Beta
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -67,9 +67,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         joinButton.setTitleColor(UIColor.white, for: .normal)
         joinButton.layer.cornerRadius = 15
         joinButton.clipsToBounds = true
-        
-        // Populate group array
-        //groupNames = currentUser?.groupList
     
         myGroupsLabel.font = UIFont(name: "Poppins-Bold", size: 20)
         
@@ -147,7 +144,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         groupNameLabel.translatesAutoresizingMaskIntoConstraints = false
         groupNameLabel.font = UIFont(name: "Poppins-Bold", size: 16)
         groupNameLabel.frame.origin.x = leftMargin
-//        groupNameLabel.frame = CGRect(x: leftMargin, y: 60.0, width: 200.0, height: 30.0)
         createModalView.addSubview(groupNameLabel)
         
         NSLayoutConstraint.activate([
@@ -185,12 +181,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         groupNameHere = groupTextField.text!
         
         createModalView.addSubview(groupTextField)
-        
-//        NSLayoutConstraint.activate([
-//            groupTextField.topAnchor.constraint(equalTo: groupNameLabel.bottomAnchor, constant: 20.0),
-//            groupTextField.leadingAnchor.constraint(equalTo: groupNameLabel.leadingAnchor),
-//            groupTextField.widthAnchor.constraint(equalTo: view.widthAnchor)
-//        ])
         
         // Create character count label
         var characterCountLabel = UILabel()
@@ -324,28 +314,11 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         let joinDoneButton = ProfileDoneButton()
         joinDoneButton.typeOfButton = .join
         
-        // TODO: - Find a way to initialize currentUser
-        // TODO: Ensure correct group is being found in joinDoneCallback
-        // TODO: Ensure the group that is found is added to currentUser's groupList
         joinDoneButton.joinDoneCallback = {
             print("Join done callback")
             // need to get correct group based on group code
             var enteredCode:String = codeTextField.text ?? "0000000"
             print("The code that was entered is \(enteredCode)")
-            //var groupToJoin: Group
-            
-//            for group in globalGroupList {
-//                if (enteredCode == group.groupCode) {
-//                    print("Found a match for the entered code")
-//                    groupToJoin = group
-//                    print("group joined's name: \(groupToJoin.groupName)")
-//                    self.addGroup(newGroup: groupToJoin)
-//                    groupToJoin.userList.append(currentUser!)
-//                    break
-//                }
-//            }
-            
-            // handle joining group in firestore
             self.handleJoinGroup(code: enteredCode)
             
         }
@@ -373,9 +346,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     func handleGroupCreation(name: String, code: String) {
-//        var groupToAdd: Group = Group(groupName: name, groupCode: code, userList: [currentUser!])
-//        globalGroupList.append(groupToAdd)
-//        addGroup(newGroup: groupToAdd)
 
         let db = Firestore.firestore()
         
@@ -467,10 +437,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                         }
                     }
                 }
-//                let group = Group(groupName: self.groupNameHere, groupCode: code)
-                // self.addGroupToTable(newGroup: Group(groupName: self.groupNameHere, groupCode: code))
-               
-                //self.fetchGroups()
             } else {
                 print("Group document does not exist")
             }
@@ -536,11 +502,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             // Check if the generated code already exists in the global array
             isUnique = true
             // TODO: Merge functionality with Firestore to check if a group with a code already exists
-//            for group in globalGroupList {
-//                if (group.groupCode == randomCode) {
-//                    isUnique = false
-//                }
-//            }
         }
         print("random code: \(randomCode)")
         return randomCode
@@ -548,12 +509,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else {return true}
-        
         // check if the char count exceeds 20
         let newLength = text.count + string.count - range.length
-//        if newLength > 20 {
-//            characterC
-//        }
         return newLength <= 20
     }
     
@@ -578,31 +535,17 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     // TODO: - Handle tapping outside of keyboard to dismiss it without dismissing the modal view
     // Called when 'return' key pressed
-
-       func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
            textField.resignFirstResponder()
            return true
-       }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // print("count: ",currentUser!.groupList.count )
         return groupList.count
 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // dummy
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTableCell", for: indexPath) as! GroupTableViewCell
         let row = indexPath.row
         let groupName = groupList[row]!.groupName
@@ -616,8 +559,6 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-
-    
 
     func addGroup(newGroup: Group) {
         // Add group to group list array

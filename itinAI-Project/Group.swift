@@ -4,6 +4,7 @@
 
 import Foundation
 
+// Class to create a group object.
 class Group {
     
     var groupName: String

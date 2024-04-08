@@ -4,6 +4,7 @@
 
 import Foundation
 
+// Class to create a user object.
 class User {
     
     var email: String

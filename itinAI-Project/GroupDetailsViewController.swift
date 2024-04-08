@@ -31,12 +31,9 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         tableView.rowHeight = 75
         groupNameLabel.text = group?.groupName
         groupCodeLabel.text = "Group Code: " + group!.groupCode
-        
         detailsImage.image = UIImage(named: "japan")
-        
         descript.delegate = self
         descript.allowsEditingTextAttributes = true
-        
         // Get saved description from Firestore
         let db = Firestore.firestore()
         let groupId = group?.groupCode
@@ -55,7 +52,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groupProfilePics.count //thisGroup?.userList.count ?? 0
+        return groupProfilePics.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,7 +80,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
                 print("Document successfully written!")
             }
         }
-         
     }
     
 }

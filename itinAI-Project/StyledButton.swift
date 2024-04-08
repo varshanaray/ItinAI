@@ -4,6 +4,7 @@
 
 import UIKit
 
+// Class that styles a button like how we designed in Figma.
 class StyledButton: UIButton {
 
     override init(frame: CGRect) {
@@ -22,7 +23,7 @@ class StyledButton: UIButton {
         self.clipsToBounds = true
         
         self.titleLabel?.adjustsFontSizeToFitWidth = true
-        self.titleLabel?.minimumScaleFactor = 0.8 // Adjust as needed
+        self.titleLabel?.minimumScaleFactor = 0.8
         
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 1.0
@@ -34,5 +35,4 @@ class StyledButton: UIButton {
         self.titleLabel?.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont(name: "Poppins-Bold", size:18)!)
     }
 
-    
 }

@@ -5,6 +5,7 @@
 import Foundation
 
 struct ItineraryDay {
+    
     var dayNumber: String
     var date: String
     var content: [String]

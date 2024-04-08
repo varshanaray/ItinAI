@@ -4,6 +4,7 @@
 
 import Foundation
 
+// Class to create a city object.
 class City {
     
     var name: String

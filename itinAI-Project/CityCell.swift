@@ -4,7 +4,9 @@
 
 import UIKit
 
+// Class dedicated to a city cell in a group.
 class CityCell: UITableViewCell {
+    
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var cityImageView: UIImageView!
     
