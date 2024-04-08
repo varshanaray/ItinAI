@@ -3,9 +3,11 @@
 // Course: CS371L
 
 import UIKit
+import FirebaseFirestore
 
 class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
 
+    @IBOutlet weak var detailsImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var groupCodeLabel: UILabel!
@@ -30,10 +32,28 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             groupNameLabel.text = group?.groupName
             groupCodeLabel.text = "Group Code: " + group!.groupCode
             
-//            descript.delegate = self
-//            NSString.self *savedText = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferenceName"];
-//            descript.text = savedText;
+            detailsImage.image = UIImage(named: "japan")
+            
+            descript.delegate = self
+            descript.allowsEditingTextAttributes = true
+            // Get saved description from Firestore
+            
+            let db = Firestore.firestore()
+            let groupId = group?.groupCode
+            db.collection("Groups").document(groupId!).getDocument { [self] (document, error) in
+                if let document = document, document.exists {
+                    // Document found, retrieve description
+                    let description = document.data()?["description"] as? String ?? "Edit Here"
+                    descript.text = description
+                    print("Description: \(description)")
+                } else {
+                    // Document does not exist or there was an error
+                    print("Document does not exist or there was an error")
+                }
+            }
+             
         }
+
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return groupProfilePics.count //thisGroup?.userList.count ?? 0
@@ -47,10 +67,30 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             return cell
         }
     
-        func textViewDidEndEditing(_ textView: UITextView) {
-//            NSString *textToSave = descript.text;
-//            [[NSUserDefaults standardUserDefaults] setObject:textToSave forKey:@"preferenceName"];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
+        func textViewDidChange(_ textView: UITextView) {
+            // Here you can save the text to wherever you want
+            // For example, you can save it to UserDefaults, Core Data, or Firestore
+            saveTextToStorage(textView.text)
+        }
+    
+        func saveTextToStorage(_ text: String) {
+            // Implement your logic to save text
+            // For example, if you're using UserDefaults:
+            
+            let db = Firestore.firestore()
+            let groupId = group?.groupCode
+
+            // Specify merge option to merge new data with existing fields
+            db.collection("Groups").document(groupId!).setData([
+                "description": descript.text!
+            ], merge: true) { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+             
         }
         
     }
