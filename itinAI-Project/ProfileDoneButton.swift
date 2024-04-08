@@ -1,4 +1,4 @@
-// Project: itinAI-Alpha
+// Project: itinAI-Beta
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -36,14 +36,10 @@ class ProfileDoneButton: StyledButton {
     }
 
     private func configureDoneButton() {
-        //backgroundColor = .black
-        //layer.cornerRadius = 10.0
-        //setTitleColor(.white, for: .normal)
         setTitle("Done", for: .normal)
         addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
     }
     
-    // TODO: - Figure out how to save stuff from any modal view when the done button is pressed
     @objc private func doneButtonPressed() {
         switch typeOfButton {
         case .create:

@@ -1,4 +1,4 @@
-// Project: itinAI-Alpha
+// Project: itinAI-Beta
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -18,12 +18,6 @@ class LoginVC: UIViewController {
         
         signUpButton.setTitleColor(UIColor.black, for: .normal)
         signUpButton.titleLabel?.font = UIFont(name: "Poppins-Bold", size: 16)
-        // testing GPT API
-        /*
-        Task {
-            print("calling generateCityItinerary")
-            await generateCityItinerary("4Mn1JSpDubai", "Dubai", ["I want to shop", "I want to eat sushi", "I want to see Tokyo Tower", "I want to go to Shibuya Crossing", "I want to go to a club"], "April 2nd", "April 5th")
-        }*/
         
         Auth.auth().addStateDidChangeListener()
         {
@@ -35,7 +29,8 @@ class LoginVC: UIViewController {
             }
         }
     }
-
+    
+    // Authenticate user login info and take them to HomePageVC if existing in Firestore
     @IBAction func loginButtonPressed(_ sender: Any) {
         // Check for empty fields
         guard let email = emailField.text, !email.isEmpty else {
@@ -69,40 +64,8 @@ class LoginVC: UIViewController {
                 return
             }
             // login successful
-            
-            
-            /*
-            if let homeNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as? UINavigationController {
-                homeNavigationController.modalPresentationStyle = .fullScreen // Set full screen
-                self.present(homeNavigationController, animated: true, completion: nil)
-            }*/
         }
     }
-    
-    /* Function to handle and interpret Firebase Auth errors
-    func handleLoginError(error: Error) {
-        let nsError = error as NSError
-        guard let errorCode = AuthErrorCode(rawValue: AuthErrorCode.Code(rawValue: nsError.code) ?? "unknown error") else {
-            displayErrorAlert(message: "An unexpected error occurred. Please try again.")
-            return
-        }
-        
-        var errorMessage: String
-        
-        switch errorCode {
-        case .userNotFound, .wrongPassword:
-            errorMessage = "Invalid email or password. Please try again."
-        case .userDisabled:
-            errorMessage = "This account has been disabled. Please contact support."
-        case .networkError:
-            errorMessage = "Check your internet connection and try again."
-        // You can handle more specific errors as needed
-        default:
-            errorMessage = "An unexpected error occurred. Please try again."
-        }
-        
-        displayErrorAlert(message: errorMessage)
-    } */
 
     func displayErrorAlert(message: String) {
         let controller = UIAlertController(
@@ -114,6 +77,7 @@ class LoginVC: UIViewController {
     }
 }
 
+// validates email input in terms of formatting
 func isValidEmail(_ email: String) -> Bool {
    let emailRegEx =
        "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -121,7 +85,8 @@ func isValidEmail(_ email: String) -> Bool {
        emailRegEx)
    return emailPred.evaluate(with: email)
 }
-  
+
+// validates password input in terms of formatting
 func isValidPassword(_ password: String) -> Bool {
    let minPasswordLength = 6
    return password.count >= minPasswordLength

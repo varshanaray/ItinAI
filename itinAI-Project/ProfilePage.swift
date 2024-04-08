@@ -1,6 +1,6 @@
-// Project: itinAI-Alpha
+// Project: itinAI-Beta
 // EID: ezy78, gkk298, esa549, vn4597
-// Course: CS371L
+// Course: CS371L   
 
 import UIKit
 import FirebaseFirestore
@@ -37,7 +37,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
         // Change Picture button
         changePictureButton.setTitle("", for: .normal)
         
-        
         // Set the display name
         let db = Firestore.firestore()
         let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
@@ -57,6 +56,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // TODO: FINAL - implement
     @IBAction func changePictureButtonPressed(_ sender: Any) {
         print("Change picture button pressed")
         currentModalView = pictureModalView
@@ -87,22 +87,20 @@ class ProfilePage: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // TODO: - Handle tapping outside of keyboard to dismiss it without dismissing the modal view
    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
        textField.resignFirstResponder()
        return true
    }
     
+    // Logs out user and returns to login page
     @IBAction func logoutButtonPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
             
             self.dismiss(animated: true)
             
-            
         } catch {
             print("log out error")
         }
     }
 }
-					

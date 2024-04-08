@@ -1,9 +1,6 @@
-//
-//  StyledButton.swift
-//  itinAI-Project
-//
-//  Created by Eric Yang on 4/7/24.
-//
+// Project: itinAI-Beta
+// EID: ezy78, gkk298, esa549, vn4597
+// Course: CS371L
 
 import UIKit
 
@@ -31,17 +28,9 @@ class StyledButton: UIButton {
         self.layer.borderWidth = 1.0
         
         // Set the background color
-        
-        //self.backgroundColor = UIColor.lightGray
         self.backgroundColor = UIColor(red: 242/255.0, green: 241/255.0, blue: 241/255.0, alpha: 1)
         
-        // Set content edge insets
-        //self.contentEdgeInsets = UIEdgeInsets(top: 3, left: 6, bottom: 3, right: 6)
-        
-        //self.titleLabel?.textColor = UIColor.black
-        
         self.setTitleColor(UIColor.black, for: .normal)
-        //self.titleLabel?.font = UIFont(name: "Poppins-Bold", size: 20)
         self.titleLabel?.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont(name: "Poppins-Bold", size:18)!)
     }
 
