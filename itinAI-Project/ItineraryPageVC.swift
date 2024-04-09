@@ -1,9 +1,6 @@
-//
-//  itineraryPageVC.swift
-//  itinAI-Project
-//
-//  Created by Eric Yang on 4/1/24.
-//
+// Project: itinAI-Beta
+// EID: ezy78, gkk298, esa549, vn4597
+// Course: CS371L
 
 import UIKit
 import FirebaseFirestore

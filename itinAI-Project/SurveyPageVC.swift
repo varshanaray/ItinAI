@@ -1,9 +1,6 @@
-//
-//  SurveyPageVC.swift
-//  itinAI-Project
-//
-//  Created by Erick Albarran on 3/31/24.
-//
+// Project: itinAI-Beta
+// EID: ezy78, gkk298, esa549, vn4597
+// Course: CS371L
 
 import UIKit
 import FirebaseFirestore
@@ -144,7 +141,6 @@ class SurveyPageVC: UIViewController {
             textField2.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -20),
             textField2.heightAnchor.constraint(equalTo: textField1.heightAnchor), // Adjust height as needed
         ])
-        
         
         // Add the 'Submit' button
         // Create Submit button

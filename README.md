@@ -12,6 +12,7 @@ Varsha Narayanan (Release 25%, Overall 25%)
 - Add city pop-up functionality
 - Group page UI
     - Can see the cities a group has created in Group Page
+- Polishing UI of various pages
 - Survey vs itinerary functionality
     - Worked on whether the survey or itinerary page will be shown based on the date/deadline
 
@@ -26,6 +27,7 @@ Erick Albarran (Release 25%, Overall 25%)
 - Survey page UI & functionality
     - Survey answers are saved after being submitted
 - Add city pop-up UI
+- Polishing UI of various pages
 - Survey vs itinerary functionality
     - Worked on whether the survey or itinerary page will be shown based on the date/deadline
 
@@ -36,9 +38,11 @@ Eric Yang (Release 25%, Overall 25%)
 - Firebase authentication for login & signup
 - Update code to use Firebase (migrate all data to database)
 - ChatGPT itinerary generation
-    - GPT API
+    - Integration with OpenAI GPT API
+    - Parsing, processing, and storing of the generated results
     - Itinerary page UI & functionality
         - Can see ChatGPT-generated itinerary after deadline passes
+- Polishing UI of various pages
 - Survey vs itinerary functionality
     - Worked on whether the survey or itinerary page will be shown based on the date/deadline
 
@@ -53,9 +57,9 @@ Gurman Kalkat (Release 25%, Overall 25%)
     - Made description editable
 - Announcements page UI
 - Add city pop-up functionality
+- Polishing UI of various pages
 - Survey vs itinerary functionality
     - Worked on whether the survey or itinerary page will be shown based on the date/deadline
     
 **Deviations**<br>
-There were no deviations in this phase. We were able to accomplish everything we said we would in the proposal. While there are still changes that need to be made to the UI, we spent time implementing a database and having the itinerary generation work exactly how we would like, completing the main functionality of our app. As a note, we have an account (email: tester@gmail.com & password: 123456) that can be used to see what the app looks like when a group has added multiple cities and generated an itinerary. Additionally, after a deadline has passed, it takes about 10 seconds for the itinerary to load (the app is not frozen).
-
+There were no deviations in this phase. We were able to accomplish everything we said we would in the proposal. While there are still changes that need to be made to the UI, we spent time implementing a database and having the itinerary generation work exactly how we would like, completing the main functionality of our app. As a note, we have a demo account (email: tester@gmail.com & password: 123456) that can be used to see what the app looks like when a group has added multiple cities and generated an itinerary. Additionally, Note that when a city's itinerary is being accessed for the first time after the survey deadline has passed, it takes about 10 seconds for the app to generate and load the itinerary. The app is not frozen, and the loading screen is intended.

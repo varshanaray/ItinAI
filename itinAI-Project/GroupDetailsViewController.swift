@@ -83,4 +83,3 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     }
     
 }
-
