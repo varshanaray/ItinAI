@@ -5,7 +5,7 @@ Varsha Narayanan (Release 25%, Overall 25%)
 - Home page UI & functionality
     - Adding a list of all groups a user is part of
 - UI for people carousel on Group page & functionality
-    - All users in group show up with pictures & email
+    - All users in group show up with pictures
 - Login & signup UI
 - Update code to use Firebase (migrate all data to database)
 - Navigation bar UI & functionality
