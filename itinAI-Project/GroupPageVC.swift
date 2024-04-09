@@ -56,25 +56,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // Set the corner radius to make image circular
         announceImage.layer.cornerRadius = imageSize / 2
         announceImage.clipsToBounds = true
-        
-       // announcementsTableView.layer.cornerRadius = 20
-        //announcementsTableView.layer.borderWidth = 1
-        //announcementsTableView.layer.borderColor = UIColor.darkGray.cgColor
-        
-        /*var numInGroup: Int = 0 //group?.userList.count ?? -1
-        // If less than or equal to 0, do nothing
-        if (numInGroup > 0) {
-            for i in 0...(numInGroup - 1) {
-                print("picture, i: ", i)
-                // Default image until database is set up
-                var thisImage: UIImage? = UIImage(named: "defaultProfilePicture")
-                var thisName: String? = "" //group?.userList[i].email
-                groupProfilePics.append(thisImage)
-                displayNames.append(thisName)
-                print("this Name: ", thisName)
-            }
-        } */
-        
+
         // Get from firestore
         print("group code!: ", (group?.groupCode)!)
         fetchUsers(groupCode: (group?.groupCode)!)
@@ -104,8 +86,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let margin = (cell.contentView.frame.width - newWidth) / 2.0
         
         cell.contentView.frame = CGRect(x: margin, y: 0, width: newWidth, height: cell.contentView.frame.height)
-        
-        //cell.contentView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
         // Get the city name for the current row.
         let thisCity = cityList[indexPath.row]
@@ -472,8 +452,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             endDatePicker.leadingAnchor.constraint(equalTo: toLabel.trailingAnchor, constant: 10), // Positioned to the right of "to" label
         ])
 
-
-        
         // Create done button for this modal view
         let citiesDoneButton = ProfileDoneButton()
         citiesDoneButton.typeOfButton = .cities
