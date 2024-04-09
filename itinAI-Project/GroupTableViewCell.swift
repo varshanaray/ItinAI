@@ -23,6 +23,8 @@ class GroupTableViewCell: UITableViewCell {
         groupImageView.contentMode = .scaleAspectFill
         groupImageView.layer.cornerRadius = 10 // Optional: Add rounded corners
         groupImageView.clipsToBounds = true
+        
+        datesRangeLabel.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

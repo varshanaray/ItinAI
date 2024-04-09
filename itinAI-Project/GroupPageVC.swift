@@ -25,7 +25,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var thisGroupUsers = [User?]()
     var overlayView: UIView = UIView()
     var citiesModalView: UIView = UIView()
-    let modalHeight: CGFloat = 400
+    let modalHeight: CGFloat = 430
     let surveyDeadlinePicker = UIDatePicker()
     
     var currentModalView: UIView!
@@ -52,7 +52,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         let imageSize: CGFloat = 50
         announceImage.image = UIImage(named: "defaultProfilePicture")
-        announceImage.frame = CGRect(x: 12, y: 10, width: imageSize, height: imageSize)
+        announceImage.frame = CGRect(x: 20, y: 20, width: imageSize, height: imageSize)
         // Set the corner radius to make image circular
         announceImage.layer.cornerRadius = imageSize / 2
         announceImage.clipsToBounds = true
@@ -83,7 +83,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         for city in cityList {
             print("  city name: ", city?.name)
         }
-        	
+            
         fetchCities()
     }
     
@@ -113,6 +113,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // Set the city name to the cell's text label.
         cell.layer.cornerRadius = 15
         cell.cityNameLabel?.text = thisCity!.name.uppercased()
+        cell.cityNameLabel?.setCharacterSpacing(-1.5)
+        cell.cityNameLabel?.shadowColor = .black
+        cell.cityNameLabel?.shadowOffset = CGSize(width: 1, height: 1)
         cell.cityImageView?.image = UIImage(named: "japan")
         print("CITY TEXT: ", thisCity?.name)
 
@@ -364,14 +367,14 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         NSLayoutConstraint.activate([
             destinationLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             destinationLabel.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20),
-            destinationLabel.trailingAnchor.constraint(equalTo: citiesModalView.trailingAnchor, constant: -20)
+            destinationLabel.trailingAnchor.constraint(equalTo: citiesModalView.trailingAnchor, constant: -20),
         ])
         
         // Add destination text field
         let destinationTextField = UITextField()
         destinationTextField.translatesAutoresizingMaskIntoConstraints = false
         destinationTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2) // Light grey background
-        destinationTextField.layer.cornerRadius = 15 // Rounded corners
+        destinationTextField.layer.cornerRadius = 10 // Rounded corners
         destinationTextField.layer.masksToBounds = true
         destinationTextField.placeholder = "Enter city name"
         
@@ -391,7 +394,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         citiesModalView.addSubview(destinationTextField)
 
         NSLayoutConstraint.activate([
-            destinationTextField.topAnchor.constraint(equalTo: destinationLabel.bottomAnchor, constant: 10),
+            destinationTextField.topAnchor.constraint(equalTo: destinationLabel.bottomAnchor, constant: 5),
             destinationTextField.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20),
             destinationTextField.trailingAnchor.constraint(equalTo: citiesModalView.trailingAnchor, constant: -20),
             destinationTextField.heightAnchor.constraint(equalToConstant: 40) // Fixed height for the text field
@@ -415,9 +418,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         citiesModalView.addSubview(surveyDeadlinePicker)
         
         NSLayoutConstraint.activate([
-            surveyDeadlinePicker.topAnchor.constraint(equalTo: surveyDeadlineLabel.bottomAnchor, constant: 10),
+            surveyDeadlinePicker.topAnchor.constraint(equalTo: surveyDeadlineLabel.bottomAnchor, constant: 5),
             surveyDeadlinePicker.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20), // Left-aligned
-            surveyDeadlinePicker.widthAnchor.constraint(equalToConstant: 200)
+            //surveyDeadlinePicker.widthAnchor.constraint(equalToConstant: 250)
         ])
 
         // Trip Dates Label
@@ -440,22 +443,22 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         citiesModalView.addSubview(startDatePicker)
 
         NSLayoutConstraint.activate([
-            startDatePicker.topAnchor.constraint(equalTo: tripDatesLabel.bottomAnchor, constant: 10),
-            startDatePicker.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: -20), // Left-aligned
-            startDatePicker.widthAnchor.constraint(equalTo: surveyDeadlinePicker.widthAnchor) // Match width with the existing date picker
+            startDatePicker.topAnchor.constraint(equalTo: tripDatesLabel.bottomAnchor, constant: 5),
+            startDatePicker.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20), // Left-aligned
+            //startDatePicker.widthAnchor.constraint(equalToConstant: 200) // Match width with the existing date picker
         ])
         
         // To label between start and end date pickers
         let toLabel = UILabel()
         toLabel.translatesAutoresizingMaskIntoConstraints = false
         toLabel.text = "to"
-        toLabel.font = UIFont(name: "Poppins-Bold", size: 16)
+        toLabel.font = UIFont(name: "Poppins", size: 16)
         toLabel.textColor = .black
         citiesModalView.addSubview(toLabel)
 
         NSLayoutConstraint.activate([
             toLabel.centerYAnchor.constraint(equalTo: startDatePicker.centerYAnchor),
-            toLabel.centerXAnchor.constraint(equalTo: citiesModalView.centerXAnchor)
+            toLabel.leadingAnchor.constraint(equalTo: startDatePicker.trailingAnchor, constant: 10)
         ])
 
         // End date picker
@@ -467,8 +470,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         NSLayoutConstraint.activate([
             endDatePicker.topAnchor.constraint(equalTo: startDatePicker.topAnchor),
             endDatePicker.leadingAnchor.constraint(equalTo: toLabel.trailingAnchor, constant: 10), // Positioned to the right of "to" label
-            endDatePicker.trailingAnchor.constraint(equalTo: citiesModalView.trailingAnchor, constant: -20), // Right-aligned
-            endDatePicker.widthAnchor.constraint(equalTo: startDatePicker.widthAnchor) // Match width with the start date picker
         ])
 
 
@@ -492,7 +493,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         NSLayoutConstraint.activate([
             citiesDoneButton.centerXAnchor.constraint(equalTo: citiesModalView.centerXAnchor),
-            citiesDoneButton.bottomAnchor.constraint(equalTo: citiesModalView.bottomAnchor, constant: -30),
+            citiesDoneButton.bottomAnchor.constraint(equalTo: citiesModalView.bottomAnchor, constant: -40),
             citiesDoneButton.heightAnchor.constraint(equalToConstant: 50),
             citiesDoneButton.widthAnchor.constraint(equalToConstant: 100)
         ])

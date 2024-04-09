@@ -148,14 +148,9 @@ class SurveyPageVC: UIViewController {
         
         // Add the 'Submit' button
         // Create Submit button
-        let submitButton = UIButton(type: .system)
+        let submitButton = StyledButton()
         submitButton.setTitle("Submit", for: .normal)
-        submitButton.titleLabel?.font = UIFont(name: "Poppins-Bold", size: 16)
-        submitButton.setTitleColor(.black, for: .normal)
-        submitButton.backgroundColor = .lightGray
         submitButton.layer.cornerRadius = 10
-        submitButton.layer.borderWidth = 1
-        submitButton.layer.borderColor = UIColor.black.cgColor
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(submitButton)
         
