@@ -26,9 +26,12 @@ class SurveyPageVC: UIViewController {
         // Do any additional setup after loading the view.
         // Create the label
         let titleLabel = UILabel()
-        titleLabel.text = cityName?.uppercased()
+        titleLabel.text = cityName
         titleLabel.font = UIFont(name: "Poppins-Bold", size: 40)
         titleLabel.textColor = .white
+        titleLabel.setCharacterSpacing(-1.5)
+        titleLabel.shadowColor = .black
+        titleLabel.shadowOffset = CGSize(width: 1, height: 1)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         

@@ -23,9 +23,12 @@ class ItineraryPageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.text = cityName?.uppercased()
+        titleLabel.text = cityName
         titleLabel.font = UIFont(name: "Poppins-Bold", size: 40)
         titleLabel.textColor = .white
+        titleLabel.setCharacterSpacing(-1.5)
+        titleLabel.shadowColor = .black
+        titleLabel.shadowOffset = CGSize(width: 1, height: 1)
 
         fetchItineraryData (cityDocId: cityId!){ [weak self] in
             self?.populateScrollView()
@@ -51,34 +54,47 @@ class ItineraryPageVC: UIViewController {
     func populateScrollView() {
         print("populating the scroll view")
         var yOffset: CGFloat = 10
+        let maskView = UIView(frame: CGRect(x: 0, y: 0, width: scrollView.frame.width, height: 50))
+        maskView.layer.cornerRadius = 15
+        maskView.backgroundColor = .white
+        scrollView.addSubview(maskView)
         for day in itineraryDays {
             let block = createItineraryBlock(for: day, yOffset: yOffset)
             scrollView.addSubview(block)
-            yOffset += block.frame.height + 10 // Adjust spacing between blocks
+            yOffset += block.frame.height// + 10 // Adjust spacing between blocks
         }
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: yOffset)
+        scrollView.layer.cornerRadius = 15
     }
     
     func createItineraryBlock(for day: ItineraryDay, yOffset: CGFloat) -> UIView {
-        print("creating itinerary block UIView")
-        let blockView = UIView(frame: CGRect(x: 0, y: yOffset, width: scrollView.frame.width, height: 200)) // Adjust height as needed
+        let blockView = UIView(frame: CGRect(x: 0, y: yOffset, width: scrollView.frame.width, height: 0)) // Start with 0 height
+        blockView.backgroundColor = .white // Set background color if needed
+        //blockView.layer.cornerRadius = 15 // Set rounded corners
         
-        let dayLabel = UILabel(frame: CGRect(x: 10, y: 10, width: blockView.frame.width - 20, height: 20))
+        let dayLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 80, height: 20))
         dayLabel.font = UIFont(name: "Poppins-Bold", size: 20)
         dayLabel.text = "Day \(day.dayNumber)"
         blockView.addSubview(dayLabel)
         
-        let dateLabel = UILabel(frame: CGRect(x: 10, y: 40, width: blockView.frame.width - 20, height: 20))
+        let dateLabel = UILabel(frame: CGRect(x: 87, y: 21, width: 200, height: 20))
         dateLabel.text = day.date
         dateLabel.font = UIFont(name: "Poppins-Regular", size: 16)
-        dateLabel.textColor = UIColor.darkGray
+        dateLabel.textColor = UIColor.gray
         blockView.addSubview(dateLabel)
         
-        let contentView = UITextView(frame: CGRect(x: 10, y: 70, width: blockView.frame.width - 20, height: 120))
-        contentView.text = day.content.joined(separator: "\n")
+        let contentView = UITextView(frame: CGRect(x: 20, y: 50, width: blockView.frame.width - 40, height: 0)) // Start with 0 height
+        contentView.text = "- " + day.content.joined(separator: "\n- ")
         contentView.font = UIFont(name: "Poppins-Regular", size: 16)
-        contentView.isEditable = true // Adjust based on your requirements
+        contentView.isEditable = false
+        contentView.isScrollEnabled = false // Disable scrolling
+        let contentHeight = contentView.sizeThatFits(CGSize(width: contentView.frame.width, height: CGFloat.greatestFiniteMagnitude)).height
+        contentView.frame.size.height = contentHeight
         blockView.addSubview(contentView)
+        
+        // Adjust the height of the blockView based on the content
+        let totalHeight = dayLabel.frame.maxY + contentHeight + 25 // Adjust the padding as needed
+        blockView.frame.size.height = totalHeight
         
         return blockView
     }
@@ -220,3 +236,12 @@ func uploadDayItineraryToFirestore(db: Firestore, cityDocId: String, dayNumber: 
     }
 }
 
+extension UILabel {
+    func setCharacterSpacing(_ spacing: CGFloat) {
+        guard let text = self.text else { return }
+        
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(.kern, value: spacing, range: NSRange(location: 0, length: text.count))
+        self.attributedText = attributedString
+    }
+}
