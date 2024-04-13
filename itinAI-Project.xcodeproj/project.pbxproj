@@ -59,6 +59,7 @@
 		3BF2F9F72BBB501400C90D2B /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 3BF2F9F62BBB501400C90D2B /* OpenAI */; };
 		827389732BC328EE0000730D /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827389722BC328EE0000730D /* GroupTableViewCell.swift */; };
 		829207B52BC067FC00FD63E2 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829207B42BC067FC00FD63E2 /* City.swift */; };
+		82B8CD6B2BCA35E600B8F6ED /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8CD6A2BCA35E600B8F6ED /* IconButton.swift */; };
 		82E7BBC12B9B70F100EE2CED /* CircularProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */; };
 		82E7BBC22B9B70F100EE2CED /* ProfileDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */; };
 		82E7BBC32B9B70F100EE2CED /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */; };
@@ -101,6 +102,7 @@
 		3BE4BE502BC48F3900FA7D60 /* ItineraryDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryDay.swift; sourceTree = "<group>"; };
 		827389722BC328EE0000730D /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		829207B42BC067FC00FD63E2 /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		82B8CD6A2BCA35E600B8F6ED /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		82E7BBBE2B9B70F100EE2CED /* CircularProfilePicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProfilePicture.swift; sourceTree = "<group>"; };
 		82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDoneButton.swift; sourceTree = "<group>"; };
 		82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				3B1123D62B9B70BF00DF05D8 /* ProfilePage.swift */,
 				9D2BF0072BA7831E0029E742 /* CustomPeopleTableViewCell.swift */,
 				827389722BC328EE0000730D /* GroupTableViewCell.swift */,
+				82B8CD6A2BCA35E600B8F6ED /* IconButton.swift */,
 			);
 			path = "itinAI-Project";
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				3BD878CA2BA8DFE600B51C3F /* User.swift in Sources */,
 				9D8D6E892BBB50F1002DDF75 /* SurveyPageVC.swift in Sources */,
 				829207B52BC067FC00FD63E2 /* City.swift in Sources */,
+				82B8CD6B2BCA35E600B8F6ED /* IconButton.swift in Sources */,
 				3BB9936A2BA65057003AC721 /* GroupPageVC.swift in Sources */,
 				9DC44AB42BA65E8C002906C8 /* HomePageVC.swift in Sources */,
 				82E7BBC32B9B70F100EE2CED /* ProfilePage.swift in Sources */,
