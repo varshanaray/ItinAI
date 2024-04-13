@@ -24,6 +24,11 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     
     var currentModalView: UIView!
     
+    let storage = Storage.storage()
+    var pfpRef: StorageReference!
+    var userStorageRef: StorageReference!
+    var currentProfilePictureUrl: String?
+    
     let defaultImage = UIImage(named: "defaultProfilePicture")
     
     override func viewDidLoad() {
@@ -36,6 +41,20 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         
         // Change Picture button
         changePictureButton.setTitle("", for: .normal)
+        
+        pfpRef = storage.reference().child("ProfilePictures")
+        
+        // Retrieve the current user's UID
+        guard let userId = Auth.auth().currentUser else {
+            print("No current user")
+            return
+        }
+        
+        var userStorageRef = pfpRef.child(Auth.auth().currentUser!.uid)
+        self.userStorageRef = userStorageRef
+        print("This is userStorageRef: ", userStorageRef)
+        
+        retrieveProfilePicture()
         
         // Set the display name
         let db = Firestore.firestore()
@@ -52,6 +71,54 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
                 }
             } else {
                 print("User document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    }
+    
+    func retrieveProfilePicture() {
+        guard let currentUser = Auth.auth().currentUser else {
+            print("No current user")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userRef = db.collection("Users").document(currentUser.uid)
+        
+        userRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                if let profileImageUrl = document.get("profileImageURL") as? String {
+                    // Profile picture URL found in Firestore
+                    self.currentProfilePictureUrl = profileImageUrl
+                    self.downloadProfilePicture(profileImageUrl)
+                } else {
+                    print("Profile image URL not found")
+                    // Use default profile picture
+                }
+            } else {
+                print("User document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    }
+    
+    func downloadProfilePicture(_ url: String) {
+        print("Inside downloadProfilePicture")
+        // Create a reference to the profile picture in Firebase Storage
+        let profilePictureRef = pfpRef.child(url)
+        print("The picture ref i'm looking for is :", profilePictureRef)
+        
+        // Download the profile picture
+        profilePictureRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("Error downloading profile picture: \(error.localizedDescription)")
+            } else {
+                if let imageData = data {
+                    // Profile picture downloaded successfully, update image view
+                    self.profilePicture.image = UIImage(data: imageData)
+                    print("Successfully retrieved profile picture")
+                    
+                } else {
+                    print("No data received for profile picture")
+                }
             }
         }
     }
@@ -177,13 +244,28 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
         
         if let selectedImage = info[.originalImage] as? UIImage {
-            // Use the selected image
-            // For example, you can set it as the profile picture
-            profilePicture.image = selectedImage
+            
+            if let currentUrl = currentProfilePictureUrl {
+                print("Profile picture already exists, comparing")
+                //checkIfSameImage(selectedImage, withUrl: currentUrl)
+                // TODO: Debug checkIfSameImage
+                self.profilePicture.image = selectedImage
+                uploadImageToFirebaseStorage(selectedImage)
+            } else {
+                // No current profile picture, proceed with upload
+                print("No current profile picture, proceed with upload")
+                self.profilePicture.image = selectedImage
+                uploadImageToFirebaseStorage(selectedImage)
+            }
+
         }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
     @objc func deletePhotoButtonPressed() {
@@ -193,6 +275,97 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         dismissModalView()
     }
     
+    
+    func uploadImageToFirebaseStorage(_ image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+            print("Failed to convert image to data")
+            return
+        }
+        
+        let imageName = "\(UUID().uuidString).jpg"
+        
+        // Create a reference to the image in the user's folder
+        guard let userStorageRef = userStorageRef else {
+            print("User storage reference is nil")
+            return
+        }
+        
+        let imageRef = userStorageRef.child(imageName)
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        let _ = imageRef.putData(imageData, metadata: metadata) { (metadata, error) in
+            guard error == nil else {
+                print("Error uploading image: \(error!.localizedDescription)")
+                return
+            }
+            
+            // Image uploaded successfully
+            imageRef.downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                    print("Error getting download URL: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
+                print("Image uploaded to Firebase Storage")
+                // Save download URL to Firestore
+                self.updateProfilePictureURL(downloadURL)
+            }
+        }
+    }
+
+    func updateProfilePictureURL(_ downloadURL: URL) {
+        guard let currentUser = Auth.auth().currentUser else {
+            print("No current user")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userRef = db.collection("Users").document(currentUser.uid)
+        
+        userRef.updateData(["profileImageURL": downloadURL.absoluteString]) { error in
+            if let error = error {
+                print("Error updating profile picture URL: \(error.localizedDescription)")
+            } else {
+                print("Profile picture URL updated successfully: ", downloadURL.absoluteString)
+            }
+        }
+    }
+    
+    // Function to compare selected image with current profile picture
+    func checkIfSameImage(_ image: UIImage, withUrl url: String) {
+        print("Inside checkIfSameImgage")
+        let profilePictureRef = userStorageRef?.child(url)
+        
+        profilePictureRef?.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("Error downloading profile picture: \(error.localizedDescription)")
+            } else {
+                if let imageData = data, let currentImage = UIImage(data: imageData) {
+                    // Compare images
+                    if self.imagesAreEqual(image, currentImage) {
+                        print("Selected image is the same as current profile picture")
+                        return // Do not upload if images are the same
+                    }
+                } else {
+                    print("No data received for profile picture")
+                }
+                print("Selected image is different than current pfp, proceed with upload")
+                // Selected image is different, proceed with upload
+                self.uploadImageToFirebaseStorage(image)
+            }
+        }
+    }
+    
+    // Function to compare two images
+    func imagesAreEqual(_ image1: UIImage, _ image2: UIImage) -> Bool {
+        guard let data1 = image1.jpegData(compressionQuality: 1.0),
+              let data2 = image2.jpegData(compressionQuality: 1.0) else {
+            return false
+        }
+        
+        return data1 == data2
+    }
     
     
     func dismissModalView() {
