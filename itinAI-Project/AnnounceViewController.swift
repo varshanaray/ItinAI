@@ -28,6 +28,7 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate {
     
     var subject = ""
     var announcement = ""
+    var group:Group?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,7 +192,7 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate {
     
          createDoneButton.createDoneCallback = {
              print("Create done callback")
-             self.handleAnnouncementCreation(subject: subjectTextField.text!, announcement: announceTextView.text!)
+             self.handleAnnouncmentCreation(subject: subjectTextField.text!, announcement: announceTextView.text!)
          }
          
          createDoneButton.dismissCallback = {
@@ -201,7 +202,7 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func handleAnnouncmentCreation(name: String, code: String) {
+    func handleAnnouncmentCreation(subject: String, announcement: String) {
 
         let db = Firestore.firestore()
         /*

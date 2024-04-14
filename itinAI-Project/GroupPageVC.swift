@@ -587,5 +587,11 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     destination.displayNames = displayNames
                     destination.group = group
                 }
+        
+        if segue.identifier == "GroupToAnnounce",
+                   let destination = segue.destination as? AnnounceViewController
+                {
+                    destination.group = group
+                }
     }
 }
