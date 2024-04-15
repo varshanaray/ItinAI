@@ -162,20 +162,34 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("CITY COUNT: ", cityList.count)
+        return 1 //cityList.count
+    }
+      
+    func numberOfSections(in tableView: UITableView) -> Int {
         return cityList.count
     }
-    
+      
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
+    }
+      
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1
+    }
+      
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Dequeue a reusable cell from the table view.
+        // Dequeue a reusable cell from the table view.          
         let cell = tableView.dequeueReusableCell(withIdentifier: "CityCell", for: indexPath) as! CityCell
-        
-        let newWidth = cell.contentView.frame.width * 0.8
+          
+        let newWidth = cell.contentView.frame.width * 0.5
         let margin = (cell.contentView.frame.width - newWidth) / 2.0
-        
-        cell.contentView.frame = CGRect(x: margin, y: 0, width: newWidth, height: cell.contentView.frame.height)
+          
+        //cell.contentView.frame = CGRect(x: margin, y: 0, width: newWidth, height: cell.contentView.frame.height)
+        cell.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        //cell.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         
         // Get the city name for the current row.
-        let thisCity = cityList[indexPath.row]
+        let thisCity = cityList[indexPath.section]
 
         // Set the city name to the cell's text label.
         cell.layer.cornerRadius = 15
@@ -188,7 +202,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
         return cell
     }
-    
+      
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
@@ -196,18 +210,18 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let db = Firestore.firestore()
         let groupCode = group?.groupCode ?? ""
-        let cityName = cityList[indexPath.row]?.name ?? ""
-        
+        let cityName = cityList[indexPath.section]?.name ?? ""
+          
         let cityId = "\(groupCode)\(cityName)"
         print("City ID:", cityId)
         let cityRef = db.collection("Cities").document(cityId)
-        
+          
         cityRef.getDocument { (document, error) in
             guard let document = document, document.exists else {
                 print("City document does not exist")
                 return
             }
-            
+              
             if let deadlineTimestamp = document.data()?["deadline"] as? Timestamp {
                 let deadlineDate = deadlineTimestamp.dateValue()
                 if Date() >= deadlineDate {
@@ -219,10 +233,10 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         } else {
                             // If not generated, generate itinerary first
                             self.showLoadingOverlay() // Show a loading indicator to the user
-                            
+                                  
                             self.generateItinerary(cityId: cityId) { success in
                                 self.hideLoadingOverlay() // Hide the loading indicator
-                                
+                    
                                 if success {
                                     self.navigateToItineraryPage(cityId: cityId, cityName: cityName)
                                 } else {
@@ -240,6 +254,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 print("Issue finding deadline in Firestore")
             }
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     func checkIfItineraryGenerated(cityId: String, completion: @escaping (Bool) -> Void) {

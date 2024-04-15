@@ -23,7 +23,7 @@ class CityCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12))
         contentView.layer.cornerRadius = 15
         contentView.layer.borderWidth = 0.5
     }
