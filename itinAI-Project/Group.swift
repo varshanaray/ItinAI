@@ -9,10 +9,12 @@ class Group {
     
     var groupName: String
     var groupCode: String
+    var groupImageURL: String
     
-    init(groupName: String, groupCode: String) {
+    init(groupName: String, groupCode: String, groupImageURL: String) {
         self.groupName = groupName
         self.groupCode = groupCode
+        self.groupImageURL = groupImageURL
     }
 
 }

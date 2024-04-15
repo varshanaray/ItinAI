@@ -5,8 +5,9 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 
-class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var announceCell: UITableViewCell!
     
@@ -32,8 +33,16 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     var cityList: [City?] = []
     
+    let imagePicker = UIImagePickerController()
+    
+    let storage = Storage.storage()
+    var groupImagesRef: StorageReference!
+    var groupStorageRef: StorageReference!
+    var currentGroupImageURL: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         collectionViewPeople.delegate = self
         collectionViewPeople.dataSource = self
         
@@ -42,6 +51,15 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         citiesTableView.layer.cornerRadius = 15
         citiesTableView.layer.borderWidth = 1
         citiesTableView.layer.borderColor = UIColor.darkGray.cgColor
+        
+        // Add tap gesture recognizer to the image view
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped(_:)))
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        imageView.isUserInteractionEnabled = true
+        imagePicker.delegate = self
+        
+        groupImagesRef = storage.reference().child("GroupImages")
+        groupStorageRef = groupImagesRef.child(group!.groupCode)
         
         citiesTableView.delegate = self
         citiesTableView.dataSource = self
@@ -67,6 +85,166 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
             
         fetchCities()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        retrieveGroupImage()
+    }
+    
+    // Action method to handle tap on the image view
+    @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
+        // Open the camera roll or perform any action you desire
+        openCameraRoll()
+    }
+
+    // Function to open the camera roll
+    func openCameraRoll() {
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        print("inside imagePickerController, didFinishPickingMediaWithInfo")
+        // Get the selected image from the info dictionary
+        if let selectedImage = info[.originalImage] as? UIImage {
+            // Set the selected image as the group image
+            imageView.image = selectedImage
+            print("Selected image is new group image")
+            uploadImageToFirebaseStorage(imageView.image!)
+        } else {
+            print("failure to select and set image")
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func retrieveGroupImage() {
+        guard let currentUser = Auth.auth().currentUser else {
+            print("No current user")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userRef = db.collection("Groups").document(group!.groupCode)
+        
+        userRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                if let groupImageURL = document.get("groupImageURL") as? String {
+                    // Profile picture URL found in Firestore
+                    self.currentGroupImageURL = groupImageURL
+                    self.downloadGroupImage(groupImageURL)
+                } else {
+                    print("Profile image URL not found")
+                    // Use default profile picture
+                }
+            } else {
+                print("User document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    }
+
+    func downloadGroupImage(_ urlString: String) {
+        print("Inside downloadGroupImage")
+        print("The url retrieved is: \(urlString)")
+        guard let url = URL(string: urlString) else {
+             print("Invalid URL")
+             return
+         }
+         
+         // Create a URLSessionDataTask to fetch the image data from the URL
+        // Create a URLSessionDataTask to fetch the image data from the URL
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            // Check for errors
+            if let error = error {
+                print("Error downloading image: \(error.localizedDescription)")
+                return
+            }
+            
+            // Check for response status code
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                print("Invalid response")
+                return
+            }
+            
+            // Check if data is available
+            guard let imageData = data else {
+                print("No data received")
+                return
+            }
+            
+            // Convert the downloaded data into a UIImage
+            if let image = UIImage(data: imageData) {
+                // Update the profileImageView with the downloaded image
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                    print("Successfully retrieved and set group image")
+                }
+            } else {
+                print("Failed to create image from data")
+            }
+        }
+        
+        // Start the URLSessionDataTask
+        task.resume()
+    }
+    
+    func uploadImageToFirebaseStorage(_ image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+            print("Failed to convert image to data")
+            return
+        }
+        
+        let imageName = "\(UUID().uuidString).jpg"
+        
+        // Create a reference to the image in the user's folder
+        guard let groupStorageRef = self.groupStorageRef else {
+            print("User storage reference is nil")
+            return
+        }
+        
+        let imageRef = groupStorageRef.child(imageName)
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        let _ = imageRef.putData(imageData, metadata: metadata) { (metadata, error) in
+            guard error == nil else {
+                print("Error uploading image: \(error!.localizedDescription)")
+                return
+            }
+            
+            // Image uploaded successfully
+            imageRef.downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                    print("Error getting download URL: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
+                print("Image uploaded to Firebase Storage")
+                // Save download URL to Firestore
+                self.updateGroupImageURL(downloadURL)
+            }
+        }
+    }
+
+    func updateGroupImageURL(_ downloadURL: URL) {
+        guard let currentUser = Auth.auth().currentUser else {
+            print("No current user")
+            return
+        }
+        let db = Firestore.firestore()
+        let userRef = db.collection("Groups").document(group!.groupCode)
+        
+        userRef.updateData(["groupImageURL": downloadURL.absoluteString]) { error in
+            if let error = error {
+                print("Error updating group image URL: \(error.localizedDescription)")
+            } else {
+                print("Group image URL updated successfully: ", downloadURL.absoluteString)
+            }
+        }
     }
     
     @IBAction func announceClicked(_ sender: Any) {

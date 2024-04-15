@@ -53,9 +53,10 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         var userStorageRef = pfpRef.child(Auth.auth().currentUser!.uid)
         self.userStorageRef = userStorageRef
         print("This is userStorageRef: ", userStorageRef)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         retrieveProfilePicture()
-        
         // Set the display name
         let db = Firestore.firestore()
         let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)

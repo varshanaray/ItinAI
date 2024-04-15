@@ -354,7 +354,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         db.collection("Groups").document(code).setData([
             "groupName": name,
             "code": code,
-            "userList": [userRef]
+            "userList": [userRef],
+            "groupImageURL": "https://firebasestorage.googleapis.com:443/v0/b/itinai.appspot.com/o/GroupImages%logoItinAI.jpeg"
             //"userList": [Auth.auth().currentUser!.uid]
         ]) { err in
             if let err = err {
@@ -463,8 +464,18 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                         defer {
                             dispatchGroup.leave()
                         }
-                        if let groupDoc = groupDoc, groupDoc.exists, let groupName =  groupDoc.data()?["groupName"] as? String {
-                            let group = Group(groupName: groupName, groupCode: groupDoc.documentID)
+                        
+                    var outsideURL: String = ""
+                        if let groupDoc = groupDoc, groupDoc.exists, let groupName =  groupDoc.data()?["groupName"] as? String? {
+                            if let stringURL = groupDoc.get("groupImageURL") {
+                                print("Found an image URL")
+                                
+                                outsideURL = stringURL as! String
+                            } else {
+                                print("did not find a group image url")
+                            }
+                            
+                            let group = Group(groupName: groupName!, groupCode: groupDoc.documentID, groupImageURL: outsideURL)
                             self.groupList.append(group)
                         } else {
                             print("Group document does not exists in User")
