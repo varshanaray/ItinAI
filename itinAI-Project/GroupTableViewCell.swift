@@ -16,6 +16,7 @@ class GroupTableViewCell: UITableViewCell {
         self.layer.cornerRadius = 15
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 1
+        self.clipsToBounds = true
 
         // Customize the appearance of the image view
         groupImageView.layer.borderWidth = 0.5

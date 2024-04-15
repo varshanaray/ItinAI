@@ -19,4 +19,12 @@ class CityCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        contentView.layer.cornerRadius = 15
+        contentView.layer.borderWidth = 0.5
+    }
 }
