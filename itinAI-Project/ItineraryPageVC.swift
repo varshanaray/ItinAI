@@ -109,8 +109,9 @@ func fetchSurveyResponsesAndGenerate(cityDocId: String) async -> Bool {
                 return false
             }
             
+            let surveyResponses = data["surveyResponses"] as? [String] ?? []
+            
             guard let cityName = data["cityName"] as? String,
-                  let surveyResponses = data["surveyResponses"] as? [String],
                   let startDateTimestamp = data["startDate"] as? Timestamp,
                   let endDateTimestamp = data["endDate"] as? Timestamp else {
                 print("One or more fields not found or is not in the expected format")
@@ -151,7 +152,7 @@ func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList:
         
         Recall to do this for however many days from \(startDate) to \(endDate). And note that we do not need to strictly visit 4 places per day.
 
-        Please create a similar itinerary, ensuring each day offers a unique and enriching experience and make sure to consider all of the user's preferences. Translate the entire itinerary to spanish but remember to retain the formatting.
+        Please create a similar itinerary, ensuring each day offers a unique and enriching experience and make sure to consider all of the user's preferences. Use English instead of other languages.
         """
 
     // User preferences are considered after the initial prompt, each as a separate message
