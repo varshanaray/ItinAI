@@ -18,4 +18,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
         userImageView.layer.cornerRadius = imageSize / 2
         userImageView.clipsToBounds = true
     }
+    
+
 }

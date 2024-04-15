@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28412AEA2BCDB54B00E4DF90 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28412AE92BCDB54B00E4DF90 /* SettingsVC.swift */; };
 		28756D432BC3128C000CAB6C /* NavTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28756D422BC3128C000CAB6C /* NavTabVC.swift */; };
 		28C6B51F2B9B651200E2DBC3 /* japan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B51E2B9B651200E2DBC3 /* japan.jpg */; };
 		28C6B5212B9B660E00E2DBC3 /* defaultProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */; };
@@ -73,6 +74,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28412AE92BCDB54B00E4DF90 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		28756D422BC3128C000CAB6C /* NavTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavTabVC.swift; sourceTree = "<group>"; };
 		28C6B51E2B9B651200E2DBC3 /* japan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = japan.jpg; sourceTree = "<group>"; };
 		28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProfilePicture.png; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				82E7BBBF2B9B70F100EE2CED /* ProfileDoneButton.swift */,
 				829207B42BC067FC00FD63E2 /* City.swift */,
 				82E7BBC02B9B70F100EE2CED /* ProfilePage.swift */,
+				28412AE92BCDB54B00E4DF90 /* SettingsVC.swift */,
 				9DC44AB32BA65E8C002906C8 /* HomePageVC.swift */,
 				28C786482B9A3C81003C757D /* LoginVC.swift */,
 				3BE4BE502BC48F3900FA7D60 /* ItineraryDay.swift */,
@@ -349,6 +352,7 @@
 				28C786452B9A3C81003C757D /* AppDelegate.swift in Sources */,
 				3BD878CC2BA8DFED00B51C3F /* Group.swift in Sources */,
 				9D2BF0042BA777130029E742 /* GroupDetailsViewController.swift in Sources */,
+				28412AEA2BCDB54B00E4DF90 /* SettingsVC.swift in Sources */,
 				3B64443D2BC34798006CBBAC /* StyledButton.swift in Sources */,
 				9D2BF0082BA7831E0029E742 /* CustomPeopleTableViewCell.swift in Sources */,
 				9D3975ED2BC3AD1F00C02E35 /* AnnounceViewController.swift in Sources */,

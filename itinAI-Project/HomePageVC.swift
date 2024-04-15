@@ -5,6 +5,8 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import UserNotifications
+import Foundation
 
 protocol GroupTableUpdater {
     func addGroup(newGroup: Group)
@@ -43,6 +45,23 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
     
     override func viewDidLoad() {
+        print("view did load in home page")
+        if (UserDefaults.standard.object(forKey: "notificationPermission") == nil) {
+            print("need to ask for notif permissions")
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) {
+                (granted,error) in
+                if granted {
+                    print("allowed notifs!")
+                } else if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    print("not allowed notifs")
+                }
+                UserDefaults.standard.set(granted, forKey: "notificationPermission")
+            }
+        }
+        print(UserDefaults.standard.object(forKey: "notificationPermission") ?? "none")
+
         super.viewDidLoad()
         groupTableView.delegate = self
         groupTableView.dataSource = self

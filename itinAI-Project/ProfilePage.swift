@@ -11,6 +11,7 @@ import UniformTypeIdentifiers
 
 class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @IBOutlet weak var resetStatusLabel: UILabel!
     @IBOutlet weak var profilePicture: CircularProfilePicture!
     @IBOutlet weak var changePictureButton: UIButton!
     @IBOutlet weak var displayNameLabel: UILabel!
@@ -28,12 +29,14 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     var pfpRef: StorageReference!
     var userStorageRef: StorageReference!
     var currentProfilePictureUrl: String?
+    var userEmail: String?
     
     let defaultImage = UIImage(named: "defaultProfilePicture")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        resetStatusLabel.text = ""
         profilePicture.image = defaultImage
         
         displayNameLabel.text = ""
@@ -57,6 +60,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     
     override func viewWillAppear(_ animated: Bool) {
         retrieveProfilePicture()
+        resetStatusLabel.text = ""
         // Set the display name
         let db = Firestore.firestore()
         let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
@@ -66,9 +70,14 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
                 if let displayName = document.get("name") as? String {
                     print("Display Name: \(displayName)")
                     self.displayNameLabel.text = displayName
-                    // You can now use the displayName variable as needed
                 } else {
                     print("Display name not found or not in expected format")
+                }
+                if let email = document.get("email") as? String {
+                    print("Email: \(email)")
+                    self.userEmail = email
+                } else {
+                    print("Email not found or not in expected format")
                 }
             } else {
                 print("User document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
@@ -76,6 +85,28 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         }
     }
     
+    @IBAction func resetPassPressed(_ sender: Any) {
+        /*guard let email = emailTextField.text, !email.isEmpty else {
+            // Display error message indicating that email field is empty
+            return
+        } */
+
+        Auth.auth().sendPasswordReset(withEmail: userEmail ?? "") { error in
+            if let error = error {
+                // Handle error
+                print("Error sending password reset email: \(error.localizedDescription)")
+                // Display error message to the user
+                self.resetStatusLabel.textColor = .red
+                self.resetStatusLabel.text = "Unable to send password request!"
+            } else {
+                // Password reset email sent successfully
+                print("Password reset email sent successfully")
+                self.resetStatusLabel.textColor = .black
+                self.resetStatusLabel.text = "Password reset request successfully sent!"
+                // Display success message to the user
+            }
+        }
+    }
     func retrieveProfilePicture() {
         guard let currentUser = Auth.auth().currentUser else {
             print("No current user")
