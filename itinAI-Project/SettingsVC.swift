@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseStorage
 
 class SettingsVC: UIViewController {
 
@@ -13,6 +15,11 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var notifsSwitch: UISwitch!
     
     @IBOutlet weak var darkModeSwitch: UISwitch!
+    
+    let storage = Storage.storage()
+    var groupImagesRef: StorageReference!
+    var groupStorageRef: StorageReference!
+    var currentGroupImageURL: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
