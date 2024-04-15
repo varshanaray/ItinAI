@@ -49,7 +49,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         //UITabBar.appearance().tintColor = .white
         //UITabBar.appearance().unselectedItemTintColor = .white
-        fetchGroups()
+        //fetchGroups()
         
         // reset codeToCopy to blank
         codeToCopy = ""
@@ -75,6 +75,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         print("viewWillAppear called")
+        fetchGroups()
     }
     
     @IBAction func createButtonPressed(_ sender: Any) {
@@ -560,11 +561,60 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTableCell", for: indexPath) as! GroupTableViewCell
         let row = indexPath.row
         let groupName = groupList[row]!.groupName
+        let groupImageURL = groupList[row]!.groupImageURL
         cell.groupNameLabel.text = groupName
-        cell.groupImageView.image = UIImage(named: "japan")
+        //cell.groupImageView.image = UIImage(named: "japan")
+        downloadGroupImage(groupImageURL, cell)
         cell.datesRangeLabel.text = "Date range"
         
         return cell
+    }
+    
+    func downloadGroupImage(_ urlString: String, _ cell: GroupTableViewCell){
+        print("Inside downloadGroupImage")
+        print("The url retrieved is: \(urlString)")
+        guard let url = URL(string: urlString) else {
+             print("Invalid URL")
+             return
+         }
+         
+         // Create a URLSessionDataTask to fetch the image data from the URL
+        // Create a URLSessionDataTask to fetch the image data from the URL
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            // Check for errors
+            if let error = error {
+                cell.groupImageView.image = UIImage(named: "japan")
+                return
+            }
+            
+            // Check for response status code
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                print("Invalid response")
+                return
+            }
+            
+            // Check if data is available
+            guard let imageData = data else {
+                print("No data received")
+                return
+            }
+            
+            // Convert the downloaded data into a UIImage
+            if let image = UIImage(data: imageData) {
+                // Update the profileImageView with the downloaded image
+                DispatchQueue.main.async {
+                    cell.groupImageView.image = image
+                    print("Successfully retrieved and set group image")
+                }
+            } else {
+                cell.groupImageView.image = UIImage(named: "japan")
+                print("Failed to create image from data")
+            }
+        }
+        
+        // Start the URLSessionDataTask
+        task.resume()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
