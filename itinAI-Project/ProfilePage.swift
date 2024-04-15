@@ -100,27 +100,50 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         }
     }
     
-    func downloadProfilePicture(_ url: String) {
+    func downloadProfilePicture(_ urlString: String) {
         print("Inside downloadProfilePicture")
-        // Create a reference to the profile picture in Firebase Storage
-        let profilePictureRef = pfpRef.child(url)
-        print("The picture ref i'm looking for is :", profilePictureRef)
-        
-        // Download the profile picture
-        profilePictureRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        print("The url retrieved is: \(urlString)")
+        guard let url = URL(string: urlString) else {
+             print("Invalid URL")
+             return
+         }
+         
+         // Create a URLSessionDataTask to fetch the image data from the URL
+        // Create a URLSessionDataTask to fetch the image data from the URL
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            // Check for errors
             if let error = error {
-                print("Error downloading profile picture: \(error.localizedDescription)")
-            } else {
-                if let imageData = data {
-                    // Profile picture downloaded successfully, update image view
-                    self.profilePicture.image = UIImage(data: imageData)
-                    print("Successfully retrieved profile picture")
-                    
-                } else {
-                    print("No data received for profile picture")
+                print("Error downloading image: \(error.localizedDescription)")
+                return
+            }
+            
+            // Check for response status code
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                print("Invalid response")
+                return
+            }
+            
+            // Check if data is available
+            guard let imageData = data else {
+                print("No data received")
+                return
+            }
+            
+            // Convert the downloaded data into a UIImage
+            if let image = UIImage(data: imageData) {
+                // Update the profileImageView with the downloaded image
+                DispatchQueue.main.async {
+                    self.profilePicture.image = image
+                    print("Successfully retrieved and set profile picture")
                 }
+            } else {
+                print("Failed to create image from data")
             }
         }
+        
+        // Start the URLSessionDataTask
+        task.resume()
     }
     
     // TODO: FINAL - implement
@@ -229,7 +252,10 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     // Method to handle button press events
     @objc func takePictureButtonPressed() {
         print("Take picture button pressed")
-        // Implement functionality to take a picture using the front camera
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .camera
+        present(imagePickerController, animated: true, completion: nil)
     }
     
     @objc func accessGalleryButtonPressed() {
@@ -319,7 +345,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
             print("No current user")
             return
         }
-        
         let db = Firestore.firestore()
         let userRef = db.collection("Users").document(currentUser.uid)
         
