@@ -771,6 +771,7 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="byL-oZ-ZZt">
                                 <rect key="frame" x="287" y="201" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" systemColor="systemIndigoColor"/>
                                 <connections>
                                     <action selector="notifsSwitchChange:" destination="JwX-fw-oGr" eventType="valueChanged" id="eTR-z0-bEa"/>
                                 </connections>
@@ -785,6 +786,7 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ko-1z-IHL">
                                 <rect key="frame" x="287" y="276" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" systemColor="systemIndigoColor"/>
                                 <connections>
                                     <action selector="darkModeChanged:" destination="JwX-fw-oGr" eventType="valueChanged" id="jKc-FB-3UF"/>
                                 </connections>
@@ -846,7 +848,7 @@
                                 <rect key="frame" x="35" y="679" width="322" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFY-wa-eLT">
@@ -860,7 +862,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Kar-uE-qTF"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="B41-ya-9zC" firstAttribute="centerX" secondItem="nwq-aV-ASQ" secondAttribute="centerX" id="0sF-VR-s2x"/>
                             <constraint firstItem="B41-ya-9zC" firstAttribute="top" secondItem="jt4-gm-2W1" secondAttribute="bottom" constant="40" id="AQZ-nD-N73"/>
@@ -995,6 +997,12 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
