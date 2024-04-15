@@ -12,6 +12,8 @@ class SettingsVC: UIViewController {
     
     @IBOutlet weak var notifsSwitch: UISwitch!
     
+    @IBOutlet weak var darkModeSwitch: UISwitch!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // .isOn = tru
@@ -22,11 +24,32 @@ class SettingsVC: UIViewController {
         } else {
             notifsSwitch.isOn = false
         }
-
+        
+        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
+            // dark mode is on
+            darkModeSwitch.isOn = true
+        } else {
+            darkModeSwitch.isOn = false
+        }
         // Do any additional setup after loading the view.
     }
     
 
+    @IBAction func darkModeChanged(_ sender: Any) {
+        print("Dark mode switch changed")
+        if (sender as! UISwitch).isOn {
+            print("darkMode switch is ON")
+            UserDefaults.standard.set(true, forKey: "darkMode")
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
+        } else {
+            print("Darkmode Switch is OFF")
+            UserDefaults.standard.set(false, forKey: "darkMode")
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
+         
+        }
+        
+    }
+    
     @IBAction func notifsSwitchChange(_ sender: Any) {
         print("Notif switch changed")
         if (sender as! UISwitch).isOn {

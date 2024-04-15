@@ -775,12 +775,27 @@
                                     <action selector="notifsSwitchChange:" destination="JwX-fw-oGr" eventType="valueChanged" id="eTR-z0-bEa"/>
                                 </connections>
                             </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dark Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTZ-lF-O3L">
+                                <rect key="frame" x="43" y="286" width="84" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ko-1z-IHL">
+                                <rect key="frame" x="287" y="276" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="darkModeChanged:" destination="JwX-fw-oGr" eventType="valueChanged" id="jKc-FB-3UF"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EuS-Km-1Op"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="gearshape" catalog="system" selectedImage="gearshape.fill" id="Nf5-pm-u3c"/>
                     <connections>
+                        <outlet property="darkModeSwitch" destination="3ko-1z-IHL" id="ZXt-bx-raY"/>
                         <outlet property="notifsSwitch" destination="byL-oZ-ZZt" id="Vcm-Y7-E2z"/>
                     </connections>
                 </viewController>

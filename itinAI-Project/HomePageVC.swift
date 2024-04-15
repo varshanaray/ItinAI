@@ -48,6 +48,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         print("view did load in home page")
         if (UserDefaults.standard.object(forKey: "notificationPermission") == nil) {
             print("need to ask for notif permissions")
+            UserDefaults.standard.set(false, forKey: "darkMode")
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) {
                 (granted,error) in
                 if granted {
