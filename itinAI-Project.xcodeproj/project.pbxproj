@@ -20,6 +20,7 @@
 		28C786512B9A3C87003C757D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28C786502B9A3C87003C757D /* Assets.xcassets */; };
 		28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28C786522B9A3C87003C757D /* LaunchScreen.storyboard */; };
 		28C7865C2B9A3E4C003C757D /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C7865B2B9A3E4C003C757D /* SignUpVC.swift */; };
+		3B57A0092BCDC59E00662DC1 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B57A0082BCDC59E00662DC1 /* Notifications.swift */; };
 		3B64443D2BC34798006CBBAC /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B64443C2BC34798006CBBAC /* StyledButton.swift */; };
 		3B6444402BC3481C006CBBAC /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B64443E2BC3481C006CBBAC /* Poppins-Regular.ttf */; };
 		3B6444412BC3481C006CBBAC /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B64443F2BC3481C006CBBAC /* Poppins-Bold.ttf */; };
@@ -92,6 +93,7 @@
 		3B1123D42B9B70BF00DF05D8 /* CircularProfilePicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProfilePicture.swift; sourceTree = "<group>"; };
 		3B1123D52B9B70BF00DF05D8 /* ProfileDoneButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDoneButton.swift; sourceTree = "<group>"; };
 		3B1123D62B9B70BF00DF05D8 /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
+		3B57A0082BCDC59E00662DC1 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		3B64443C2BC34798006CBBAC /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
 		3B64443E2BC3481C006CBBAC /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		3B64443F2BC3481C006CBBAC /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				28C7864A2B9A3C81003C757D /* Main.storyboard */,
 				3B6DF8752BC360E700B6E7C2 /* CityCell.swift */,
 				9D8D6E8A2BBB51A7002DDF75 /* ItineraryPageVC.swift */,
+				3B57A0082BCDC59E00662DC1 /* Notifications.swift */,
 				3B64443C2BC34798006CBBAC /* StyledButton.swift */,
 				3B64443F2BC3481C006CBBAC /* Poppins-Bold.ttf */,
 				3B64443E2BC3481C006CBBAC /* Poppins-Regular.ttf */,
@@ -342,6 +345,7 @@
 				3BD878CA2BA8DFE600B51C3F /* User.swift in Sources */,
 				9D8D6E892BBB50F1002DDF75 /* SurveyPageVC.swift in Sources */,
 				829207B52BC067FC00FD63E2 /* City.swift in Sources */,
+				3B57A0092BCDC59E00662DC1 /* Notifications.swift in Sources */,
 				82B8CD6B2BCA35E600B8F6ED /* IconButton.swift in Sources */,
 				3BB9936A2BA65057003AC721 /* GroupPageVC.swift in Sources */,
 				9DC44AB42BA65E8C002906C8 /* HomePageVC.swift in Sources */,
