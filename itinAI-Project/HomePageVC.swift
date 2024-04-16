@@ -583,13 +583,25 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("CITY COUNT: ", groupList.count)
+        return 1 //cityList.count
+    }
+      
+    func numberOfSections(in tableView: UITableView) -> Int {
         return groupList.count
-
+    }
+      
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 1
+    }
+      
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 15
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTableCell", for: indexPath) as! GroupTableViewCell
-        let row = indexPath.row
+        let row = indexPath.section
         let groupName = groupList[row]!.groupName
         let groupImageURL = groupList[row]!.groupImageURL
         cell.groupNameLabel.text = groupName
@@ -599,6 +611,10 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         cell.datesRangeLabel.text = "Date range"
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     
     func downloadGroupImage(_ urlString: String, _ cell: GroupTableViewCell){
@@ -647,10 +663,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         // Start the URLSessionDataTask
         task.resume()
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
+
 
     func addGroup(newGroup: Group) {
         // Add group to group list array

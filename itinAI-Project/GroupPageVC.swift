@@ -699,6 +699,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         //cell.userImageView.image = groupProfilePics[indexPath.row]
         var currentURL = self.profilePicsURLs[indexPath.row]
         cell.userImageView.setImage(with: currentURL!, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
+        
         //cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
     }
