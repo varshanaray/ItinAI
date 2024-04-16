@@ -101,7 +101,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
             } else {
                 // Password reset email sent successfully
                 print("Password reset email sent successfully")
-                self.resetStatusLabel.textColor = .black
+                //self.resetStatusLabel.textColor = .black
                 self.resetStatusLabel.text = "Password reset request successfully sent!"
                 // Display success message to the user
             }
