@@ -594,7 +594,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         let groupImageURL = groupList[row]!.groupImageURL
         cell.groupNameLabel.text = groupName
         //cell.groupImageView.image = UIImage(named: "japan")
-        downloadGroupImage(groupImageURL, cell)
+        //downloadGroupImage(groupImageURL, cell)
+        cell.groupImageView.setImage(with: groupImageURL, placeholder: UIImage(named: "logoItinAI"), fallbackImage: UIImage(named: "logoItinAI"))
         cell.datesRangeLabel.text = "Date range"
         
         return cell

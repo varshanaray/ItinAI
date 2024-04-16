@@ -23,6 +23,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     var group:Group?
     var groupProfilePics = [UIImage?]()
+    var profilePicsURLs = [String?]()
     var displayNames = [String?]()
     var thisGroupUsers = [User?]()
     var overlayView: UIView = UIView()
@@ -99,7 +100,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 if let groupImageURL = document.get("groupImageURL") as? String {
                     // Profile picture URL found in Firestore
                     if (self.currentGroupImageURL != groupImageURL) {
-                        self.downloadGroupImage(groupImageURL)
+                        //self.downloadGroupImage(groupImageURL)
+                        self.imageView.setImage(with: groupImageURL, fallbackImage: UIImage(named: "logoItinAI"))
+                        self.imageToPass = self.imageView.image
                         self.currentGroupImageURL = groupImageURL
                     }
                     //self.downloadGroupImage(groupImageURL)
@@ -664,11 +667,12 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         defer {
                             dispatchGroup.leave()
                         }
-                        if let userDoc = userDoc, userDoc.exists, let email =  userDoc.data()?["email"] as? String, let name =  userDoc.data()?["name"] as? String {
+                        if let userDoc = userDoc, userDoc.exists, let email =  userDoc.data()?["email"] as? String, let name =  userDoc.data()?["name"] as? String, let profileImageURL = userDoc.data()?["profileImageURL"] {
                             //let user = User(email: email, displayName: name, profileImageUrl: "")
                             print("!!! name: ", name)
                             self.displayNames.append(name)
                             var thisImage: UIImage? = UIImage(named: "defaultProfilePicture")
+                            self.profilePicsURLs.append(profileImageURL as? String ?? "")
                             self.groupProfilePics.append(thisImage)
                             print("group profile pics count: ", self.groupProfilePics.count)
                         } else {
@@ -692,7 +696,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
-        cell.userImageView.image = groupProfilePics[indexPath.row]
+        //cell.userImageView.image = groupProfilePics[indexPath.row]
+        var currentURL = self.profilePicsURLs[indexPath.row]
+        cell.userImageView.setImage(with: currentURL!, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
         //cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
     }
@@ -706,6 +712,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     destination.displayNames = displayNames
                     destination.group = group
                     destination.receivedImage = imageToPass
+                    destination.currentGroupImageURL = self.currentGroupImageURL
+                    destination.profilePicsURLs = self.profilePicsURLs
                 }
     }
 }

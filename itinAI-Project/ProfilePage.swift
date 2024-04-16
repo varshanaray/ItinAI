@@ -121,7 +121,8 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
                 if let profileImageUrl = document.get("profileImageURL") as? String {
                     // Profile picture URL found in Firestore
                     self.currentProfilePictureUrl = profileImageUrl
-                    self.downloadProfilePicture(profileImageUrl)
+                    //self.downloadProfilePicture(profileImageUrl)
+                    self.profilePicture.setImage(with: profileImageUrl, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
                 } else {
                     print("Profile image URL not found")
                     // Use default profile picture

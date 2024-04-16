@@ -16,6 +16,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var descript: UITextView!
     
     var groupProfilePics = [UIImage?]()
+    var profilePicsURLs = [String?]()
     var displayNames = [String?]()
     var group:Group?
     
@@ -42,7 +43,8 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         tableView.backgroundColor = UIColor(named: "CustomBackground")
         groupNameLabel.text = group?.groupName
         groupCodeLabel.text = "Group Code: " + group!.groupCode
-        detailsImage.image = UIImage(named: "japan")
+        //detailsImage.image = self.receivedImage
+        detailsImage.setImage(with: currentGroupImageURL, fallbackImage: UIImage(named: "logoItinAI"))
         descript.delegate = self
         descript.allowsEditingTextAttributes = true
         descript.backgroundColor = UIColor(named: "CustomBackground")
@@ -235,7 +237,9 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell", for: indexPath) as! CustomPeopleTableViewCell
         cell.name.text = displayNames[indexPath.row]
-        cell.iconImageView.image = groupProfilePics[indexPath.row]
+        var currentURL = self.profilePicsURLs[indexPath.row]!
+        cell.iconImageView.setImage(with: currentURL, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
+        //cell.iconImageView.image = groupProfilePics[indexPath.row]
         cell.backgroundColor = UIColor(named: "CustomBackground")
         return cell
     }
