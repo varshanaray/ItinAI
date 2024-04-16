@@ -698,8 +698,10 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
         //cell.userImageView.image = groupProfilePics[indexPath.row]
         var currentURL = self.profilePicsURLs[indexPath.row]
+        //cell.userImageView.clipsToBounds = true
         cell.userImageView.setImage(with: currentURL!, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
-        
+        cell.userImageView.contentMode = .scaleAspectFill
+        cell.userImageView.clipsToBounds = true
         //cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
     }

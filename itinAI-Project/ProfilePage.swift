@@ -56,6 +56,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         var userStorageRef = pfpRef.child(Auth.auth().currentUser!.uid)
         self.userStorageRef = userStorageRef
         print("This is userStorageRef: ", userStorageRef)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

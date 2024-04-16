@@ -12,6 +12,7 @@ class CircularProfilePicture: UIImageView {
         // Make image view circular
         layer.cornerRadius = min(bounds.width, bounds.height) / 2
         clipsToBounds = true
+        contentMode = .scaleAspectFill
     }
 
 }
