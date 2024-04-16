@@ -20,6 +20,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     @IBOutlet weak var announceImage: UIImageView!
     
+    
     var group:Group?
     var groupProfilePics = [UIImage?]()
     var displayNames = [String?]()
@@ -160,7 +161,15 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     @IBAction func announceClicked(_ sender: Any) {
-        performSegue(withIdentifier: "GroupToAnnounce", sender: self)
+        self.navigateToAnnouncements(group: group!)
+    }
+    
+    func navigateToAnnouncements(group: Group) {
+        print("segue to announcements")
+        if let announceVC = self.storyboard?.instantiateViewController(withIdentifier: "AnnounceVCID") as? AnnounceViewController {
+            announceVC.group = group
+            self.navigationController?.pushViewController(announceVC, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -697,12 +706,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     destination.displayNames = displayNames
                     destination.group = group
                     destination.receivedImage = imageToPass
-                }
-        
-        if segue.identifier == "GroupToAnnounce",
-                   let destination = segue.destination as? AnnounceViewController
-                {
-                    destination.group = group
                 }
     }
 }
