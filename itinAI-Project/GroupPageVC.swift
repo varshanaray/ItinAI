@@ -46,12 +46,14 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         collectionViewPeople.delegate = self
         collectionViewPeople.dataSource = self
+        collectionViewPeople.backgroundColor = UIColor(named: "CustomBackground")
         
         contentView.layer.cornerRadius = 15
         
         citiesTableView.layer.cornerRadius = 15
         citiesTableView.layer.borderWidth = 1
-        citiesTableView.layer.borderColor = UIColor.darkGray.cgColor
+        citiesTableView.layer.borderColor = UIColor(named: "CustomDarkGrey")?.cgColor
+        citiesTableView.backgroundColor = UIColor(named: "CustomBackground")
         
         groupImagesRef = storage.reference().child("GroupImages")
         groupStorageRef = groupImagesRef.child(group!.groupCode)
@@ -61,7 +63,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         announceCell.layer.cornerRadius = 15
         announceCell.layer.borderWidth = 1
-        announceCell.layer.borderColor = UIColor.darkGray.cgColor
+        // CustomDarkGrey
+        announceCell.layer.borderColor = UIColor(named: "CustomDarkGrey")?.cgColor
         
         let imageSize: CGFloat = 50
         announceImage.image = UIImage(named: "defaultProfilePicture")
@@ -410,7 +413,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
          
         // Create modal view
         citiesModalView = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: modalHeight))
-        citiesModalView.backgroundColor = .white
+        //citiesModalView.backgroundColor = .white
+        citiesModalView.backgroundColor = UIColor(named: "CustomBackground")
         citiesModalView.layer.cornerRadius = 15
         citiesModalView.layer.masksToBounds = true
         overlayView.addSubview(citiesModalView)
@@ -443,7 +447,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         destinationLabel.translatesAutoresizingMaskIntoConstraints = false
         destinationLabel.text = "Destination"
         destinationLabel.font = UIFont(name: "Poppins-Bold", size: 16)
-        destinationLabel.textColor = .black
+        //destinationLabel.textColor = .black
+        destinationLabel.textColor = UIColor(named: "CustomOutlineText")
         citiesModalView.addSubview(destinationLabel)
 
         NSLayoutConstraint.activate([
@@ -487,7 +492,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         surveyDeadlineLabel.translatesAutoresizingMaskIntoConstraints = false
         surveyDeadlineLabel.text = "Survey Deadline"
         surveyDeadlineLabel.font = UIFont(name: "Poppins-Bold", size: 16)
-        surveyDeadlineLabel.textColor = .black
+        //surveyDeadlineLabel.textColor = .black
+        surveyDeadlineLabel.textColor = UIColor(named: "CustomOutlineText")
         citiesModalView.addSubview(surveyDeadlineLabel)
 
         NSLayoutConstraint.activate([
@@ -510,7 +516,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         tripDatesLabel.translatesAutoresizingMaskIntoConstraints = false
         tripDatesLabel.text = "Trip Dates"
         tripDatesLabel.font = UIFont(name: "Poppins-Bold", size: 16)
-        tripDatesLabel.textColor = .black
+        //tripDatesLabel.textColor = .black
+        tripDatesLabel.textColor = UIColor(named: "CustomOutlineText")
         citiesModalView.addSubview(tripDatesLabel)
 
         NSLayoutConstraint.activate([
@@ -535,7 +542,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         toLabel.translatesAutoresizingMaskIntoConstraints = false
         toLabel.text = "to"
         toLabel.font = UIFont(name: "Poppins", size: 16)
-        toLabel.textColor = .black
+        //toLabel.textColor = .black
+        toLabel.textColor = UIColor(named: "CustomOutlineText")
         citiesModalView.addSubview(toLabel)
 
         NSLayoutConstraint.activate([

@@ -53,7 +53,8 @@ class SurveyPageVC: UIViewController {
         
         // Create the white view
         let whiteView = UIView()
-        whiteView.backgroundColor = .white
+        //whiteView.backgroundColor = .white
+        whiteView.backgroundColor = UIColor(named: "CustomBackground")
         whiteView.translatesAutoresizingMaskIntoConstraints = false
         // Round the corners
         whiteView.layer.cornerRadius = 20 // Adjust the value as needed
@@ -77,14 +78,17 @@ class SurveyPageVC: UIViewController {
         
         let detailLabel1 = UILabel()
         detailLabel1.text = "E.g. museums, historical sites, art galleries, landmarks, theme parks, local markets, neighborhoods, etc."
-        detailLabel1.textColor = .gray
+        //detailLabel1.textColor = .gray
+        detailLabel1.textColor = UIColor(named: "CustomDetailLabel")
         detailLabel1.font = UIFont(name: "Poppins-Regular", size: 12)
         detailLabel1.numberOfLines = 0 // Make it multiline
         detailLabel1.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(detailLabel1)
         
         textField1.translatesAutoresizingMaskIntoConstraints = false
-        textField1.layer.borderColor = UIColor.gray.cgColor // Set border color
+        //textField1.layer.borderColor = UIColor.gray.cgColor // Set border color
+        textField1.layer.borderColor = UIColor(named: "CustomDetailLabel")?.cgColor // Set border color
+        textField1.backgroundColor = UIColor(named: "CustomBackground")
         textField1.layer.borderWidth = 1.0 // Set border width
         textField1.layer.cornerRadius = 10 // Set corner radius for rounded corners
         whiteView.addSubview(textField1)
@@ -116,14 +120,17 @@ class SurveyPageVC: UIViewController {
         
         let detailLabel2 = UILabel()
         detailLabel2.text = "E.g. sightseeing, shopping, hiking, attending shows or concerts, relaxation/spa days, boat rides, etc."
-        detailLabel2.textColor = .gray
+        //detailLabel2.textColor = .gray
+        detailLabel2.textColor = UIColor(named: "CustomDetailLabel")
         detailLabel2.font = UIFont(name: "Poppins-Regular", size: 12)
         detailLabel2.numberOfLines = 0 // Make it multiline
         detailLabel2.translatesAutoresizingMaskIntoConstraints = false
         whiteView.addSubview(detailLabel2)
         
         textField2.translatesAutoresizingMaskIntoConstraints = false
-        textField2.layer.borderColor = UIColor.gray.cgColor // Set border color
+        //textField2.layer.borderColor = UIColor.gray.cgColor // Set border color
+        textField2.layer.borderColor = UIColor(named: "CustomDetailLabel")?.cgColor
+        textField2.backgroundColor = UIColor(named: "CustomBackground")
         textField2.layer.borderWidth = 1.0 // Set border width
         textField2.layer.cornerRadius = 10 // Set corner radius for rounded corners
         whiteView.addSubview(textField2)

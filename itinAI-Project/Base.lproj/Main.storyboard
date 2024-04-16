@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -290,20 +291,20 @@
                                 <rect key="frame" x="16" y="256" width="361" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="19"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6fL-cU-YT5" userLabel="Second Divider">
                                 <rect key="frame" x="0.0" y="354" width="393" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="separatorColor"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" name="CustomSeparator"/>
+                                <color key="tintColor" name="CustomOutlineText"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5r-Dz-xyB">
                                 <rect key="frame" x="16" y="369" width="361" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="17"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" name="CustomOutlineText"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" usesAttributedText="YES" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-bY-hP9" userLabel="Decription Text">
@@ -324,14 +325,14 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-Zf-n81" userLabel="Third Divider">
                                 <rect key="frame" x="0.0" y="545" width="393" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="separatorColor"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" name="CustomSeparator"/>
+                                <color key="tintColor" name="CustomOutlineText"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="All People" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lK2-EE-SVs">
                                 <rect key="frame" x="16" y="561" width="361" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="17"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" name="CustomOutlineText"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="5EZ-6e-ekN">
@@ -375,7 +376,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qqI-aG-AXn"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="CustomBackground"/>
                     </view>
                     <navigationItem key="navigationItem" id="rYB-EW-a4u"/>
                     <connections>
@@ -442,14 +443,14 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CityCell" id="Tn5-bf-9Zw" customClass="CityCell" customModule="itinAI_Project" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="55.333332061767578" width="346" height="94.333335876464844"/>
+                                                <rect key="frame" x="0.0" y="55.333332061767578" width="346" height="94"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tn5-bf-9Zw" id="86k-jH-EyG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="346" height="94.333335876464844"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="346" height="94"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Kd-nw-tYC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="346" height="94.333333333333329"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="346" height="94"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxe-Q4-sCB">
                                                             <rect key="frame" x="20" y="9.9999999999999964" width="99" height="50.666666666666657"/>
@@ -458,7 +459,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j74-iD-1Dk">
-                                                            <rect key="frame" x="305.33333333333331" y="20.000000000000004" width="20.666666666666686" height="54.333333333333343"/>
+                                                            <rect key="frame" x="305.33333333333331" y="20" width="20.666666666666686" height="54"/>
                                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="38"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -565,7 +566,7 @@
                                         </connections>
                                     </tableViewCell>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="CustomBackground"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnH-zV-XTE">
                                 <rect key="frame" x="336" y="176" width="59" height="35"/>
@@ -719,7 +720,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tac-rO-IBa"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="CustomBackground"/>
                         <constraints>
                             <constraint firstItem="PEL-o8-sMN" firstAttribute="leading" secondItem="tac-rO-IBa" secondAttribute="leading" constant="20" id="I3f-1L-H7W"/>
                             <constraint firstItem="tac-rO-IBa" firstAttribute="bottom" secondItem="PEL-o8-sMN" secondAttribute="bottom" id="PdL-Gb-yp4"/>
@@ -793,7 +794,7 @@
                             </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EuS-Km-1Op"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="CustomBackground"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="gearshape" catalog="system" selectedImage="gearshape.fill" id="Nf5-pm-u3c"/>
                     <connections>
@@ -862,7 +863,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Kar-uE-qTF"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="CustomBackground"/>
                         <constraints>
                             <constraint firstItem="B41-ya-9zC" firstAttribute="centerX" secondItem="nwq-aV-ASQ" secondAttribute="centerX" id="0sF-VR-s2x"/>
                             <constraint firstItem="B41-ya-9zC" firstAttribute="top" secondItem="jt4-gm-2W1" secondAttribute="bottom" constant="40" id="AQZ-nD-N73"/>
@@ -986,6 +987,15 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus.app.fill" catalog="system" width="128" height="114"/>
+        <namedColor name="CustomBackground">
+            <color red="0.99999994039535522" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="CustomOutlineText">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="CustomSeparator">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.77647058823529413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

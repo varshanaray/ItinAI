@@ -39,11 +39,13 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 75
+        tableView.backgroundColor = UIColor(named: "CustomBackground")
         groupNameLabel.text = group?.groupName
         groupCodeLabel.text = "Group Code: " + group!.groupCode
         detailsImage.image = UIImage(named: "japan")
         descript.delegate = self
         descript.allowsEditingTextAttributes = true
+        descript.backgroundColor = UIColor(named: "CustomBackground")
         // Get saved description from Firestore
         let db = Firestore.firestore()
         let groupId = group?.groupCode
@@ -234,6 +236,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell", for: indexPath) as! CustomPeopleTableViewCell
         cell.name.text = displayNames[indexPath.row]
         cell.iconImageView.image = groupProfilePics[indexPath.row]
+        cell.backgroundColor = UIColor(named: "CustomBackground")
         return cell
     }
 

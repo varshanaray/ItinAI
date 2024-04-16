@@ -35,8 +35,10 @@ class SettingsVC: UIViewController {
         if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
             // dark mode is on
             darkModeSwitch.isOn = true
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
         } else {
             darkModeSwitch.isOn = false
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
         // Do any additional setup after loading the view.
     }

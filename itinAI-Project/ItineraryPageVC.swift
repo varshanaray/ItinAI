@@ -53,7 +53,8 @@ class ItineraryPageVC: UIViewController {
         var yOffset: CGFloat = 10
         let maskView = UIView(frame: CGRect(x: 0, y: 0, width: scrollView.frame.width, height: 50))
         maskView.layer.cornerRadius = 15
-        maskView.backgroundColor = .white
+        //maskView.backgroundColor = .white
+        maskView.backgroundColor = UIColor(named: "CustomBackground")
         scrollView.addSubview(maskView)
         for day in itineraryDays {
             let block = createItineraryBlock(for: day, yOffset: yOffset)
@@ -66,7 +67,8 @@ class ItineraryPageVC: UIViewController {
     
     func createItineraryBlock(for day: ItineraryDay, yOffset: CGFloat) -> UIView {
         let blockView = UIView(frame: CGRect(x: 0, y: yOffset, width: scrollView.frame.width, height: 0)) // Start with 0 height
-        blockView.backgroundColor = .white // Set background color if needed
+        //blockView.backgroundColor = .white // Set background color if needed
+        blockView.backgroundColor = UIColor(named: "CustomBackground")
         //blockView.layer.cornerRadius = 15 // Set rounded corners
         
         let dayLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 80, height: 20))

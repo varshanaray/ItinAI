@@ -46,6 +46,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     override func viewDidLoad() {
         print("view did load in home page")
+        groupTableView.backgroundColor = UIColor(named: "CustomBackground")
         if (UserDefaults.standard.object(forKey: "notificationPermission") == nil) {
             print("need to ask for notif permissions")
             UserDefaults.standard.set(false, forKey: "darkMode")
@@ -60,6 +61,13 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 }
                 UserDefaults.standard.set(granted, forKey: "notificationPermission")
             }
+        }
+        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
+            // dark mode is on
+            print("dark mode in home page")
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
+        } else {
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
         print(UserDefaults.standard.object(forKey: "notificationPermission") ?? "none")
 
@@ -118,7 +126,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         // Create modal view
         createModalView = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: modalHeight))
-        createModalView.backgroundColor = .white
+        // createModalView.backgroundColor = .white
+        createModalView.backgroundColor = UIColor(named: "CustomBackground")
         createModalView.layer.cornerRadius = 15
         createModalView.layer.masksToBounds = true
         createModalView.translatesAutoresizingMaskIntoConstraints = false
@@ -266,7 +275,8 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         // Create modal view
         joinModalView = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: modalHeight))
-        joinModalView.backgroundColor = .white
+        //joinModalView.backgroundColor = .white
+        joinModalView.backgroundColor = UIColor(named: "CustomBackground")
         joinModalView.layer.cornerRadius = 15
         joinModalView.layer.masksToBounds = true
         joinModalView.translatesAutoresizingMaskIntoConstraints = false
