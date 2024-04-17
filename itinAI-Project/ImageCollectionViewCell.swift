@@ -19,5 +19,15 @@ class ImageCollectionViewCell: UICollectionViewCell {
         userImageView.clipsToBounds = true
     }
     
+   /* override func updateConfiguration(using state: UICellConfigurationState) {
+        print("update config func")
+        automaticallyUpdatesBackgroundConfiguration = false
+        
+        var modifiedState = state
+        modifiedState.isHighlighted = false
+        modifiedState.isSelected = false
+        backgroundConfiguration = backgroundConfiguration?.updated(for: modifiedState)
+    } */
+    
 
 }

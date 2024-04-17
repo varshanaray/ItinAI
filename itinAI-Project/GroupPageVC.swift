@@ -45,10 +45,10 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         collectionViewPeople.delegate = self
         collectionViewPeople.dataSource = self
         collectionViewPeople.backgroundColor = UIColor(named: "CustomBackground")
+        collectionViewPeople.allowsSelection = false
         
         contentView.layer.cornerRadius = 15
         
@@ -699,9 +699,10 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         //cell.userImageView.image = groupProfilePics[indexPath.row]
         var currentURL = self.profilePicsURLs[indexPath.row]
         //cell.userImageView.clipsToBounds = true
-        cell.userImageView.setImage(with: currentURL!, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
         cell.userImageView.contentMode = .scaleAspectFill
-        cell.userImageView.clipsToBounds = true
+        cell.userImageView.setImage(with: currentURL!, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
+        
+        //cell.userImageView.clipsToBounds = true
         //cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
     }
