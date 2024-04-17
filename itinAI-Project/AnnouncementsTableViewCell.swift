@@ -32,23 +32,25 @@ class AnnouncementsTableViewCell: UITableViewCell {
         groupImageView.clipsToBounds = true
         */
         
-        /*
+        
         NSLayoutConstraint.activate([
-                    myLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-                    myLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-                    myLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-                    
-                    myImageView.topAnchor.constraint(equalTo: myLabel.bottomAnchor, constant: 10),
-                    myImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-                    myImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-                    myImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
-                    myImageView.heightAnchor.constraint(equalToConstant: 100)  // Fixed height for image view
-                ])*/
+            message.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 50),
+        ])
     }
 
         override func setSelected(_ selected: Bool, animated: Bool) {
             super.setSelected(selected, animated: animated)
             // Configure the view for the selected state
         }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // Set a fixed image size
+        let imageSize: CGFloat = 50
+        img.frame = CGRect(x: 12, y: 10, width: imageSize, height: imageSize)
+        // Set the corner radius to make image circular
+        img.layer.cornerRadius = imageSize / 2
+        img.clipsToBounds = true
+    }
 
 }

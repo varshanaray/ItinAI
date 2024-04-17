@@ -42,8 +42,9 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
         announceTableView.delegate = self
         announceTableView.dataSource = self
         
-        announceTableView.rowHeight = UITableView.automaticDimension
-        announceTableView.estimatedRowHeight = 300
+        announceTableView.rowHeight = 100
+        //announceTableView.rowHeight = UITableView.automaticDimension
+        //announceTableView.estimatedRowHeight = 300
     }
     
     @IBAction func addClicked(_ sender: Any) {
@@ -228,10 +229,12 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
                db.collection("Users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
                    if let document = document, document.exists {
                        let userName = document.data()?["name"] as? String ?? "Unknown User"
+                       let userImageURL = document.data()?["profileImageURL"] as? String ?? "Unknown URL"
                        
                        // Proceed with adding the announcement
                        let announcementData: [String: Any] = [
                            "user": userName,  // Add the user's name to the announcement data
+                           "userImageURL": userImageURL,
                            "subject": subject,
                            "announcement": announcement,
                            "timestamp": self.time
@@ -291,12 +294,12 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
                    if let announcementsData = groupDoc.data()?["announcements"] as? [[String: Any]] {
                        for announcementDict in announcementsData {
                            if let user = announcementDict["user"] as? String,
-                               let subject = announcementDict["subject"] as? String,
-                               let message = announcementDict["announcement"] as? String,
-                               let timestamp = announcementDict["timestamp"] as? Timestamp {
-                                   
+                              let userImageURL = announcementDict["userImageURL"] as? String,
+                              let subject = announcementDict["subject"] as? String,
+                              let message = announcementDict["announcement"] as? String,
+                              let timestamp = announcementDict["timestamp"] as? Timestamp {
                                let date = timestamp.dateValue() // Convert Timestamp to Date
-                               let announcement = Announcements(user: user, subject: subject, message: message, timestamp: date)
+                               let announcement = Announcements(user: user, userImageURL: userImageURL, subject: subject, message: message, timestamp: date)
                                self.allAnnouncements.append(announcement)
                                self.announceTableView.reloadData()
                            }
@@ -380,6 +383,13 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
         let dateString = convertDateToString(date: timestamp)
         cell.time.text = dateString
         cell.message.text = message
+        
+        var currentURL = allAnnouncements[row]!.userImageURL
+        //cell.userImageView.clipsToBounds = true
+        cell.img.setImage(with: currentURL, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
+        cell.img.contentMode = .scaleAspectFill
+        cell.img.clipsToBounds = true
+        
         return cell
     }
        
