@@ -6,7 +6,7 @@ import UIKit
 import FirebaseFirestore
 import OpenAI
 
-class ItineraryPageVC: UIViewController {
+class ItineraryPageVC: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var bgImageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -85,10 +85,12 @@ class ItineraryPageVC: UIViewController {
         let contentView = UITextView(frame: CGRect(x: 20, y: 50, width: blockView.frame.width - 40, height: 0)) // Start with 0 height
         contentView.text = "- " + day.content.joined(separator: "\n- ")
         contentView.font = UIFont(name: "Poppins-Regular", size: 16)
-        contentView.isEditable = false
+        contentView.isEditable = true
         contentView.isScrollEnabled = false // Disable scrolling
         let contentHeight = contentView.sizeThatFits(CGSize(width: contentView.frame.width, height: CGFloat.greatestFiniteMagnitude)).height
         contentView.frame.size.height = contentHeight
+        contentView.delegate = self // Set delegate to self
+        contentView.tag = Int(day.dayNumber) ?? 0 // Store day number as tag, convert dayNumber to Int or use a direct mapping
         blockView.addSubview(contentView)
         
         // Adjust the height of the blockView based on the content
@@ -98,6 +100,42 @@ class ItineraryPageVC: UIViewController {
         return blockView
     }
     
+    /*
+    func textViewDidChange(_ textView: UITextView) {
+        let dayNumber = "Day\(textView.tag)" // Construct dayNumber from tag
+            guard let cityId = cityId else {
+                return
+            }
+            let newTextLines = textView.text.split(separator: "\n").map(String.init)
+            let newContents = newTextLines.map { line in
+                line.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "- ", with: "")
+            }
+        let temp  = Int(dayNumber)
+        let numDay = (temp ?? 0) - 1
+        let ogContent = itineraryDays[numDay ?? 0].content
+            // Assuming `originalContents` is accessible and holds the original array loaded from Firestore
+            if newContents != ogContent {
+                // Find differences and update Firestore accordingly
+                saveTextToStorage(cityDocId: cityId, dayNumber: dayNumber, newContent: newContents)
+            }
+    }
+    
+    func saveTextToStorage(cityDocId: String, dayNumber: String, newContent: [String]) {
+        print("in saveTextToStorage")
+            let db = Firestore.firestore()
+            db.collection("Cities")
+              .document(cityDocId)
+              .collection("ItineraryDays")
+              .document(dayNumber)  // Make sure this matches the document ID for the day
+              .updateData(["content": newContent]) { error in
+                      if let error = error {
+                          print("Error updating document: \(error)")
+                      } else {
+                          print("Document successfully updated")
+                      }
+                  }
+        }
+     */
 }
 
 func fetchSurveyResponsesAndGenerate(cityDocId: String) async -> Bool {
