@@ -89,6 +89,11 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     override func viewWillAppear(_ animated: Bool) {
         retrieveGroupImage()
+        
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
     
     func retrieveGroupImage() {
@@ -700,8 +705,12 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         var currentURL = self.profilePicsURLs[indexPath.row]
         //cell.userImageView.clipsToBounds = true
         cell.userImageView.contentMode = .scaleAspectFill
-        cell.userImageView.setImage(with: currentURL!, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
         
+        DispatchQueue.main.async {
+            cell.userImageView.setImage(with: currentURL!, fallbackImage: UIImage(named: "defaultProfilePicture"))
+        }
+    
+
         //cell.userImageView.clipsToBounds = true
         //cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
@@ -720,4 +729,5 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     destination.profilePicsURLs = self.profilePicsURLs
                 }
     }
+    
 }
