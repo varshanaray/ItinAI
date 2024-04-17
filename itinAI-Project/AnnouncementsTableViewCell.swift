@@ -10,10 +10,14 @@ import UIKit
 class AnnouncementsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var img: UIImageView!
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var subject: UILabel!
     @IBOutlet weak var message: UITextView!
+    @IBOutlet weak var name: UILabel!
     @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var subject: UILabel!
+    
+    
+    @IBOutlet weak var content: UIView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,10 +36,10 @@ class AnnouncementsTableViewCell: UITableViewCell {
         groupImageView.clipsToBounds = true
         */
         
-        
-        NSLayoutConstraint.activate([
-            message.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 50),
-        ])
+        setupViews()
+//        NSLayoutConstraint.activate([
+//            message.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 50),
+//        ])
     }
 
         override func setSelected(_ selected: Bool, animated: Bool) {
@@ -52,5 +56,18 @@ class AnnouncementsTableViewCell: UITableViewCell {
         img.layer.cornerRadius = imageSize / 2
         img.clipsToBounds = true
     }
+    
+    private func setupViews() {
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+        message.isScrollEnabled = false  // Important for expanding size
+        message.isEditable = false       // Typically not editable in a cell
+            //contentView.addSubview(message)
 
+            NSLayoutConstraint.activate([
+                //message.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+                message.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+                //message.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+                //message.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
+            ])
+        }
 }
