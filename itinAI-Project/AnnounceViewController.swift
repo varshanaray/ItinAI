@@ -41,6 +41,9 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
         super.viewDidLoad()
         announceTableView.delegate = self
         announceTableView.dataSource = self
+        
+        announceTableView.rowHeight = UITableView.automaticDimension
+        announceTableView.estimatedRowHeight = 300
     }
     
     @IBAction func addClicked(_ sender: Any) {
@@ -322,66 +325,77 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
        }
 
        
-       func animateModalView() {
-           UIView.animate(withDuration: 0.3) {
-               self.overlayView.alpha = 1.0
-               self.currentModalView.frame.origin.y = self.view.frame.height - self.modalHeight
-           }
-       }
+    func animateModalView() {
+        UIView.animate(withDuration: 0.3) {
+            self.overlayView.alpha = 1.0
+            self.currentModalView.frame.origin.y = self.view.frame.height - self.modalHeight
+        }
+    }
+    
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        // Dismiss the modal view
+        dismissModalView()
+    }
        
-       @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-           // Dismiss the modal view
-           dismissModalView()
-       }
+    func dismissModalView() {
+        // Animate modal view and overlay out of the screen
+        UIView.animate(withDuration: 0.3, animations: {
+            self.overlayView.alpha = 0.0
+            self.currentModalView.frame.origin.y = self.view.frame.height
+        }) { _ in
+            // Remove both views from the superview after animation completes
+            self.overlayView.removeFromSuperview()
+            self.currentModalView.removeFromSuperview()
+        }
+    }
        
-       func dismissModalView() {
-           // Animate modal view and overlay out of the screen
-           UIView.animate(withDuration: 0.3, animations: {
-               self.overlayView.alpha = 0.0
-               self.currentModalView.frame.origin.y = self.view.frame.height
-           }) { _ in
-               // Remove both views from the superview after animation completes
-               self.overlayView.removeFromSuperview()
-               self.currentModalView.removeFromSuperview()
-           }
-       }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+      
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return allAnnouncements.count
+    }
+      
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 1
+    }
+      
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 15
+    }
        
-       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           print("here")
-           return allAnnouncements.count
-       }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("here")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AnnounceTableCell", for: indexPath) as! AnnouncementsTableViewCell
+        let row = indexPath.section
+        let userName = allAnnouncements[row]!.user
+        let message = allAnnouncements[row]!.message
+        let subject = allAnnouncements[row]!.subject
+        let timestamp = allAnnouncements[row]!.timestamp
+        cell.name.text = userName
+        //cell.groupImageView.image = UIImage(named: "japan")
+        // downloadGroupImage(groupImageURL, cell)
+        cell.subject.text = subject
+        let dateString = convertDateToString(date: timestamp)
+        cell.time.text = dateString
+        cell.message.text = message
+        return cell
+    }
        
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           print("here")
-           let cell = tableView.dequeueReusableCell(withIdentifier: "AnnounceTableCell", for: indexPath) as! AnnouncementsTableViewCell
-           let row = indexPath.row
-           let userName = allAnnouncements[row]!.user
-           let message = allAnnouncements[row]!.message
-           let subject = allAnnouncements[row]!.subject
-           let timestamp = allAnnouncements[row]!.timestamp
-           cell.name.text = userName
-           //cell.groupImageView.image = UIImage(named: "japan")
-           // downloadGroupImage(groupImageURL, cell)
-           cell.subject.text = subject
-           let dateString = convertDateToString(date: timestamp)
-           cell.time.text = dateString
-           cell.message.text = message
-           return cell
-       }
-       
-       func convertDateToString(date: Date) -> String {
-           let formatter = DateFormatter()
-           // Example of a format: "yyyy-MM-dd HH:mm:ss"
-           // You can adjust this format to meet your needs.
-           formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    func convertDateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        // Example of a format: "yyyy-MM-dd HH:mm:ss"
+        // You can adjust this format to meet your needs.
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
            
-           // Optionally, you can set the locale or timezone if needed
-           // formatter.locale = Locale(identifier: "en_US_POSIX")
-           // formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        // Optionally, you can set the locale or timezone if needed
+        // formatter.locale = Locale(identifier: "en_US_POSIX")
+        // formatter.timeZone = TimeZone(secondsFromGMT: 0)
            
-           return formatter.string(from: date)
-       }
-   }
+        return formatter.string(from: date)
+    }
+}
     
 //    func setupCreateModalView(title: String) {
 //        var modalTitle: String = ""

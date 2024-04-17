@@ -583,8 +583,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("CITY COUNT: ", groupList.count)
-        return 1 //cityList.count
+        return 1
     }
       
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -677,7 +676,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CellToGroupSegue",
            let destination = segue.destination as? GroupPageVC,
-           let groupIndex = groupTableView.indexPathForSelectedRow?.row
+           let groupIndex = groupTableView.indexPathForSelectedRow?.section
         {
             destination.group = groupList[groupIndex]
         }
