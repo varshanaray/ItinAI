@@ -149,12 +149,12 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         announceImage.contentMode = .scaleAspectFill
         announceImage.clipsToBounds = true
         announceImage.setImage(with: lastAnnouncement.userImageURL, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
-        var messageDisplayed = ""
+        var messageDisplayed = lastAnnouncement.message
         if lastAnnouncement.message.count > 35 {
             let index = lastAnnouncement.message.index(lastAnnouncement.message.startIndex, offsetBy: 35)
-            messageDisplayed = String(lastAnnouncement.message.prefix(upTo: index))
+            messageDisplayed = String(lastAnnouncement.message.prefix(upTo: index)) + "..."
         }
-        announceMessage.setTitle(messageDisplayed + "...", for: .normal)
+        announceMessage.setTitle(messageDisplayed, for: .normal)
         announceMessage.setTitleColor(.black, for: .normal)
         // Allow multiple lines
         // announceMessage.titleLabel?.numberOfLines = 1
