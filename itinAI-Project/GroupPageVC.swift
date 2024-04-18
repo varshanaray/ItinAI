@@ -18,8 +18,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var collectionViewPeople: UICollectionView!
     @IBOutlet weak var addCitiesButton: UIButton!
     
+    @IBOutlet weak var announceName: UILabel!
     @IBOutlet weak var announceImage: UIImageView!
-    
+    @IBOutlet weak var announceMessage: UIButton!
     
     var group:Group?
     var groupProfilePics = [UIImage?]()
@@ -30,6 +31,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var citiesModalView: UIView = UIView()
     let modalHeight: CGFloat = 430
     let surveyDeadlinePicker = UIDatePicker()
+    var lastAnnouncement: Announcements = Announcements(user: "", userImageURL: "", subject: "", message: "", timestamp: Date())
     
     var currentModalView: UIView!
     
@@ -63,6 +65,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         citiesTableView.delegate = self
         citiesTableView.dataSource = self
         
+        
         announceCell.layer.cornerRadius = 15
         announceCell.layer.borderWidth = 1
         // CustomDarkGrey
@@ -74,7 +77,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // Set the corner radius to make image circular
         announceImage.layer.cornerRadius = imageSize / 2
         announceImage.clipsToBounds = true
-
+         
+        
         // Get from firestore
         print("group code!: ", (group?.groupCode)!)
         fetchUsers(groupCode: (group?.groupCode)!)
@@ -85,12 +89,84 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
             
         fetchCities()
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        // fetchLastAnnouncement()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        retrieveGroupImage()
-        
+//    override func viewWillAppear(_ animated: Bool) {
+//        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& viewWillAppear called")
+//        fetchLastAnnouncement()
+//    }
+    
+    func fetchLastAnnouncement() {
+        print("IN FETCH LAST ANNOUNCEMT -------------------------------")
+        let db = Firestore.firestore()
+        let groupRef = db.collection("Groups").document((self.group?.groupCode)!)
+            
+        groupRef.getDocument { (groupDoc, error) in
+            let dispatchGroup = DispatchGroup()
+            dispatchGroup.enter()
+            if let error = error {
+                print("Error fetching group document: \(error)")
+                return
+            }
+            
+            guard let groupDoc = groupDoc, groupDoc.exists else {
+                print("Group document does not exist")
+                return
+            }
+            
+            if let announcementsData = groupDoc.data()?["announcements"] as? [[String: Any]], !announcementsData.isEmpty {
+                    let lastAnnouncementDict = announcementsData.last! // Get the last announcement from the list
 
+                    // Assuming you have a model set up to configure your cell
+                    if let user = lastAnnouncementDict["user"] as? String,
+                       let userImageURL = lastAnnouncementDict["userImageURL"] as? String,
+                       let subject = lastAnnouncementDict["subject"] as? String,
+                       let message = lastAnnouncementDict["announcement"] as? String,
+                       let timestamp = lastAnnouncementDict["timestamp"] as? Timestamp {
+                        let date = timestamp.dateValue() // Convert Timestamp to Date
+                        let lastAnnouncement = Announcements(user: user, userImageURL: userImageURL, subject: subject, message: message, timestamp: date)
+                        
+                        // Store this last announcement in a property
+                        self.lastAnnouncement = lastAnnouncement
+                        
+                        DispatchQueue.main.async {
+                            print("about to update announce")
+                            print("last announce", lastAnnouncement.message)
+                            self.updateAnnounceCell(lastAnnouncement: lastAnnouncement)
+                        }
+                    }
+                } else {
+                    print("No announcements found in the group document.")
+                }
+            }
+    }
+    
+    func updateAnnounceCell(lastAnnouncement: Announcements) {
+        print("in updateAnnounceCell")
+        announceName.text = lastAnnouncement.user
+        announceImage.contentMode = .scaleAspectFill
+        announceImage.clipsToBounds = true
+        announceImage.setImage(with: lastAnnouncement.userImageURL, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
+        var messageDisplayed = ""
+        if lastAnnouncement.message.count > 35 {
+            let index = lastAnnouncement.message.index(lastAnnouncement.message.startIndex, offsetBy: 35)
+            messageDisplayed = String(lastAnnouncement.message.prefix(upTo: index))
+        }
+        announceMessage.setTitle(messageDisplayed + "...", for: .normal)
+        announceMessage.setTitleColor(.black, for: .normal)
+        // Allow multiple lines
+        // announceMessage.titleLabel?.numberOfLines = 1
+        // Add an ellipsis if the text exceeds the width of the button
+        // announceMessage.titleLabel?.lineBreakMode = .byTruncatingTail
+        
+    }
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchLastAnnouncement()
+        retrieveGroupImage()
     }
     
     override func viewDidAppear(_ animated: Bool) {

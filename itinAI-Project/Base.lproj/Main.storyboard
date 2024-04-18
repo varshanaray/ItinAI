@@ -155,7 +155,7 @@
                                     <fragment content="Announcements">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="system" size="17"/>
+                                            <font key="NSFont" size="17" name="Poppins-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -191,7 +191,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" text="Message" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yI2-uC-2wg">
-                                                    <rect key="frame" x="102" y="78" width="233" height="78"/>
+                                                    <rect key="frame" x="97" y="78" width="233" height="78"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="233" id="aUw-FG-wR3"/>
@@ -201,35 +201,41 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqY-IL-Awx">
-                                                    <rect key="frame" x="102" y="21" width="134" height="19"/>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Name">
-                                                            <attributes>
-                                                                <font key="NSFont" metaFont="system" size="16"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O96-PL-OCP">
                                                     <rect key="frame" x="102" y="49" width="247" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Subject">
                                                             <attributes>
-                                                                <font key="NSFont" metaFont="system" size="15"/>
+                                                                <font key="NSFont" size="15" name="Poppins-Bold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="okd-3x-Kyf">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="okd-3x-Kyf">
                                                     <rect key="frame" x="244" y="20" width="100" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <nil key="textColor"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Time">
+                                                            <attributes>
+                                                                <font key="NSFont" size="14" name="Poppins-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqY-IL-Awx">
+                                                    <rect key="frame" x="102" y="22" width="134" height="19"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Name">
+                                                            <attributes>
+                                                                <font key="NSFont" size="16" name="Poppins-Bold"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -237,11 +243,11 @@
                                                 <constraint firstItem="3ir-TR-m00" firstAttribute="leading" secondItem="h9Z-5P-trV" secondAttribute="leading" constant="20" symbolic="YES" id="50Q-ag-ZuP"/>
                                                 <constraint firstItem="3ir-TR-m00" firstAttribute="top" secondItem="h9Z-5P-trV" secondAttribute="top" constant="27" id="5kn-Wn-L5P"/>
                                                 <constraint firstItem="fqY-IL-Awx" firstAttribute="leading" secondItem="3ir-TR-m00" secondAttribute="trailing" constant="17" id="BQR-gW-POt"/>
-                                                <constraint firstItem="yI2-uC-2wg" firstAttribute="leading" secondItem="3ir-TR-m00" secondAttribute="trailing" constant="17" id="FiH-uA-deY"/>
+                                                <constraint firstItem="yI2-uC-2wg" firstAttribute="leading" secondItem="h9Z-5P-trV" secondAttribute="leading" constant="97" id="KpG-X2-ot8"/>
+                                                <constraint firstItem="yI2-uC-2wg" firstAttribute="leading" secondItem="3ir-TR-m00" secondAttribute="trailing" constant="12" id="U1B-l0-QW6"/>
                                                 <constraint firstItem="3ir-TR-m00" firstAttribute="leading" secondItem="h9Z-5P-trV" secondAttribute="leading" constant="20" symbolic="YES" id="Xsd-Oi-WIe"/>
-                                                <constraint firstItem="fqY-IL-Awx" firstAttribute="top" secondItem="h9Z-5P-trV" secondAttribute="top" constant="21" id="cqH-rs-QHS"/>
+                                                <constraint firstItem="fqY-IL-Awx" firstAttribute="top" secondItem="h9Z-5P-trV" secondAttribute="top" constant="22" id="e2x-GD-x0D"/>
                                                 <constraint firstItem="yI2-uC-2wg" firstAttribute="top" secondItem="fqY-IL-Awx" secondAttribute="bottom" constant="36" id="uXo-v5-FsU"/>
-                                                <constraint firstItem="yI2-uC-2wg" firstAttribute="leading" secondItem="h9Z-5P-trV" secondAttribute="leading" constant="102" id="uj5-ui-cZ5"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -461,23 +467,23 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CityCell" id="Tn5-bf-9Zw" customClass="CityCell" customModule="itinAI_Project" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="55.333332061767578" width="346" height="93.666664123535156"/>
+                                                <rect key="frame" x="0.0" y="55.333332061767578" width="346" height="84.666664123535156"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tn5-bf-9Zw" id="86k-jH-EyG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="346" height="93.666664123535156"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="346" height="84.666664123535156"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Kd-nw-tYC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="346" height="93.666666666666671"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="346" height="84.666666666666671"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxe-Q4-sCB">
-                                                            <rect key="frame" x="20" y="9.9999999999999964" width="99" height="50.666666666666657"/>
+                                                            <rect key="frame" x="19.999999999999993" y="10" width="88.333333333333314" height="42"/>
                                                             <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="36"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j74-iD-1Dk">
-                                                            <rect key="frame" x="305.33333333333331" y="19.999999999999996" width="20.666666666666686" height="53.666666666666657"/>
+                                                            <rect key="frame" x="303" y="19.999999999999996" width="23" height="44.666666666666657"/>
                                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="38"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -509,33 +515,57 @@
                                             <rect key="frame" x="0.0" y="0.0" width="346" height="94"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9u-ZH-kcu">
-                                                    <rect key="frame" x="98" y="20" width="227" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qz2-xM-4TJ">
+                                                    <rect key="frame" x="19" y="20" width="71" height="55"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="71" id="szY-R4-9E2"/>
+                                                        <constraint firstAttribute="height" constant="55" id="v6S-SN-Mzm"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t0u-M6-0YS">
+                                                    <rect key="frame" x="98" y="49" width="248" height="26"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="26" id="mZ4-yV-I5q"/>
+                                                        <constraint firstAttribute="width" constant="248" id="zYQ-uA-tVe"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain">
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="Message"/>
+                                                        </attributedString>
+                                                    </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="announceClicked:" destination="FkJ-cl-HvY" eventType="touchUpInside" id="Iry-Fk-XzC"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9u-ZH-kcu">
+                                                    <rect key="frame" x="98" y="11" width="227" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="227" id="37M-Vg-qBA"/>
+                                                        <constraint firstAttribute="height" constant="21" id="5Jy-wP-lk2"/>
+                                                    </constraints>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Name">
                                                             <attributes>
-                                                                <font key="NSFont" metaFont="system" size="17"/>
+                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" size="16" name="Poppins-Bold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qz2-xM-4TJ">
-                                                    <rect key="frame" x="32" y="30" width="71" height="55"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t0u-M6-0YS">
-                                                    <rect key="frame" x="84" y="40" width="93" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Message"/>
-                                                    <connections>
-                                                        <action selector="announceClicked:" destination="FkJ-cl-HvY" eventType="touchUpInside" id="Iry-Fk-XzC"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="t0u-M6-0YS" firstAttribute="top" secondItem="u9u-ZH-kcu" secondAttribute="bottom" constant="17" id="NzR-cK-ilP"/>
+                                                <constraint firstItem="qz2-xM-4TJ" firstAttribute="top" secondItem="65f-rn-4Ci" secondAttribute="top" constant="20" symbolic="YES" id="Pbp-Fv-7bi"/>
+                                                <constraint firstItem="u9u-ZH-kcu" firstAttribute="top" secondItem="65f-rn-4Ci" secondAttribute="top" constant="11" id="Quy-BA-ktQ"/>
+                                                <constraint firstItem="qz2-xM-4TJ" firstAttribute="leading" secondItem="65f-rn-4Ci" secondAttribute="leading" constant="19" id="fKN-hm-RRT"/>
+                                                <constraint firstItem="t0u-M6-0YS" firstAttribute="top" secondItem="65f-rn-4Ci" secondAttribute="top" constant="49" id="l6p-9N-Sdi"/>
+                                                <constraint firstAttribute="bottom" secondItem="qz2-xM-4TJ" secondAttribute="bottom" constant="19" id="th5-4a-fO4"/>
+                                                <constraint firstItem="u9u-ZH-kcu" firstAttribute="leading" secondItem="qz2-xM-4TJ" secondAttribute="trailing" constant="8" symbolic="YES" id="vAZ-JM-SQ4"/>
+                                                <constraint firstItem="t0u-M6-0YS" firstAttribute="leading" secondItem="qz2-xM-4TJ" secondAttribute="trailing" constant="8" symbolic="YES" id="xxr-Yf-yCG"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mjb-Tc-i07">
@@ -604,7 +634,9 @@
                     <connections>
                         <outlet property="addCitiesButton" destination="8rl-cO-T4q" id="A2X-et-med"/>
                         <outlet property="announceCell" destination="8Y4-9D-xlG" id="0xe-39-adP"/>
-                        <outlet property="announceImage" destination="qz2-xM-4TJ" id="qBa-pL-XjE"/>
+                        <outlet property="announceImage" destination="qz2-xM-4TJ" id="hx3-HH-i7n"/>
+                        <outlet property="announceMessage" destination="t0u-M6-0YS" id="ZqU-vT-454"/>
+                        <outlet property="announceName" destination="u9u-ZH-kcu" id="5g7-aZ-BRo"/>
                         <outlet property="citiesTableView" destination="TbX-N9-sKi" id="WH3-bd-Abo"/>
                         <outlet property="collectionViewPeople" destination="mjb-Tc-i07" id="NL1-LF-rXR"/>
                         <outlet property="contentView" destination="637-uC-elZ" id="nrV-GE-SX6"/>

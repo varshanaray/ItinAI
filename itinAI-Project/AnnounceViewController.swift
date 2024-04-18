@@ -50,7 +50,9 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
         //announceTableView.estimatedRowHeight = 300
         announceTableView.rowHeight = UITableView.automaticDimension
             //announceTableView.estimatedRowHeight = 100
+        
     }
+    
     
     @IBAction func addClicked(_ sender: Any) {
         print("Add button pressed")
