@@ -41,7 +41,7 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
         super.viewDidLoad()
         announceTableView.delegate = self
         announceTableView.dataSource = self
-        // announceTableView.allowsSelection = false
+        announceTableView.allowsSelection = false
 //        announceTableView.rowHeight = UITableView.automaticDimension
 //        announceTableView.estimatedRowHeight = UITableView.automaticDimension
         // announceTableView.rowHeight = 100
@@ -309,6 +309,12 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
                                // self.announceTableView.reloadData()
                            }
                        }
+                       self.allAnnouncements = self.allAnnouncements.sorted(by: { (announcement1, announcement2) -> Bool in
+                               guard let date1 = announcement1?.timestamp, let date2 = announcement2?.timestamp else {
+                                   return false // Handle the case where one or both announcements are nil
+                               }
+                               return date1 > date2 // Sort in descending order based on the date
+                           })
                        for announcement in self.allAnnouncements {
                            print(announcement?.message)
                        }

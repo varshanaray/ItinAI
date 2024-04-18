@@ -58,14 +58,14 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
-            contentView.translatesAutoresizingMaskIntoConstraints = false
+        message.translatesAutoresizingMaskIntoConstraints = false
         message.isScrollEnabled = false  // Important for expanding size
         message.isEditable = false       // Typically not editable in a cell
             //contentView.addSubview(message)
 
             NSLayoutConstraint.activate([
                 //message.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-                message.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+                message.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7),
                 //message.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
                 //message.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
             ])
