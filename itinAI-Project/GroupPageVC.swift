@@ -6,6 +6,7 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
+import UniformTypeIdentifiers
 
 class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -14,7 +15,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var citiesTableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var contentView: UIView!
-   // @IBOutlet weak var announcementsTableView: UITableView!
+    // @IBOutlet weak var announcementsTableView: UITableView!
     @IBOutlet weak var collectionViewPeople: UICollectionView!
     @IBOutlet weak var addCitiesButton: UIButton!
     
@@ -42,8 +43,11 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     let storage = Storage.storage()
     var groupImagesRef: StorageReference!
     var groupStorageRef: StorageReference!
+    var citiesStorageRef: StorageReference!
     var currentGroupImageURL: String!
     var imageToPass: UIImage? // Property to store the image data
+    var currentEditingCityIndexPath: IndexPath?
+    var currentEditingCityId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +65,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         groupImagesRef = storage.reference().child("GroupImages")
         groupStorageRef = groupImagesRef.child(group!.groupCode)
+        citiesStorageRef = storage.reference().child("CityImages")
         
         citiesTableView.delegate = self
         citiesTableView.dataSource = self
@@ -71,19 +76,13 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // CustomDarkGrey
         announceCell.layer.borderColor = UIColor(named: "CustomDarkGrey")?.cgColor
         
+        let imageSize: CGFloat = 50
         announceImage.image = UIImage(named: "defaultProfilePicture")
-        announceImage.contentMode = .scaleAspectFill
-
-        // Explicitly set the size of the image view
-        let imageSize: CGFloat = 50  // Set a smaller size for the image view
-                
-        // Position the image view
-        announceImage.frame = CGRect(x: (view.bounds.width - imageSize) / 2, y: 100, width: imageSize, height: imageSize)
-                
-        // Apply the corner radius
+        announceImage.frame = CGRect(x: 20, y: 20, width: imageSize, height: imageSize)
+        // Set the corner radius to make image circular
         announceImage.layer.cornerRadius = imageSize / 2
         announceImage.clipsToBounds = true
-         
+        
         
         // Get from firestore
         print("group code!: ", (group?.groupCode)!)
@@ -93,22 +92,22 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         for city in cityList {
             print("  city name: ", city?.name)
         }
-            
+        
         fetchCities()
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         // fetchLastAnnouncement()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& viewWillAppear called")
-//        fetchLastAnnouncement()
-//    }
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& viewWillAppear called")
+    //        fetchLastAnnouncement()
+    //    }
     
     func fetchLastAnnouncement() {
         print("IN FETCH LAST ANNOUNCEMT -------------------------------")
         let db = Firestore.firestore()
         let groupRef = db.collection("Groups").document((self.group?.groupCode)!)
-            
+        
         groupRef.getDocument { (groupDoc, error) in
             let dispatchGroup = DispatchGroup()
             dispatchGroup.enter()
@@ -123,30 +122,30 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             }
             
             if let announcementsData = groupDoc.data()?["announcements"] as? [[String: Any]], !announcementsData.isEmpty {
-                    let lastAnnouncementDict = announcementsData.last! // Get the last announcement from the list
-
-                    // Assuming you have a model set up to configure your cell
-                    if let user = lastAnnouncementDict["user"] as? String,
-                       let userImageURL = lastAnnouncementDict["userImageURL"] as? String,
-                       let subject = lastAnnouncementDict["subject"] as? String,
-                       let message = lastAnnouncementDict["announcement"] as? String,
-                       let timestamp = lastAnnouncementDict["timestamp"] as? Timestamp {
-                        let date = timestamp.dateValue() // Convert Timestamp to Date
-                        let lastAnnouncement = Announcements(user: user, userImageURL: userImageURL, subject: subject, message: message, timestamp: date)
-                        
-                        // Store this last announcement in a property
-                        self.lastAnnouncement = lastAnnouncement
-                        
-                        DispatchQueue.main.async {
-                            print("about to update announce")
-                            print("last announce", lastAnnouncement.message)
-                            self.updateAnnounceCell(lastAnnouncement: lastAnnouncement)
-                        }
+                let lastAnnouncementDict = announcementsData.last! // Get the last announcement from the list
+                
+                // Assuming you have a model set up to configure your cell
+                if let user = lastAnnouncementDict["user"] as? String,
+                   let userImageURL = lastAnnouncementDict["userImageURL"] as? String,
+                   let subject = lastAnnouncementDict["subject"] as? String,
+                   let message = lastAnnouncementDict["announcement"] as? String,
+                   let timestamp = lastAnnouncementDict["timestamp"] as? Timestamp {
+                    let date = timestamp.dateValue() // Convert Timestamp to Date
+                    let lastAnnouncement = Announcements(user: user, userImageURL: userImageURL, subject: subject, message: message, timestamp: date)
+                    
+                    // Store this last announcement in a property
+                    self.lastAnnouncement = lastAnnouncement
+                    
+                    DispatchQueue.main.async {
+                        print("about to update announce")
+                        print("last announce", lastAnnouncement.message)
+                        self.updateAnnounceCell(lastAnnouncement: lastAnnouncement)
                     }
-                } else {
-                    print("No announcements found in the group document.")
                 }
+            } else {
+                print("No announcements found in the group document.")
             }
+        }
     }
     
     func updateAnnounceCell(lastAnnouncement: Announcements) {
@@ -168,7 +167,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // announceMessage.titleLabel?.lineBreakMode = .byTruncatingTail
         
     }
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         fetchLastAnnouncement()
@@ -202,16 +201,16 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             }
         }
     }
-
+    
     func downloadGroupImage(_ urlString: String) {
         print("Inside downloadGroupImage")
         print("The url retrieved is: \(urlString)")
         guard let url = URL(string: urlString) else {
-             print("Invalid URL")
-             return
-         }
-         
-         // Create a URLSessionDataTask to fetch the image data from the URL
+            print("Invalid URL")
+            return
+        }
+        
+        // Create a URLSessionDataTask to fetch the image data from the URL
         // Create a URLSessionDataTask to fetch the image data from the URL
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             // Check for errors
@@ -266,64 +265,66 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         print("CITY COUNT: ", cityList.count)
         return 1 //cityList.count
     }
-      
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return cityList.count
     }
-      
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
     }
-      
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
     }
-      
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Dequeue a reusable cell from the table view.          
+        // Dequeue a reusable cell from the table view.
         let cell = tableView.dequeueReusableCell(withIdentifier: "CityCell", for: indexPath) as! CityCell
-          
+        
         let newWidth = cell.contentView.frame.width * 0.5
         let margin = (cell.contentView.frame.width - newWidth) / 2.0
-          
+        
         //cell.contentView.frame = CGRect(x: margin, y: 0, width: newWidth, height: cell.contentView.frame.height)
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         //cell.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         
         // Get the city name for the current row.
         let thisCity = cityList[indexPath.section]
-
+        
         // Set the city name to the cell's text label.
         cell.layer.cornerRadius = 15
         cell.cityNameLabel?.text = thisCity!.name.uppercased()
         cell.cityNameLabel?.setCharacterSpacing(-1.5)
         cell.cityNameLabel?.shadowColor = .black
         cell.cityNameLabel?.shadowOffset = CGSize(width: 1, height: 1)
-        cell.cityImageView?.image = UIImage(named: "japan")
-        print("CITY TEXT: ", thisCity?.name)
-
+        
+        var currentURL = thisCity!.cityImageURL
+        cell.cityImageView?.setImage(with: currentURL, fallbackImage: UIImage(named: "japan"))
+        
+        
         return cell
     }
-      
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let db = Firestore.firestore()
         let groupCode = group?.groupCode ?? ""
         let cityName = cityList[indexPath.section]?.name ?? ""
-          
+        
         let cityId = "\(groupCode)\(cityName)"
         print("City ID:", cityId)
         let cityRef = db.collection("Cities").document(cityId)
-          
+        
         cityRef.getDocument { (document, error) in
             guard let document = document, document.exists else {
                 print("City document does not exist")
                 return
             }
-              
+            
             if let deadlineTimestamp = document.data()?["deadline"] as? Timestamp {
                 let deadlineDate = deadlineTimestamp.dateValue()
                 if Date() >= deadlineDate {
@@ -335,10 +336,10 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         } else {
                             // If not generated, generate itinerary first
                             self.showLoadingOverlay() // Show a loading indicator to the user
-                                  
+                            
                             self.generateItinerary(cityId: cityId) { success in
                                 self.hideLoadingOverlay() // Hide the loading indicator
-                    
+                                
                                 if success {
                                     self.navigateToItineraryPage(cityId: cityId, cityName: cityName)
                                 } else {
@@ -358,7 +359,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     func checkIfItineraryGenerated(cityId: String, completion: @escaping (Bool) -> Void) {
         print("calling checkIfItineraryGenerated")
         let db = Firestore.firestore()
@@ -373,7 +374,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             }
         }
     }
-
+    
     func generateItinerary(cityId: String, completion: @escaping (Bool) -> Void) {
         print("calling generateItinerary")
         Task {
@@ -381,12 +382,12 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             completion(success)
         }
     }
-
+    
     func showLoadingOverlay() {
         let overlay = UIView(frame: self.view.bounds)
         overlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         overlay.tag = 100 // Arbitrary tag to identify the overlay later
-
+        
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.center = overlay.center
         overlay.addSubview(indicator)
@@ -395,14 +396,14 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.view.addSubview(overlay)
         self.view.isUserInteractionEnabled = false // Disables interaction with the underlying view
     }
-
+    
     func hideLoadingOverlay() {
         if let overlay = self.view.viewWithTag(100) {
             overlay.removeFromSuperview()
         }
         self.view.isUserInteractionEnabled = true // Re-enables interaction
     }
-
+    
     
     func navigateToItineraryPage(cityId: String, cityName: String) {
         if let itineraryVC = self.storyboard?.instantiateViewController(withIdentifier: "ItineraryVCID") as? ItineraryPageVC {
@@ -412,7 +413,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             self.navigationController?.pushViewController(itineraryVC, animated: true)
         }
     }
-
+    
     func navigateToSurveyPage(cityId: String, cityName: String) {
         print("segue to survey")
         if let surveyVC = self.storyboard?.instantiateViewController(withIdentifier: "SurveyVCID") as? SurveyPageVC {
@@ -470,16 +471,17 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         }
                         print("type of deadline: " ,type(of: cityDoc?.get("deadline")))
                         print("type of citydoc: ", type(of: cityDoc))
-                       if let cityDoc = cityDoc, cityDoc.exists, let cityName =  cityDoc.data()?["cityName"] as? String,
-                          let deadline = cityDoc.data()?["deadline"] as? Timestamp,
-                            let startDate = cityDoc.data()?["startDate"] as? Timestamp,
-                          let endDate = cityDoc.data()?["endDate"] as? Timestamp {
-                           print("start date value: ", startDate.dateValue())
-                           print("start type: ", type(of: startDate.dateValue()))
-                           let city = City(name: cityName, startDate: startDate.dateValue(), endDate: endDate.dateValue(), deadline: deadline.dateValue(), imageURL: "")
-                           self.cityList.append(city)
-                           print("Appended to city list in fetchCities, leng of cityList: ", self.cityList.count)
-                       }
+                        if let cityDoc = cityDoc, cityDoc.exists, let cityName =  cityDoc.data()?["cityName"] as? String,
+                           let deadline = cityDoc.data()?["deadline"] as? Timestamp,
+                           let startDate = cityDoc.data()?["startDate"] as? Timestamp,
+                           let endDate = cityDoc.data()?["endDate"] as? Timestamp {
+                            print("start date value: ", startDate.dateValue())
+                            print("start type: ", type(of: startDate.dateValue()))
+                            let cityImageURL = cityDoc.data()?["cityImageURL"] as? String
+                            let city = City(name: cityName, startDate: startDate.dateValue(), endDate: endDate.dateValue(), deadline: deadline.dateValue(), imageURL: cityImageURL ?? "default")
+                            self.cityList.append(city)
+                            print("Appended to city list in fetchCities, leng of cityList: ", self.cityList.count)
+                        }
                     }
                 }
                 dispatchGroup.notify(queue: .main) {
@@ -490,11 +492,11 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     }
                     self.citiesTableView.reloadData()
                 }
-                    
+                
             }
         }
     }
-     
+    
     
     func setupCitiesModalView(title: String) {
         var modalTitle: String = ""
@@ -509,7 +511,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // Add a tap gesture recognizer to overlayView
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         overlayView.addGestureRecognizer(tapGesture)
-         
+        
         // Create modal view
         citiesModalView = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: modalHeight))
         //citiesModalView.backgroundColor = .white
@@ -549,7 +551,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         //destinationLabel.textColor = .black
         destinationLabel.textColor = UIColor(named: "CustomOutlineText")
         citiesModalView.addSubview(destinationLabel)
-
+        
         NSLayoutConstraint.activate([
             destinationLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             destinationLabel.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20),
@@ -571,14 +573,14 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             NSAttributedString.Key.foregroundColor: UIColor.darkGray // Optional: Adjust placeholder text color
         ]
         destinationTextField.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: placeholderAttributes)
-
+        
         // Adding left padding to the text field
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: destinationTextField.frame.height))
         destinationTextField.leftView = paddingView
         destinationTextField.leftViewMode = .always
-
+        
         citiesModalView.addSubview(destinationTextField)
-
+        
         NSLayoutConstraint.activate([
             destinationTextField.topAnchor.constraint(equalTo: destinationLabel.bottomAnchor, constant: 5),
             destinationTextField.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20),
@@ -594,12 +596,12 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         //surveyDeadlineLabel.textColor = .black
         surveyDeadlineLabel.textColor = UIColor(named: "CustomOutlineText")
         citiesModalView.addSubview(surveyDeadlineLabel)
-
+        
         NSLayoutConstraint.activate([
             surveyDeadlineLabel.topAnchor.constraint(equalTo: destinationTextField.bottomAnchor, constant: 20),
             surveyDeadlineLabel.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20)
         ])
-
+        
         surveyDeadlinePicker.translatesAutoresizingMaskIntoConstraints = false
         surveyDeadlinePicker.datePickerMode = .dateAndTime
         citiesModalView.addSubview(surveyDeadlinePicker)
@@ -609,7 +611,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             surveyDeadlinePicker.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20), // Left-aligned
             //surveyDeadlinePicker.widthAnchor.constraint(equalToConstant: 250)
         ])
-
+        
         // Trip Dates Label
         let tripDatesLabel = UILabel()
         tripDatesLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -618,7 +620,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         //tripDatesLabel.textColor = .black
         tripDatesLabel.textColor = UIColor(named: "CustomOutlineText")
         citiesModalView.addSubview(tripDatesLabel)
-
+        
         NSLayoutConstraint.activate([
             tripDatesLabel.topAnchor.constraint(equalTo: surveyDeadlinePicker.bottomAnchor, constant: 20),
             tripDatesLabel.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20),
@@ -629,7 +631,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         startDatePicker.translatesAutoresizingMaskIntoConstraints = false
         startDatePicker.datePickerMode = .date
         citiesModalView.addSubview(startDatePicker)
-
+        
         NSLayoutConstraint.activate([
             startDatePicker.topAnchor.constraint(equalTo: tripDatesLabel.bottomAnchor, constant: 5),
             startDatePicker.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20), // Left-aligned
@@ -644,23 +646,23 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         //toLabel.textColor = .black
         toLabel.textColor = UIColor(named: "CustomOutlineText")
         citiesModalView.addSubview(toLabel)
-
+        
         NSLayoutConstraint.activate([
             toLabel.centerYAnchor.constraint(equalTo: startDatePicker.centerYAnchor),
             toLabel.leadingAnchor.constraint(equalTo: startDatePicker.trailingAnchor, constant: 10)
         ])
-
+        
         // End date picker
         let endDatePicker = UIDatePicker()
         endDatePicker.translatesAutoresizingMaskIntoConstraints = false
         endDatePicker.datePickerMode = .date
         citiesModalView.addSubview(endDatePicker)
-
+        
         NSLayoutConstraint.activate([
             endDatePicker.topAnchor.constraint(equalTo: startDatePicker.topAnchor),
             endDatePicker.leadingAnchor.constraint(equalTo: toLabel.trailingAnchor, constant: 10), // Positioned to the right of "to" label
         ])
-
+        
         // Create done button for this modal view
         let citiesDoneButton = ProfileDoneButton()
         citiesDoneButton.typeOfButton = .cities
@@ -708,7 +710,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 print("Document successfully written!")
             }
         }
-    
+        
         let cityRef = db.collection("Cities").document(cityId)
         let groupRef = db.collection("Groups").document((group?.groupCode)!)
         groupRef.updateData([
@@ -721,7 +723,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 print("City reference added to group successfully")
             }
         }
-
+        
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
@@ -771,7 +773,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     print("reload collection view for people")
                     self.collectionViewPeople.reloadData()
                 }
-                    
+                
             }
         }
     }
@@ -791,8 +793,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         DispatchQueue.main.async {
             cell.userImageView.setImage(with: currentURL!, fallbackImage: UIImage(named: "defaultProfilePicture"))
         }
-    
-
+        
+        
         //cell.userImageView.clipsToBounds = true
         //cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
@@ -801,15 +803,150 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Prepare to segue to Details page
         if segue.identifier == "GroupToDetails",
-                   let destination = segue.destination as? GroupDetailsViewController
-                {
-                    destination.groupProfilePics = groupProfilePics
-                    destination.displayNames = displayNames
-                    destination.group = group
-                    destination.receivedImage = imageToPass
-                    destination.currentGroupImageURL = self.currentGroupImageURL
-                    destination.profilePicsURLs = self.profilePicsURLs
-                }
+           let destination = segue.destination as? GroupDetailsViewController
+        {
+            destination.groupProfilePics = groupProfilePics
+            destination.displayNames = displayNames
+            destination.group = group
+            destination.receivedImage = imageToPass
+            destination.currentGroupImageURL = self.currentGroupImageURL
+            destination.profilePicsURLs = self.profilePicsURLs
+        }
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // Create an action for editing the city image
+        let editAction = UIContextualAction(style: .normal, title: "Edit Image") { [weak self] (action, view, completionHandler) in
+            self?.editCityImage(at: indexPath)
+            completionHandler(true)
+        }
+        editAction.backgroundColor = .blue
+        
+        // Create an action for deleting the city
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
+            self?.deleteCity(at: indexPath)
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = .red
+        
+        // Combine actions into a swipe actions configuration
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+        return configuration
+    }
+    
+    func deleteCity(at indexPath: IndexPath) {
+        let cityName = cityList[indexPath.section]?.name
+        let cityId = group!.groupCode + cityName!
+        let db = Firestore.firestore()
+        
+        // Remove city from Firestore document in Groups collection
+        let groupDocRef = db.collection("Groups").document("groupCode")
+        groupDocRef.updateData([
+            "cityList": FieldValue.arrayRemove([cityId])
+        ])
+        
+        // Delete the city document from Cities collection
+        db.collection("Cities").document(cityId).delete { error in
+            if let error = error {
+                print("Error deleting city: \(error)")
+            } else {
+                print("City successfully deleted")
+                DispatchQueue.main.async {
+                    self.cityList.remove(at: indexPath.section)
+                    let indexSet = IndexSet(arrayLiteral: indexPath.section)
+                    
+                    self.citiesTableView.deleteSections(indexSet, with: .automatic)
+                }
+            }
+        }
+    }
+    
+    func editCityImage(at indexPath: IndexPath) {
+        let cityName = cityList[indexPath.section]?.name
+        let cityId = group!.groupCode + cityName!
+        currentEditingCityIndexPath = indexPath
+        currentEditingCityId = group!.groupCode + cityName!
+        
+        print("Initiate edit for city image: \(cityName)")
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.mediaTypes = [UTType.image.identifier]
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let selectedImage = info[.originalImage] as? UIImage {
+            uploadImageToFirebaseStorage(selectedImage)
+
+        }
+    }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true, completion: nil)
+        }
+        
+
+        
+        
+    func uploadImageToFirebaseStorage(_ image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+            print("Failed to convert image to data")
+            return
+        }
+        
+        let imageName = "\(UUID().uuidString).jpg"
+        
+        // Create a reference to the image in the user's folder
+        guard let citiesStorageRef = citiesStorageRef else {
+            print("Cities storage reference is nil")
+            return
+        }
+        
+        let imageRef = citiesStorageRef.child(imageName)
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        let _ = imageRef.putData(imageData, metadata: metadata) { (metadata, error) in
+            guard error == nil else {
+                print("Error uploading image: \(error!.localizedDescription)")
+                return
+            }
+            
+            // Image uploaded successfully
+            imageRef.downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                    print("Error getting download URL: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
+                print("Image uploaded to Firebase Storage")
+                // Save download URL to Firestore
+                self.updateCityPictureURL(downloadURL)
+            }
+        }
+    }
+        
+        
+    func updateCityPictureURL(_ downloadURL: URL) {
+        guard let currentUser = Auth.auth().currentUser else {
+            print("No current user")
+            return
+        }
+        let db = Firestore.firestore()
+        let cityRef = db.collection("Cities").document(currentEditingCityId!)
+        
+        cityRef.updateData(["cityImageURL": downloadURL.absoluteString]) { error in
+            if let error = error {
+                print("Error updating city picture URL: \(error.localizedDescription)")
+            } else {
+                print("City picture URL updated successfully: ", downloadURL.absoluteString)
+                self.fetchCities()
+            }
+        }
+    }
+        
 }
