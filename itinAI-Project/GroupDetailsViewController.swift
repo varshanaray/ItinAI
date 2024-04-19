@@ -236,7 +236,50 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell", for: indexPath) as! CustomPeopleTableViewCell
-        cell.name.text = displayNames[indexPath.row]
+        if (indexPath.row == 1) {
+
+            // Assuming 'displayNames' is an array of strings and 'indexPath.row' gives you the current index
+            let normalString = displayNames[indexPath.row]! + " " // Regular string part
+
+            // Create an initial attributed string from the normal string
+            let normalAttributedString = NSMutableAttributedString(string: normalString)
+
+            // Define the attributes for the italic part
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.italicSystemFont(ofSize: 14) // Set the font to italic with size 16
+            ]
+
+            // Create the italic attributed string
+            let italicAttributedString = NSAttributedString(string: "Group Admin", attributes: attributes)
+
+            // Append the italic attributed string to the normal attributed string
+            normalAttributedString.append(italicAttributedString)
+
+            // Assign the combined attributed string to the UILabel's attributedText property
+            cell.name.attributedText = normalAttributedString
+
+        } else {
+            // Assuming 'displayNames' is an array of strings and 'indexPath.row' gives you the current index
+            let normalString = displayNames[indexPath.row]! + " " // Regular string part
+
+            // Create an initial attributed string from the normal string
+            let normalAttributedString = NSMutableAttributedString(string: normalString)
+
+            // Define the attributes for the italic part
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.italicSystemFont(ofSize: 14) // Set the font to italic with size 16
+            ]
+
+            // Create the italic attributed string
+            let italicAttributedString = NSAttributedString(string: "Group Member", attributes: attributes)
+
+            // Append the italic attributed string to the normal attributed string
+            normalAttributedString.append(italicAttributedString)
+
+            // Assign the combined attributed string to the UILabel's attributedText property
+            cell.name.attributedText = normalAttributedString
+
+        }
         var currentURL = self.profilePicsURLs[indexPath.row]!
         cell.iconImageView.setImage(with: currentURL, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
         //cell.iconImageView.image = groupProfilePics[indexPath.row]
