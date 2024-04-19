@@ -10,6 +10,7 @@ class SurveyPageVC: UIViewController {
     var cityName: String?
     var cityId: String?
     var cityImageUrl: String?
+    var cityImage: UIImage?
     @IBOutlet var topView: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
     
@@ -32,6 +33,7 @@ class SurveyPageVC: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
+        //backgroundImage.image = cityImage
         /*
         // Determine the background color's lightness/darkness
         let backgroundColor = backgroundImage.image?.averageColor

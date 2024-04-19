@@ -187,7 +187,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     // Profile picture URL found in Firestore
                     if (self.currentGroupImageURL != groupImageURL) {
                         //self.downloadGroupImage(groupImageURL)
-                        self.imageView.setImage(with: groupImageURL, fallbackImage: UIImage(named: "logoItinAI"))
+                        self.imageView.setImage(with: groupImageURL, fallbackImage: UIImage(named: "scene"))
                         self.imageToPass = self.imageView.image
                         self.currentGroupImageURL = groupImageURL
                     }
@@ -300,7 +300,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         cell.cityNameLabel?.shadowOffset = CGSize(width: 1, height: 1)
         
         var currentURL = thisCity!.cityImageURL
-        cell.cityImageView?.setImage(with: currentURL, fallbackImage: UIImage(named: "japan"))
+        cell.cityImageView?.setImage(with: currentURL, fallbackImage: UIImage(named: "f"))
         
         
         return cell
@@ -314,6 +314,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let db = Firestore.firestore()
         let groupCode = group?.groupCode ?? ""
         let cityName = cityList[indexPath.section]?.name ?? ""
+        //let cityImageURL = cityList[indexPath.section]?.cityImageURL
+        //let cityImage = (citiesTableView.cellForRow(at: indexPath)?.imageView?.image)!
         
         let cityId = "\(groupCode)\(cityName)"
         print("City ID:", cityId)
@@ -410,15 +412,17 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             print("segueing to itinerary page")
             itineraryVC.cityId = cityId
             itineraryVC.cityName = cityName
+            //itineraryVC.cityImage = cityImage
             self.navigationController?.pushViewController(itineraryVC, animated: true)
         }
     }
     
-    func navigateToSurveyPage(cityId: String, cityName: String) {
+func navigateToSurveyPage(cityId: String, cityName: String) {
         print("segue to survey")
         if let surveyVC = self.storyboard?.instantiateViewController(withIdentifier: "SurveyVCID") as? SurveyPageVC {
             surveyVC.cityId = cityId
             surveyVC.cityName = cityName
+            //surveyVC.cityImage = cityImage
             self.navigationController?.pushViewController(surveyVC, animated: true)
         }
     }

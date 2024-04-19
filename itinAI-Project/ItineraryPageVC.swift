@@ -14,6 +14,7 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
     
     var cityId: String?
     var cityName: String?
+    var cityImage: UIImage?
     
     var itineraryDays: [ItineraryDay] = [] // Populate this array from Firestore
     
@@ -30,6 +31,8 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
         fetchItineraryData (cityDocId: cityId!){ [weak self] in
             self?.populateScrollView()
         }
+        
+        //bgImageView.image = cityImage
     }
     
     func fetchItineraryData(cityDocId: String, completion: @escaping () -> Void) {
@@ -179,7 +182,7 @@ func fetchSurveyResponsesAndGenerate(cityDocId: String) async -> Bool {
 
 func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList: [String], _ startDate: String, _ endDate: String) async {
     
-    let openAI = OpenAI(apiToken: "hidden")
+    let openAI = OpenAI(apiToken: "token")
     
     let prompt = """
         Generate a detailed travel itinerary for a trip to \(cityName), from \(startDate) to \(endDate). The response should only include the itinerary details, without any additional text. Utilize custom separators to clearly distinguish between different parts of the itinerary. For each day, prefix the day number with '###Day:', followed by '###Date:' for the date. Each itinerary item should be prefixed with '###Content:'. Do not include any new line characters, leav everything in one single line so it's easily parsable. Ensure the itinerary is practical, considering travel time between locations, and aligns with the user's interests.

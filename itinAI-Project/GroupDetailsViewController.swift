@@ -41,10 +41,11 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         tableView.delegate = self
         tableView.rowHeight = 75
         tableView.backgroundColor = UIColor(named: "CustomBackground")
+        tableView.allowsSelection = false
         groupNameLabel.text = group?.groupName
         groupCodeLabel.text = "Group Code: " + group!.groupCode
         //detailsImage.image = self.receivedImage
-        detailsImage.setImage(with: currentGroupImageURL, fallbackImage: UIImage(named: "logoItinAI"))
+        detailsImage.setImage(with: currentGroupImageURL, fallbackImage: UIImage(named: "scene"))
         descript.delegate = self
         descript.allowsEditingTextAttributes = true
         descript.backgroundColor = UIColor(named: "CustomBackground")
@@ -239,7 +240,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         if (indexPath.row == 1) {
 
             // Assuming 'displayNames' is an array of strings and 'indexPath.row' gives you the current index
-            let normalString = displayNames[indexPath.row]! + " " // Regular string part
+            let normalString = displayNames[indexPath.row]! + "            " // Regular string part
 
             // Create an initial attributed string from the normal string
             let normalAttributedString = NSMutableAttributedString(string: normalString)
@@ -260,7 +261,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
 
         } else {
             // Assuming 'displayNames' is an array of strings and 'indexPath.row' gives you the current index
-            let normalString = displayNames[indexPath.row]! + " " // Regular string part
+            let normalString = displayNames[indexPath.row]! + "            " // Regular string part
 
             // Create an initial attributed string from the normal string
             let normalAttributedString = NSMutableAttributedString(string: normalString)

@@ -329,11 +329,20 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     }
     
     @objc func deletePhotoButtonPressed() {
-        print("Delete photo button pressed")
-        // Implement functionality to delete the current photo and replace it with the default image
-        profilePicture.image = defaultImage
-        dismissModalView()
-    }
+       print("Delete photo button pressed")
+       // Implement functionality to delete the current photo and replace it with the default image
+       profilePicture.image = defaultImage
+       let db = Firestore.firestore()
+       let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+       userRef.updateData(["profileImageURL": ""]) { error in
+           if let error = error {
+               print("Error updating profile picture URL: \(error.localizedDescription)")
+           } else {
+               print("Profile picture URL deleted successfully")
+           }
+       }
+       dismissModalView()
+   }
     
     
     func uploadImageToFirebaseStorage(_ image: UIImage) {
