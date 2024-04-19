@@ -606,7 +606,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         cell.groupNameLabel.text = groupName
         //cell.groupImageView.image = UIImage(named: "japan")
         //downloadGroupImage(groupImageURL, cell)
-        cell.groupImageView.setImage(with: groupImageURL, placeholder: UIImage(named: "scene"), fallbackImage: UIImage(named: "scene"))
+        cell.groupImageView.setImage(with: groupImageURL, fallbackImage: UIImage(named: "scene"))
         cell.datesRangeLabel.text = "Date range"
         
         return cell
