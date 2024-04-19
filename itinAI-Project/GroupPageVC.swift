@@ -82,7 +82,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // Set the corner radius to make image circular
         announceImage.layer.cornerRadius = imageSize / 2
         announceImage.clipsToBounds = true
-        
+        announceMessage.setTitle("No announcments yet!", for: .normal)
+        announceName.text = ""
         
         // Get from firestore
         print("group code!: ", (group?.groupCode)!)
