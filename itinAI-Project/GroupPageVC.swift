@@ -71,10 +71,16 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         // CustomDarkGrey
         announceCell.layer.borderColor = UIColor(named: "CustomDarkGrey")?.cgColor
         
-        let imageSize: CGFloat = 50
         announceImage.image = UIImage(named: "defaultProfilePicture")
-        announceImage.frame = CGRect(x: 20, y: 20, width: imageSize, height: imageSize)
-        // Set the corner radius to make image circular
+        announceImage.contentMode = .scaleAspectFill
+
+        // Explicitly set the size of the image view
+        let imageSize: CGFloat = 50  // Set a smaller size for the image view
+                
+        // Position the image view
+        announceImage.frame = CGRect(x: (view.bounds.width - imageSize) / 2, y: 100, width: imageSize, height: imageSize)
+                
+        // Apply the corner radius
         announceImage.layer.cornerRadius = imageSize / 2
         announceImage.clipsToBounds = true
          
