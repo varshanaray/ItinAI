@@ -86,7 +86,7 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
         blockView.addSubview(dateLabel)
         
         let contentView = UITextView(frame: CGRect(x: 20, y: 50, width: blockView.frame.width - 40, height: 0)) // Start with 0 height
-        contentView.text = "- " + day.content.joined(separator: "\n- ")
+        contentView.text = day.content
         contentView.font = UIFont(name: "Poppins-Regular", size: 16)
         contentView.isEditable = true
         contentView.isScrollEnabled = false // Disable scrolling
@@ -182,16 +182,16 @@ func fetchSurveyResponsesAndGenerate(cityDocId: String) async -> Bool {
 
 func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList: [String], _ startDate: String, _ endDate: String) async {
     
-    let openAI = OpenAI(apiToken: "token")
+    let openAI = OpenAI(apiToken: "hidden")
     
     let prompt = """
-        Generate a detailed travel itinerary for a trip to \(cityName), from \(startDate) to \(endDate). The response should only include the itinerary details, without any additional text. Utilize custom separators to clearly distinguish between different parts of the itinerary. For each day, prefix the day number with '###Day:', followed by '###Date:' for the date. Each itinerary item should be prefixed with '###Content:'. Do not include any new line characters, leav everything in one single line so it's easily parsable. Ensure the itinerary is practical, considering travel time between locations, and aligns with the user's interests.
+        Generate a detailed travel itinerary for a trip to \(cityName), from \(startDate) to \(endDate). The response should only include the itinerary details, without any additional text. Utilize custom separators to clearly distinguish between different parts of the itinerary. For each day, prefix the day number with '###Day:', followed by '###Date:' for the date. Each itinerary item should be prefixed with '###Content:- '. Do not include any new line characters, leav everything in one single line so it's easily parsable. Ensure the itinerary is practical, considering travel time between locations, and aligns with the user's interests.
 
         Example of the desired format:
 
-        ###Day:1 ###Date:April 2nd ###Content:9:00 AM: Start your day with a visit to the iconic Tsukiji Fish Market to experience the bustling atmosphere and enjoy some fresh seafood. ###Content:12:00 PM: Head to the upscale Ginza district for high-end shopping at luxury boutiques and department stores. ###Content:3:00 PM: Indulge in a sushi feast at a renowned sushi restaurant in Ginza to satisfy your craving for fresh and delicious sushi. ###Content:6:00 PM: Make your way to Tokyo Tower to marvel at the city skyline from this iconic landmark as it lights up in the evening.
+        ###Day:1 ###Date:April 2nd ###Content:- 9:00 AM: Start your day with a visit to the iconic Tsukiji Fish Market to experience the bustling atmosphere and enjoy some fresh seafood. ###Content:- 12:00 PM: Head to the upscale Ginza district for high-end shopping at luxury boutiques and department stores. ###Content:- 3:00 PM: Indulge in a sushi feast at a renowned sushi restaurant in Ginza to satisfy your craving for fresh and delicious sushi. ###Content:- 6:00 PM: Make your way to Tokyo Tower to marvel at the city skyline from this iconic landmark as it lights up in the evening.
 
-        ###Day:2 ###Date:April 3rd ###Content:10:00 AM: Explore the vibrant Takeshita Street in Harajuku for quirky fashion finds and unique souvenirs. ###Content:1:00 PM: Have a sushi lunch at one of the local sushi joints near Harajuku to continue enjoying delicious sushi. ###Content:4:00 PM: Visit the Meiji Shrine for a peaceful stroll through the serene forest and to learn about Japanese culture and history. ###Content:8:00 PM: Experience Tokyo's nightlife scene at a popular club in Shibuya to dance the night away and enjoy the electric atmosphere.
+        ###Day:2 ###Date:April 3rd ###Content:- 10:00 AM: Explore the vibrant Takeshita Street in Harajuku for quirky fashion finds and unique souvenirs. ###Content:- 1:00 PM: Have a sushi lunch at one of the local sushi joints near Harajuku to continue enjoying delicious sushi. ###Content:- 4:00 PM: Visit the Meiji Shrine for a peaceful stroll through the serene forest and to learn about Japanese culture and history. ###Content:- 8:00 PM: Experience Tokyo's nightlife scene at a popular club in Shibuya to dance the night away and enjoy the electric atmosphere.
         
         Recall to do this for however many days from \(startDate) to \(endDate). And note that we do not need to strictly visit 4 places per day.
 
@@ -233,7 +233,7 @@ func parseItinerary(cityDocId: String, response: String) {
     let db = Firestore.firestore()
     var dayNumber = ""
     var date = ""
-    var content: [String] = []
+    var content = ""
 
     for part in parts {
         let trimmedPart = part.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -241,7 +241,7 @@ func parseItinerary(cityDocId: String, response: String) {
             if !content.isEmpty {
                 // Upload the accumulated content for the previous day to Firestore before starting a new day
                 uploadDayItineraryToFirestore(db: db, cityDocId: cityDocId, dayNumber: dayNumber, date: date, content: content)
-                content = [] // Reset content for the new day
+                content = "" // Reset content for the new day
             }
             dayNumber = String(trimmedPart.dropFirst("Day:".count)).trimmingCharacters(in: .whitespacesAndNewlines)
         } else if trimmedPart.starts(with: "Date:") {
@@ -251,6 +251,7 @@ func parseItinerary(cityDocId: String, response: String) {
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .replacingOccurrences(of: "\\n", with: "")
                 .replacingOccurrences(of: "\\", with: "")
+            
             content.append(contentItem)
         }
     }
@@ -262,7 +263,7 @@ func parseItinerary(cityDocId: String, response: String) {
 }
 
 // Helper function to upload a single day's itinerary to Firestore
-func uploadDayItineraryToFirestore(db: Firestore, cityDocId: String, dayNumber: String, date: String, content: [String]) {
+func uploadDayItineraryToFirestore(db: Firestore, cityDocId: String, dayNumber: String, date: String, content: String) {
     let docRef = db.collection("Cities").document(cityDocId).collection("ItineraryDays").document("Day\(dayNumber)")
     docRef.setData([
         "dayNumber": dayNumber,

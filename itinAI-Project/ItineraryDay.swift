@@ -8,13 +8,13 @@ struct ItineraryDay {
     
     var dayNumber: String
     var date: String
-    var content: [String]
+    var content: String
     
     // Helper to initialize from Firestore document data
     init?(documentData: [String: Any]) {
         guard let dayNumber = documentData["dayNumber"] as? String,
               let date = documentData["date"] as? String,
-              let content = documentData["content"] as? [String] else { return nil }
+              let content = documentData["content"] as? String else { return nil }
         self.dayNumber = dayNumber
         self.date = date
         self.content = content
