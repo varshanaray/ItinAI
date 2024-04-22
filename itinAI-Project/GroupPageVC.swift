@@ -55,6 +55,11 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         collectionViewPeople.dataSource = self
         collectionViewPeople.backgroundColor = UIColor(named: "CustomBackground")
         collectionViewPeople.allowsSelection = false
+        collectionViewPeople.isScrollEnabled = true
+        // Assuming you have already set up your collectionView
+        if let layout = collectionViewPeople.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .horizontal
+        }
         
         contentView.layer.cornerRadius = 15
         
@@ -804,6 +809,8 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         //cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
     }
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Prepare to segue to Details page
