@@ -103,27 +103,23 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
         return blockView
     }
     
-    /*
     func textViewDidChange(_ textView: UITextView) {
-        let dayNumber = "Day\(textView.tag)" // Construct dayNumber from tag
-            guard let cityId = cityId else {
-                return
+        guard let cityId = cityId else { return }
+        let dayIndex = textView.tag - 1 // Assuming tag was set starting from 1
+        
+        if dayIndex >= 0 && dayIndex < itineraryDays.count {
+            let newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            let originalText = itineraryDays[dayIndex].content.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            if newText != originalText {
+                // There's a change in the content, update Firestore
+                let dayNumber = "Day\(textView.tag)" // Construct Firestore document ID from tag
+                saveTextToStorage(cityDocId: cityId, dayNumber: dayNumber, newContent: newText)
             }
-            let newTextLines = textView.text.split(separator: "\n").map(String.init)
-            let newContents = newTextLines.map { line in
-                line.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "- ", with: "")
-            }
-        let temp  = Int(dayNumber)
-        let numDay = (temp ?? 0) - 1
-        let ogContent = itineraryDays[numDay ?? 0].content
-            // Assuming `originalContents` is accessible and holds the original array loaded from Firestore
-            if newContents != ogContent {
-                // Find differences and update Firestore accordingly
-                saveTextToStorage(cityDocId: cityId, dayNumber: dayNumber, newContent: newContents)
-            }
+        }
     }
     
-    func saveTextToStorage(cityDocId: String, dayNumber: String, newContent: [String]) {
+    func saveTextToStorage(cityDocId: String, dayNumber: String, newContent: String) {
         print("in saveTextToStorage")
             let db = Firestore.firestore()
             db.collection("Cities")
@@ -138,7 +134,7 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
                       }
                   }
         }
-     */
+     
 }
 
 func fetchSurveyResponsesAndGenerate(cityDocId: String) async -> Bool {
