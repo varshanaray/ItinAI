@@ -17,6 +17,8 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
     var cityImage: UIImage?
     
     var itineraryDays: [ItineraryDay] = [] // Populate this array from Firestore
+    var contentView = UITextView()
+    var blockView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +33,7 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
         fetchItineraryData (cityDocId: cityId!){ [weak self] in
             self?.populateScrollView()
         }
-        
+        contentView.delegate = self
         //bgImageView.image = cityImage
     }
     
@@ -69,7 +71,7 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
     }
     
     func createItineraryBlock(for day: ItineraryDay, yOffset: CGFloat) -> UIView {
-        let blockView = UIView(frame: CGRect(x: 0, y: yOffset, width: scrollView.frame.width, height: 0)) // Start with 0 height
+        blockView = UIView(frame: CGRect(x: 0, y: yOffset, width: scrollView.frame.width, height: 0)) // Start with 0 height
         //blockView.backgroundColor = .white // Set background color if needed
         blockView.backgroundColor = UIColor(named: "CustomBackground")
         //blockView.layer.cornerRadius = 15 // Set rounded corners
@@ -85,25 +87,26 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
         dateLabel.textColor = UIColor.gray
         blockView.addSubview(dateLabel)
         
-        let contentView = UITextView(frame: CGRect(x: 20, y: 50, width: blockView.frame.width - 40, height: 0)) // Start with 0 height
+        contentView = UITextView(frame: CGRect(x: 20, y: 50, width: blockView.frame.width - 40, height: 0)) // Start with 0 height
         contentView.text = day.content
         contentView.font = UIFont(name: "Poppins-Regular", size: 16)
         contentView.isEditable = true
         contentView.isScrollEnabled = false // Disable scrolling
         let contentHeight = contentView.sizeThatFits(CGSize(width: contentView.frame.width, height: CGFloat.greatestFiniteMagnitude)).height
-        contentView.frame.size.height = contentHeight
+        contentView.frame.size.height = contentHeight + 50
         contentView.delegate = self // Set delegate to self
         contentView.tag = Int(day.dayNumber) ?? 0 // Store day number as tag, convert dayNumber to Int or use a direct mapping
         blockView.addSubview(contentView)
         
         // Adjust the height of the blockView based on the content
-        let totalHeight = dayLabel.frame.maxY + contentHeight + 25 // Adjust the padding as needed
+        let totalHeight = dayLabel.frame.maxY + contentHeight + 50 // Adjust the padding as needed
         blockView.frame.size.height = totalHeight
         
         return blockView
     }
     
     func textViewDidChange(_ textView: UITextView) {
+
         guard let cityId = cityId else { return }
         let dayIndex = textView.tag - 1 // Assuming tag was set starting from 1
         
@@ -127,13 +130,13 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
               .collection("ItineraryDays")
               .document(dayNumber)  // Make sure this matches the document ID for the day
               .updateData(["content": newContent]) { error in
-                      if let error = error {
-                          print("Error updating document: \(error)")
-                      } else {
-                          print("Document successfully updated")
-                      }
-                  }
-        }
+                    if let error = error {
+                        print("Error updating document: \(error)")
+                    } else {
+                        print("Document successfully updated")
+                    }
+                }
+    }
      
 }
 
@@ -236,7 +239,7 @@ func parseItinerary(cityDocId: String, response: String) {
         if trimmedPart.starts(with: "Day:") {
             if !content.isEmpty {
                 // Upload the accumulated content for the previous day to Firestore before starting a new day
-                uploadDayItineraryToFirestore(db: db, cityDocId: cityDocId, dayNumber: dayNumber, date: date, content: content)
+                uploadDayItineraryToFirestore(db: db, cityDocId: cityDocId, dayNumber: dayNumber, date: date, content: String(content.trimmingCharacters(in: .newlines)))
                 content = "" // Reset content for the new day
             }
             dayNumber = String(trimmedPart.dropFirst("Day:".count)).trimmingCharacters(in: .whitespacesAndNewlines)
@@ -248,7 +251,7 @@ func parseItinerary(cityDocId: String, response: String) {
                 .replacingOccurrences(of: "\\n", with: "")
                 .replacingOccurrences(of: "\\", with: "")
             
-            content.append(contentItem)
+            content.append(contentItem + "\n")
         }
     }
 
