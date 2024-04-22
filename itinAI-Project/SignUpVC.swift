@@ -18,6 +18,8 @@ class SignUpVC: UIViewController {
         passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         nameField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         
+        passwordField.isSecureTextEntry = true
+        
         Auth.auth().addStateDidChangeListener()
         {
             (auth, user) in

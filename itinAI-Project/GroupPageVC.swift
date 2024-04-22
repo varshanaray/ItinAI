@@ -523,7 +523,7 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         citiesModalView.backgroundColor = UIColor(named: "CustomBackground")
         citiesModalView.layer.cornerRadius = 15
         citiesModalView.layer.masksToBounds = true
-        overlayView.addSubview(citiesModalView)
+        view.addSubview(citiesModalView)
         
         // Constraints for citiesModalView
         NSLayoutConstraint.activate([
