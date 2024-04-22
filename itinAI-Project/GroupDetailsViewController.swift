@@ -27,7 +27,8 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     var groupStorageRef: StorageReference!
     var currentGroupImageURL: String!
     var receivedImage: UIImage? // Property to receive the image data
-
+    var codeToCopy: String?
+    
     var thisGroup: Group? {
         // Reload table whenever thisGroup is updated
         didSet {
@@ -78,6 +79,25 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         } else {
             retrieveGroupImage()
         }
+        
+        // Create clipboard button
+        var clipboardButton = UIButton(type: .system)
+        let clipboardImage = UIImage(systemName: "clipboard")
+        clipboardButton.setImage(clipboardImage, for: .normal)
+        codeToCopy = group?.groupCode
+        clipboardButton.addTarget(self, action: #selector(copyCodeToClipboard(_:)), for: .touchUpInside)
+        var buttonWidth: CGFloat = 30.0
+        var buttonHeight: CGFloat = buttonWidth
+        clipboardButton.frame = CGRect(x: 220.0, y: 288.0, width: buttonWidth, height: buttonHeight)
+        view.addSubview(clipboardButton)
+    }
+    
+    // handle copying whatever is currently the group code in the create group modal view to the user's clipboard
+    @objc func copyCodeToClipboard(_ sender: UIButton) {
+        let clipboardCode = self.codeToCopy
+        UIPasteboard.general.string = clipboardCode
+        print("Code copied to clipboard: \(clipboardCode!)")
+        codeToCopy = ""
     }
     
     // Action method to handle tap on the image view
