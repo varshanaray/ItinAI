@@ -50,6 +50,8 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
         //announceTableView.estimatedRowHeight = 300
         announceTableView.rowHeight = UITableView.automaticDimension
             //announceTableView.estimatedRowHeight = 100
+        announceTableView.backgroundColor = UIColor(named: "CustomBackground")
+        
         
     }
     
@@ -405,6 +407,7 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
         cell.time.text = dateString
         // print("name in cell", cell.name.text)
         cell.message.text = message
+        cell.message.backgroundColor = UIColor.clear
         cell.message.isScrollEnabled = false
         var currentURL = allAnnouncements[row]!.userImageURL
         //cell.userImageView.clipsToBounds = true
@@ -412,6 +415,7 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
         cell.img.contentMode = .scaleAspectFill
         cell.img.clipsToBounds = true
         //cell.allowS = .none
+        
         return cell
     }
        
