@@ -8,16 +8,30 @@ import FirebaseFirestore
 
 class SignUpVC: UIViewController {
 
+    @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        emailField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
-        passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
-        nameField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
-        
+        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
+            logoImageView.image = UIImage(named: "logoDarkItinAI")
+            logoImageView.alpha = 1.0
+            // dark mode is on
+            print("Dark mode Is on, sign up page")
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
+        } else {
+            print("LIGHT mode Is on, sign up page")
+            logoImageView.alpha = 0.0
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
+        }
+        //emailField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
+        emailField.backgroundColor = UIColor(named: "LoginFields")
+        //passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
+        passwordField.backgroundColor = UIColor(named: "LoginFields")
+        //nameField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
+        nameField.backgroundColor = UIColor(named: "LoginFields")
         passwordField.isSecureTextEntry = true
         
         Auth.auth().addStateDidChangeListener()
@@ -29,6 +43,20 @@ class SignUpVC: UIViewController {
                 self.nameField.text = nil
                 self.emailField.text = nil
             }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
+            logoImageView.image = UIImage(named: "logoDarkItinAI")
+            logoImageView.alpha = 1.0
+            // dark mode is on
+            print("Dark mode Is on, sign up page")
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
+        } else {
+            print("LIGHT mode Is on, sign up page")
+            logoImageView.alpha = 0.0
+            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
     }
     

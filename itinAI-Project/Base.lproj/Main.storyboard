@@ -46,10 +46,6 @@
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logoItinAI.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="PJh-8t-rvP">
-                                <rect key="frame" x="78" y="83" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WBc-rF-S5j" customClass="StyledButton" customModule="itinAI_Project" customModuleProvider="target">
                                 <rect key="frame" x="154" y="404" width="85" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -69,13 +65,22 @@
                                     <segue destination="Dgh-Ve-zrj" kind="show" id="sko-V8-6gT"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logoItinAI.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="PJh-8t-rvP">
+                                <rect key="frame" x="76" y="86" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="313-js-WLh">
+                                <rect key="frame" x="16" y="86" width="361" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="CustomBackground"/>
                     </view>
                     <navigationItem key="navigationItem" id="iCG-Gq-rXw"/>
                     <connections>
                         <outlet property="emailField" destination="5M2-JM-vqr" id="nhW-K5-OjG"/>
+                        <outlet property="logoImageView" destination="313-js-WLh" id="4zi-po-bVP"/>
                         <outlet property="passwordField" destination="G1b-Mh-ykv" id="a2p-xO-hKL"/>
                         <outlet property="signUpButton" destination="tZn-Um-Ykg" id="yu7-QU-LlD"/>
                         <segue destination="urb-sK-zs4" kind="presentation" identifier="loginSegue" modalPresentationStyle="fullScreen" id="P3q-31-HjF"/>
@@ -124,13 +129,18 @@
                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="52f-Pi-e54">
+                                <rect key="frame" x="30" y="82" width="332" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dfk-n5-tzB"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="CustomBackground"/>
                     </view>
                     <navigationItem key="navigationItem" id="ozc-Ke-twQ"/>
                     <connections>
                         <outlet property="emailField" destination="yjO-G9-I2M" id="SKd-6d-ILr"/>
+                        <outlet property="logoImageView" destination="52f-Pi-e54" id="XrN-lL-0CX"/>
                         <outlet property="nameField" destination="iAs-db-VDZ" id="KNZ-6E-vFt"/>
                         <outlet property="passwordField" destination="Dr9-u3-yWR" id="J09-9t-Tnx"/>
                         <segue destination="urb-sK-zs4" kind="presentation" identifier="signupSegue" id="ZTn-KM-P4r"/>
@@ -138,7 +148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5WI-5d-5DS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="82" y="4"/>
+            <point key="canvasLocation" x="81.679389312977094" y="3.5211267605633805"/>
         </scene>
         <!--Announce View Controller-->
         <scene sceneID="JUf-8Z-R9E">
@@ -562,7 +572,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XR1-M0-G8s">
-                                                            <rect key="frame" x="25" y="14" width="45" height="40"/>
+                                                            <rect key="frame" x="25" y="-52" width="45" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="40" id="eXz-DC-jWr"/>
                                                                 <constraint firstAttribute="height" constant="40" id="iRM-su-QMh"/>
@@ -657,7 +667,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PEL-o8-sMN">
-                                <rect key="frame" x="20" y="200" width="353" height="603"/>
+                                <rect key="frame" x="20" y="200" width="353" height="593"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GroupTableCell" rowHeight="129" id="YK3-nf-HWl" customClass="GroupTableViewCell" customModule="itinAI_Project" customModuleProvider="target">
@@ -838,7 +848,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfilePicture.png" translatesAutoresizingMaskIntoConstraints="NO" id="jt4-gm-2W1" customClass="CircularProfilePicture" customModule="itinAI_Project" customModuleProvider="target">
-                                <rect key="frame" x="111.66666666666669" y="144" width="170" height="170"/>
+                                <rect key="frame" x="111.66666666666669" y="156" width="170" height="170"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="170" id="TCb-TG-Ue0"/>
                                     <constraint firstAttribute="height" constant="170" id="ZO9-ti-Bdr"/>

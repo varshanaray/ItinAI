@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		28412AEA2BCDB54B00E4DF90 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28412AE92BCDB54B00E4DF90 /* SettingsVC.swift */; };
 		28756D432BC3128C000CAB6C /* NavTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28756D422BC3128C000CAB6C /* NavTabVC.swift */; };
+		28883C202BD75232004EE3B1 /* logoDarkItinAI.png in Resources */ = {isa = PBXBuildFile; fileRef = 28883C1F2BD75232004EE3B1 /* logoDarkItinAI.png */; };
 		28C6B51F2B9B651200E2DBC3 /* japan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B51E2B9B651200E2DBC3 /* japan.jpg */; };
 		28C6B5212B9B660E00E2DBC3 /* defaultProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */; };
 		28C6B5252BA6151700E2DBC3 /* logoItinAI.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 28C6B5242BA6151700E2DBC3 /* logoItinAI.jpeg */; };
@@ -82,6 +83,7 @@
 /* Begin PBXFileReference section */
 		28412AE92BCDB54B00E4DF90 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		28756D422BC3128C000CAB6C /* NavTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavTabVC.swift; sourceTree = "<group>"; };
+		28883C1F2BD75232004EE3B1 /* logoDarkItinAI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logoDarkItinAI.png; sourceTree = "<group>"; };
 		28C6B51E2B9B651200E2DBC3 /* japan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = japan.jpg; sourceTree = "<group>"; };
 		28C6B5202B9B660D00E2DBC3 /* defaultProfilePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProfilePicture.png; sourceTree = "<group>"; };
 		28C6B5242BA6151700E2DBC3 /* logoItinAI.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logoItinAI.jpeg; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				9D8020622BCEE827006F1D31 /* Announcements.swift */,
 				3B701E7C2BCF41270017295E /* KFImageDownload.swift */,
 				3BD878C92BA8DFE600B51C3F /* User.swift */,
+				28883C1F2BD75232004EE3B1 /* logoDarkItinAI.png */,
 				28C6B5242BA6151700E2DBC3 /* logoItinAI.jpeg */,
 				28C6B51E2B9B651200E2DBC3 /* japan.jpg */,
 				28C786502B9A3C87003C757D /* Assets.xcassets */,
@@ -341,6 +344,7 @@
 			files = (
 				28C6B5212B9B660E00E2DBC3 /* defaultProfilePicture.png in Resources */,
 				3B6444412BC3481C006CBBAC /* Poppins-Bold.ttf in Resources */,
+				28883C202BD75232004EE3B1 /* logoDarkItinAI.png in Resources */,
 				3BB9936C2BA6516A003AC721 /* GoogleService-Info.plist in Resources */,
 				28C786542B9A3C87003C757D /* LaunchScreen.storyboard in Resources */,
 				28C6B5252BA6151700E2DBC3 /* logoItinAI.jpeg in Resources */,
