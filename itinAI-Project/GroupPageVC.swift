@@ -102,6 +102,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         fetchCities()
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        fetchCitiesAndScheduleReminders(forGroupCode: group!.groupCode)
         // fetchLastAnnouncement()
     }
     
@@ -785,6 +786,7 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
             }
         }
         
+        self.scheduleNotificationsIfNeeded(groupCode: self.group!.groupCode, groupName: self.group!.groupName, cityName: name, deadline: deadline.date)
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
@@ -1011,5 +1013,81 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
             }
         }
     }
+    
+    func fetchCitiesAndScheduleReminders(forGroupCode groupCode: String) {
+        
+        print("Attempting to schedule reminders for cities")
+        let db = Firestore.firestore()
+        
+        // Reference to the group document in the Groups collection
+        let groupDocRef = db.collection("Groups").document(groupCode)
+        
+        // Fetch the document
+        groupDocRef.getDocument { (document, error) in
+            guard let document = document, document.exists, error == nil else {
+                print("Error fetching group: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            // Check if the cityList array exists
+            guard let cityRefs = document.data()?["cityList"] as? [DocumentReference] else {
+                print("No cities found for this group.")
+                return
+            }
+            
+            // Iterate through each cityId and fetch corresponding city data
+            for cityRef in cityRefs {
+                cityRef.getDocument { (cityDoc, error) in
+                    guard let cityDoc = cityDoc, cityDoc.exists, error == nil else {
+                        print("Error fetching city data: \(error?.localizedDescription ?? "Unknown error")")
+                        return
+                    }
+                    
+                    // Extract cityName and deadline from the city document
+                    guard let cityName = cityDoc.data()?["cityName"] as? String,
+                          let deadlineTimestamp = cityDoc.data()?["deadline"] as? Timestamp else {
+                        print("City data is incomplete or improperly formatted.")
+                        return
+                    }
+                    
+                    let deadlineDate = deadlineTimestamp.dateValue()
+                    
+                    // Call the function to schedule reminders
+                    self.scheduleNotificationsIfNeeded(groupCode: self.group!.groupCode, groupName: self.group!.groupName, cityName: cityName, deadline: deadlineDate)
+                }
+            }
+        }
+    }
+
+    func hasNotificationBeenScheduled(groupCode: String, cityName: String, deadline: Date, completion: @escaping (Bool) -> Void) {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            // Construct the identifier from the groupCode and cityName
+            let targetIdentifier = "\(groupCode)\(cityName)\(deadline.hashValue)"
+
+            // Check if any request's identifier matches the targetIdentifier
+            let hasScheduled = requests.contains { request in
+                request.identifier == targetIdentifier
+            }
+
+            DispatchQueue.main.async {
+                completion(hasScheduled)
+            }
+        }
+    }
+
+    func scheduleNotificationsIfNeeded(groupCode: String, groupName: String, cityName: String, deadline: Date) {
+        
+        //printAllPendingNotifications()
+        
+        hasNotificationBeenScheduled(groupCode: groupCode, cityName: cityName, deadline: deadline) { [weak self] alreadyScheduled in
+            guard !alreadyScheduled else {
+                print("\(groupName) \(cityName) notifications are already scheduled.")
+                return
+            }
+            scheduleSurveyDeadlineReminders(groupCode: groupCode, groupName: groupName, cityName: cityName, deadline: deadline)
+        }
+    }
+
+
         
 }

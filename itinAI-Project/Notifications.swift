@@ -5,41 +5,37 @@
 import Foundation
 import UserNotifications
 
-enum NotificationType {
-    case newCity, surveyDeadline
+func setNotificationPreference(enabled: Bool) {
+    UserDefaults.standard.set(enabled, forKey: "NotificationEnabled")
 }
 
-func setNotificationPreference(for type: NotificationType, enabled: Bool) {
-    UserDefaults.standard.set(enabled, forKey: "\(type)NotificationEnabled")
-}
-
-func isNotificationEnabled(for type: NotificationType) -> Bool {
-    return UserDefaults.standard.bool(forKey: "\(type)NotificationEnabled")
+func isNotificationEnabled() -> Bool {
+    return UserDefaults.standard.bool(forKey: "NotificationEnabled")
 }
 
 
-func scheduleSurveyDeadlineReminders(cityName: String, deadline: Date) {
+func scheduleSurveyDeadlineReminders(groupCode: String, groupName: String, cityName: String, deadline: Date) {
     let notificationTimes = calculateNotificationTimes(deadline: deadline)
     
     for (index, notificationTime) in notificationTimes.enumerated() {
         let content = UNMutableNotificationContent()
-        content.title = "Survey Deadline Reminder for \(cityName)"
+        content.title = "Interest Survey Deadline Reminder"
         content.sound = UNNotificationSound.default
         
         switch index {
         case 0:
-            content.body = "The survey for \(cityName) closes in 1 day. Don't forget to complete it!"
+            content.body = "\(cityName) survey for \(groupName) closes in 1 day!"
         case 1:
-            content.body = "The survey for \(cityName) closes in 1 hour."
+            content.body = "\(cityName) survey for \(groupName) closes in 1 hour!"
         case 2:
-            content.body = "The survey for \(cityName) closes in 10 minutes."
+            content.body = "\(cityName) survey for \(groupName) closes in 10 minutes!"
         case 3:
-            content.body = "The survey for \(cityName) has now closed. Check the app to generate your itinerary."
+            content.body = "\(cityName) survey for \(groupName) closed. Check app to view generated itinerary."
         default:
             break
         }
         
-        scheduleLocalNotification(content: content, date: notificationTime)
+        scheduleLocalNotification(groupCode: groupCode, cityName: cityName, content: content, date: notificationTime)
     }
 }
 
@@ -52,16 +48,24 @@ func calculateNotificationTimes(deadline: Date) -> [Date] {
     return [dayBefore, hourBefore, minutesBefore, deadline]
 }
 
-func scheduleLocalNotification(content: UNMutableNotificationContent, date: Date) {
+func scheduleLocalNotification(groupCode: String, cityName: String, content: UNMutableNotificationContent, date: Date) {
+    guard date > Date() else {
+        return
+    }
+    
+    var identifier = "\(groupCode)\(cityName)\(date.hashValue)"
+    UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [identifier])
+    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+    
+    
     let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
-    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-    
+    let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
     UNUserNotificationCenter.current().add(request) { error in
         if let error = error {
             print("Error scheduling notification: \(error)")
         } else {
-            print("Successfully scheduled notification for \(content.title) at \(date)")
+            print("Successfully scheduled notification for \(groupCode) \(cityName) at \(date.formatted())")
         }
     }
 }
@@ -91,3 +95,12 @@ override func viewDidLoad() {
  }
  
 */
+
+func printAllPendingNotifications() {
+    UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+        print("Pending Notifications:")
+        for request in requests {
+            print("ID: \(request.identifier), Title: \(request.content.title), Body: \(request.content.body)")
+        }
+    }
+}
