@@ -74,7 +74,7 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
            let leftMargin: CGFloat = 20.0
            
            createModalView = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: modalHeight))
-               createModalView.backgroundColor = .white
+            createModalView.backgroundColor = UIColor(named: "CustomBackground")
                createModalView.layer.cornerRadius = 15
                createModalView.layer.masksToBounds = true
                createModalView.translatesAutoresizingMaskIntoConstraints = false

@@ -91,6 +91,7 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
         contentView.text = day.content
         contentView.font = UIFont(name: "Poppins-Regular", size: 16)
         contentView.isEditable = true
+        contentView.backgroundColor = UIColor.clear
         contentView.isScrollEnabled = false // Disable scrolling
         let contentHeight = contentView.sizeThatFits(CGSize(width: contentView.frame.width, height: CGFloat.greatestFiniteMagnitude)).height
         contentView.frame.size.height = contentHeight + 50
