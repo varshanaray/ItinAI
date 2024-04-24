@@ -33,6 +33,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     let modalHeight: CGFloat = 430
     let surveyDeadlinePicker = UIDatePicker()
     var lastAnnouncement: Announcements = Announcements(user: "", userImageURL: "", subject: "", message: "", timestamp: Date())
+    var datesAreValid: Bool?
     
     var currentModalView: UIView!
     
@@ -678,13 +679,33 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         citiesDoneButton.typeOfButton = .cities
         citiesDoneButton.translatesAutoresizingMaskIntoConstraints = false
         
-        citiesDoneButton.citiesDoneCallback = { [self] in
+        citiesDoneButton.citiesDoneCallback = { [weak self] in
             print("cities done callback")
+            guard let self = self else { return }
+            
+            let startDate = startDatePicker.date.timeIntervalSince1970
+            let endDate = endDatePicker.date.timeIntervalSince1970
+            let deadline = surveyDeadlinePicker.date.timeIntervalSince1970
+            
+            print("The deadline date is: \(deadline)")
+            print("The start date is: \(startDate)")
+            print("The end date is: \(endDate)")
+            
+            datesAreValid = validateDates(startDate: startDate, endDate: endDate, deadline: deadline)
+            // Validate the selected dates
+            if !self.datesAreValid! {
+                return
+            }
+            
             self.handleCityCreation(name: destinationTextField.text!, startDate: startDatePicker, endDate: endDatePicker, deadline: surveyDeadlinePicker)
         }
         
         citiesDoneButton.dismissCallback = {
             // Dismiss modal view
+            if !self.datesAreValid! {
+                return
+            }
+                
             self.dismissModalView()
         }
         
@@ -696,6 +717,36 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
             citiesDoneButton.heightAnchor.constraint(equalToConstant: 50),
             citiesDoneButton.widthAnchor.constraint(equalToConstant: 100)
         ])
+    }
+    
+    func validateDates(startDate: TimeInterval, endDate: TimeInterval, deadline: TimeInterval) -> Bool {
+        let currentDate = Date().timeIntervalSince1970
+        print(currentDate)
+        // Check if any date is in the past
+        if startDate < currentDate || endDate < currentDate || deadline < currentDate {
+            presentAlert(title: "Invalid Date", message: "Please ensure all dates are not set in the past.")
+            return false
+        }
+        
+        // Check if the deadline is the earliest date
+        if deadline > startDate || deadline > endDate {
+            presentAlert(title: "Invalid Deadline", message: "Deadline should be earlier than both the start and end dates.")
+            return false
+        }
+        
+        // Check if the start date is before the end date
+        if startDate >= endDate {
+            presentAlert(title: "Invalid Date Range", message: "Start date must be earlier than the end date.")
+            return false
+        }
+
+        return true
+    }
+    
+    func presentAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
     
     func handleCityCreation(name: String, startDate: UIDatePicker, endDate: UIDatePicker, deadline: UIDatePicker) {
