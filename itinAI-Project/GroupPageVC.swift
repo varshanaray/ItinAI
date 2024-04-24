@@ -104,6 +104,13 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         fetchCitiesAndScheduleReminders(forGroupCode: group!.groupCode)
         // fetchLastAnnouncement()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped(_:)))
+        // Add tap gesture recognizer to the cell
+        announceCell.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func cellTapped(_ sender: UITapGestureRecognizer) {
+        self.navigateToAnnouncements(group: group!)
     }
     
     //    override func viewWillAppear(_ animated: Bool) {
@@ -258,7 +265,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     @IBAction func announceClicked(_ sender: Any) {
-        self.navigateToAnnouncements(group: group!)
+        //self.navigateToAnnouncements(group: group!)
     }
     
     func navigateToAnnouncements(group: Group) {
