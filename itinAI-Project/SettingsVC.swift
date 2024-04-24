@@ -12,6 +12,10 @@ import FirebaseStorage
 class SettingsVC: UIViewController {
 
     
+    @IBOutlet weak var settingsLabel: UILabel!
+    @IBOutlet weak var notificationsLabel: UILabel!
+    @IBOutlet weak var darkModeLabel: UILabel!
+    
     @IBOutlet weak var notifsSwitch: UISwitch!
     
     @IBOutlet weak var darkModeSwitch: UISwitch!
@@ -41,6 +45,12 @@ class SettingsVC: UIViewController {
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
         // Do any additional setup after loading the view.
+        settingsLabel.font = UIFont(name: "Poppins-Bold", size: 20)
+        
+        notificationsLabel.font = UIFont(name: "Poppins-Regular", size: 17)
+        darkModeLabel.font = UIFont(name: "Poppins-Regular", size: 17)
+
+
     }
     
 

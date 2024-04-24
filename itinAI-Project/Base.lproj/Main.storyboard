@@ -667,7 +667,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PEL-o8-sMN">
-                                <rect key="frame" x="20" y="200" width="353" height="593"/>
+                                <rect key="frame" x="20" y="200" width="353" height="603"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GroupTableCell" rowHeight="129" id="YK3-nf-HWl" customClass="GroupTableViewCell" customModule="itinAI_Project" customModuleProvider="target">
@@ -783,7 +783,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7Q-79-D5r">
-                                <rect key="frame" x="43" y="105" width="69" height="22"/>
+                                <rect key="frame" x="43" y="105" width="123" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Settings">
@@ -796,7 +796,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odf-ef-vBR">
-                                <rect key="frame" x="43" y="206" width="96" height="21"/>
+                                <rect key="frame" x="43" y="206" width="145" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -811,7 +811,7 @@
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dark Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTZ-lF-O3L">
-                                <rect key="frame" x="43" y="286" width="84" height="21"/>
+                                <rect key="frame" x="43" y="286" width="123" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -831,8 +831,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="gearshape" catalog="system" selectedImage="gearshape.fill" id="Nf5-pm-u3c"/>
                     <connections>
+                        <outlet property="darkModeLabel" destination="yTZ-lF-O3L" id="kVc-tQ-X5Z"/>
                         <outlet property="darkModeSwitch" destination="3ko-1z-IHL" id="ZXt-bx-raY"/>
+                        <outlet property="notificationsLabel" destination="odf-ef-vBR" id="5PF-aM-QnH"/>
                         <outlet property="notifsSwitch" destination="byL-oZ-ZZt" id="Vcm-Y7-E2z"/>
+                        <outlet property="settingsLabel" destination="N7Q-79-D5r" id="ykY-B5-Eoo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qtn-lk-pfP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -848,7 +851,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfilePicture.png" translatesAutoresizingMaskIntoConstraints="NO" id="jt4-gm-2W1" customClass="CircularProfilePicture" customModule="itinAI_Project" customModuleProvider="target">
-                                <rect key="frame" x="111.66666666666669" y="156" width="170" height="170"/>
+                                <rect key="frame" x="111.66666666666669" y="144" width="170" height="170"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="170" id="TCb-TG-Ue0"/>
                                     <constraint firstAttribute="height" constant="170" id="ZO9-ti-Bdr"/>
@@ -909,7 +912,9 @@
                     <connections>
                         <outlet property="changePictureButton" destination="UrT-OJ-n6j" id="qjE-CY-idP"/>
                         <outlet property="displayNameLabel" destination="B41-ya-9zC" id="Uaq-39-G2p"/>
+                        <outlet property="logoutButton" destination="wFY-wa-eLT" id="tCV-qv-LNb"/>
                         <outlet property="profilePicture" destination="jt4-gm-2W1" id="XQi-kE-Cc3"/>
+                        <outlet property="resetPasswordButton" destination="9vd-EM-lLf" id="2n0-vy-ODo"/>
                         <outlet property="resetStatusLabel" destination="lMG-hy-9ie" id="yGc-yc-gBf"/>
                     </connections>
                 </viewController>
@@ -1010,14 +1015,14 @@
         <image name="defaultProfilePicture.png" width="225" height="225"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="gearshape.fill" catalog="system" width="128" height="123"/>
-        <image name="house" catalog="system" width="128" height="104"/>
-        <image name="house.fill" catalog="system" width="128" height="104"/>
-        <image name="info.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="house" catalog="system" width="32" height="32"/>
+        <image name="house.fill" catalog="system" width="32" height="32"/>
+        <image name="info.circle.fill" catalog="system" width="32" height="32"/>
         <image name="logoItinAI.jpeg" width="371" height="211"/>
         <image name="person" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="plus.app.fill" catalog="system" width="128" height="114"/>
+        <image name="plus" catalog="system" width="32" height="32"/>
+        <image name="plus.app.fill" catalog="system" width="32" height="32"/>
         <image name="sunset" width="900" height="507"/>
         <namedColor name="CustomBackground">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -15,6 +15,8 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     @IBOutlet weak var profilePicture: CircularProfilePicture!
     @IBOutlet weak var changePictureButton: UIButton!
     @IBOutlet weak var displayNameLabel: UILabel!
+    @IBOutlet weak var resetPasswordButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
     
     var overlayView: UIView = UIView()
     
@@ -56,6 +58,10 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         var userStorageRef = pfpRef.child(Auth.auth().currentUser!.uid)
         self.userStorageRef = userStorageRef
         print("This is userStorageRef: ", userStorageRef)
+        
+        logoutButton.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 15)
+        resetPasswordButton.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 15)
+
         
     }
     

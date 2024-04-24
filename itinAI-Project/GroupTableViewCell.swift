@@ -26,6 +26,8 @@ class GroupTableViewCell: UITableViewCell {
         groupImageView.clipsToBounds = true
         
         datesRangeLabel.isHidden = true
+        
+        groupNameLabel.font = UIFont(name: "Poppins-Bold", size: 17)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
