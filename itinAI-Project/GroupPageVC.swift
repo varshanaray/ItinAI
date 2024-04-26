@@ -11,6 +11,8 @@ import UniformTypeIdentifiers
 class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var announceCell: UITableViewCell!
+    @IBOutlet weak var groupNameLabel: UILabel!
+    
     
     @IBOutlet weak var citiesTableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
@@ -63,6 +65,14 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
         
         contentView.layer.cornerRadius = 15
+        
+        groupNameLabel.text = group?.groupName
+        groupNameLabel.font = UIFont(name: "Poppins-Bold", size: 30)
+        groupNameLabel.textColor = .white
+        groupNameLabel.setCharacterSpacing(-1.5)
+        groupNameLabel.shadowColor = .black
+        groupNameLabel.shadowOffset = CGSize(width: 1, height: 1)
+        groupNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         citiesTableView.layer.cornerRadius = 15
         citiesTableView.layer.borderWidth = 1
@@ -731,7 +741,7 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         let currentDate = Date().timeIntervalSince1970
         print(currentDate)
         // Check if any date is in the past
-        if startDate < currentDate || endDate < currentDate || deadline < currentDate {
+        if startDate < currentDate - 10 || endDate < currentDate - 10 || deadline < currentDate - 10 {
             presentAlert(title: "Invalid Date", message: "Please ensure all dates are not set in the past.")
             return false
         }
@@ -743,8 +753,8 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         }
         
         // Check if the start date is before the end date
-        if startDate >= endDate {
-            presentAlert(title: "Invalid Date Range", message: "Start date must be earlier than the end date.")
+        if startDate > endDate {
+            presentAlert(title: "Invalid Date Range", message: "End date cannot be earlier than the start date.")
             return false
         }
 
@@ -1094,7 +1104,6 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
             scheduleSurveyDeadlineReminders(groupCode: groupCode, groupName: groupName, cityName: cityName, deadline: deadline)
         }
     }
-
-
-        
+    
+    
 }
