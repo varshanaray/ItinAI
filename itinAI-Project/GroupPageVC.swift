@@ -110,9 +110,9 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             print("  city name: ", city?.name)
         }
         
+        fetchGroupsAndScheduleNotifications()
         fetchCities()
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        fetchCitiesAndScheduleReminders(forGroupCode: group!.groupCode)
         // fetchLastAnnouncement()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped(_:)))
         // Add tap gesture recognizer to the cell
@@ -803,7 +803,7 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
             }
         }
         
-        self.scheduleNotificationsIfNeeded(groupCode: self.group!.groupCode, groupName: self.group!.groupName, cityName: name, deadline: deadline.date)
+        scheduleNotificationsIfNeeded(groupCode: self.group!.groupCode, groupName: self.group!.groupName, cityName: name, deadline: deadline.date)
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
@@ -1070,40 +1070,10 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
                     let deadlineDate = deadlineTimestamp.dateValue()
                     
                     // Call the function to schedule reminders
-                    self.scheduleNotificationsIfNeeded(groupCode: self.group!.groupCode, groupName: self.group!.groupName, cityName: cityName, deadline: deadlineDate)
+                    scheduleNotificationsIfNeeded(groupCode: self.group!.groupCode, groupName: self.group!.groupName, cityName: cityName, deadline: deadlineDate)
                 }
             }
         }
     }
-
-    func hasNotificationBeenScheduled(groupCode: String, cityName: String, deadline: Date, completion: @escaping (Bool) -> Void) {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-            // Construct the identifier from the groupCode and cityName
-            let targetIdentifier = "\(groupCode)\(cityName)\(deadline.hashValue)"
-
-            // Check if any request's identifier matches the targetIdentifier
-            let hasScheduled = requests.contains { request in
-                request.identifier == targetIdentifier
-            }
-
-            DispatchQueue.main.async {
-                completion(hasScheduled)
-            }
-        }
-    }
-
-    func scheduleNotificationsIfNeeded(groupCode: String, groupName: String, cityName: String, deadline: Date) {
-        
-        //printAllPendingNotifications()
-        
-        hasNotificationBeenScheduled(groupCode: groupCode, cityName: cityName, deadline: deadline) { [weak self] alreadyScheduled in
-            guard !alreadyScheduled else {
-                print("\(groupName) \(cityName) notifications are already scheduled.")
-                return
-            }
-            scheduleSurveyDeadlineReminders(groupCode: groupCode, groupName: groupName, cityName: cityName, deadline: deadline)
-        }
-    }
-    
     
 }

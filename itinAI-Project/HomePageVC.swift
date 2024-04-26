@@ -99,6 +99,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         myGroupsLabel.font = UIFont(name: "Poppins-Bold", size: 20)
         
         print("viewDidLoad() called")
+        fetchGroupsAndScheduleNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
