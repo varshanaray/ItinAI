@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //logoImageView.alpha = 0.0
             //UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
-        
+    
     }
     
     
@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
+
         if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
             //logoImageView.image = UIImage(named: "logoDarkItinAI")
             //logoImageView.alpha = 1.0
