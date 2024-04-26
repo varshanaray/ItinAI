@@ -20,8 +20,9 @@
                                 <rect key="frame" x="38" y="342" width="317" height="169"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FQ4-pq-ixI">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FQ4-pq-ixI">
                                 <rect key="frame" x="16" y="297" width="361" height="283"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" identifier="LaunchImageView">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
@@ -29,10 +30,6 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="CustomBackground"/>
-                        <constraints>
-                            <constraint firstItem="FQ4-pq-ixI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Shf-cM-xT8"/>
-                            <constraint firstItem="FQ4-pq-ixI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qy3-gj-sPF"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
