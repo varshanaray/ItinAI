@@ -8,17 +8,19 @@ import FirebaseStorage
 import FirebaseAuth
 
 class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     @IBOutlet weak var detailsImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var groupCodeLabel: UILabel!
     @IBOutlet weak var descript: UITextView!
+    @IBOutlet weak var leaveButton: UIButton!
     
     var groupProfilePics = [UIImage?]()
     var profilePicsURLs = [String?]()
     var displayNames = [String?]()
     var group:Group?
+    var cityList: [City?] = []
     
     let imagePicker = UIImagePickerController()
     
@@ -35,7 +37,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             tableView?.reloadData()
         }
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -105,7 +107,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         // Open the camera roll or perform any action you desire
         openCameraRoll()
     }
-
+    
     // Function to open the camera roll
     func openCameraRoll() {
         imagePicker.sourceType = .photoLibrary
@@ -158,11 +160,11 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         print("Inside downloadGroupImage")
         print("The url retrieved is: \(urlString)")
         guard let url = URL(string: urlString) else {
-             print("Invalid URL")
-             return
-         }
-         
-         // Create a URLSessionDataTask to fetch the image data from the URL
+            print("Invalid URL")
+            return
+        }
+        
+        // Create a URLSessionDataTask to fetch the image data from the URL
         // Create a URLSessionDataTask to fetch the image data from the URL
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             // Check for errors
@@ -258,48 +260,48 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell", for: indexPath) as! CustomPeopleTableViewCell
         if (indexPath.row == 1) {
-
+            
             // Assuming 'displayNames' is an array of strings and 'indexPath.row' gives you the current index
             let normalString = displayNames[indexPath.row]! + "            " // Regular string part
-
+            
             // Create an initial attributed string from the normal string
             let normalAttributedString = NSMutableAttributedString(string: normalString)
-
+            
             // Define the attributes for the italic part
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.italicSystemFont(ofSize: 14) // Set the font to italic with size 16
             ]
-
+            
             // Create the italic attributed string
             let italicAttributedString = NSAttributedString(string: "Group Admin", attributes: attributes)
-
+            
             // Append the italic attributed string to the normal attributed string
             normalAttributedString.append(italicAttributedString)
-
+            
             // Assign the combined attributed string to the UILabel's attributedText property
             cell.name.attributedText = normalAttributedString
-
+            
         } else {
             // Assuming 'displayNames' is an array of strings and 'indexPath.row' gives you the current index
             let normalString = displayNames[indexPath.row]! + "            " // Regular string part
-
+            
             // Create an initial attributed string from the normal string
             let normalAttributedString = NSMutableAttributedString(string: normalString)
-
+            
             // Define the attributes for the italic part
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.italicSystemFont(ofSize: 14) // Set the font to italic with size 16
             ]
-
+            
             // Create the italic attributed string
             let italicAttributedString = NSAttributedString(string: "Group Member", attributes: attributes)
-
+            
             // Append the italic attributed string to the normal attributed string
             normalAttributedString.append(italicAttributedString)
-
+            
             // Assign the combined attributed string to the UILabel's attributedText property
             cell.name.attributedText = normalAttributedString
-
+            
         }
         var currentURL = self.profilePicsURLs[indexPath.row]!
         cell.iconImageView.setImage(with: currentURL, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
@@ -307,7 +309,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         cell.backgroundColor = UIColor(named: "CustomBackground")
         return cell
     }
-
+    
     func textViewDidChange(_ textView: UITextView) {
         saveTextToStorage(textView.text)
     }
@@ -316,7 +318,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     func saveTextToStorage(_ text: String) {
         let db = Firestore.firestore()
         let groupId = group?.groupCode
-
+        
         db.collection("Groups").document(groupId!).setData([
             "description": descript.text!
         ], merge: true) { err in
@@ -328,4 +330,122 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
+    @IBAction func leaveButtonPressed(_ sender: Any) {
+        
+        let alertController = UIAlertController(title: "Leave Group", message: "Are you sure you want to leave this group?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let leaveAction = UIAlertAction(title: "Leave", style: .destructive) { _ in
+            // Call function to remove user from group
+            let db = Firestore.firestore()
+            var currentUserRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+            var currentGroupRef = db.collection("Groups").document(self.group!.groupCode)
+            print(currentUserRef)
+            self.removeUserFromGroup(currentUserReference: currentUserRef, groupID: self.group!.groupCode)
+            self.removeGroupFromUser(currentGroupReference: currentGroupRef)
+            self.popTwoViews()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(leaveAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func removeUserFromGroup(currentUserReference: DocumentReference, groupID: String) {
+        // Get a reference to the Firestore database
+        let db = Firestore.firestore()
+        
+        // Reference to the group document
+        let groupRef = db.collection("Groups").document(groupID)
+        
+        // Update the group document
+        groupRef.updateData([
+            "userList": FieldValue.arrayRemove([currentUserReference])
+        ]) { error in
+            if let error = error {
+                print("Error removing user from group: \(error)")
+            } else {
+                print("User removed from group successfully.")
+                // Check the size of the userList array
+                groupRef.getDocument { (document, error) in
+                    guard let document = document, document.exists else {
+                        print("Group document does not exist")
+                        return
+                    }
+                    
+                    if let userList = document.data()?["userList"] as? [Any], userList.isEmpty {
+                        // Delete all cities associated with the group
+                        self.cityList.forEach { City in
+                            self.deleteCity(cityToDelete: City!)
+                        }
+                        
+                        // Delete the entire Group document
+                        groupRef.delete { error in
+                            if let error = error {
+                                print("Error deleting group document: \(error)")
+                            } else {
+                                print("Group document deleted successfully.")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+        
+    func removeGroupFromUser(currentGroupReference: DocumentReference) {
+        // Get a reference to the Firestore database
+        let db = Firestore.firestore()
+        
+        // Reference to the group document
+        let userRef = db.collection("Users").document(Auth.auth().currentUser!.uid)
+        
+        // Update the group document
+        userRef.updateData([
+            "groupRefs": FieldValue.arrayRemove([currentGroupReference])
+        ]) { error in
+            if let error = error {
+                print("Error removing group from user: \(error)")
+            } else {
+                print("Group removed from user successfully.")
+            }
+        }
+    }
+    
+    func deleteCity(cityToDelete: City) {
+        let cityName = cityToDelete.name
+        let cityId = group!.groupCode + cityName
+        let db = Firestore.firestore()
+        print("Deleting \(cityId)")
+        db.collection("Cities").document(cityId).delete { error in
+            if let error = error {
+                print("Error deleting city: \(error)")
+            } else {
+                print("City successfully deleted")
+            }
+        }
+    }
+    
+    func popTwoViews() {
+        // Get a reference to the navigation controller
+        guard let navigationController = self.navigationController else {
+            print("no navigation controller")
+            return
+        }
+        
+        // Check if there are enough view controllers in the navigation stack
+        guard navigationController.viewControllers.count >= 3 else {
+            print("not enough views")
+            return
+        }
+        
+        // Get the view controller you want to navigate back to
+        let targetViewController = navigationController.viewControllers[navigationController.viewControllers.count - 3]
+        
+        // Pop to the target view controller
+        navigationController.popToViewController(targetViewController, animated: true)
+    }
+    
 }
+    

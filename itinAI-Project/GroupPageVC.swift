@@ -893,6 +893,7 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
             destination.receivedImage = imageToPass
             destination.currentGroupImageURL = self.currentGroupImageURL
             destination.profilePicsURLs = self.profilePicsURLs
+            destination.cityList = self.cityList
         }
     }
     
