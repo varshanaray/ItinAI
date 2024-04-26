@@ -30,10 +30,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="CustomBackground"/>
                         <constraints>
-                            <constraint firstItem="FQ4-pq-ixI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="238" id="dCR-yd-n9H"/>
-                            <constraint firstItem="FQ4-pq-ixI" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="hZr-UH-f1f"/>
-                            <constraint firstItem="FQ4-pq-ixI" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nM3-6T-hrz"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FQ4-pq-ixI" secondAttribute="bottom" constant="238" id="tB2-e9-PqF"/>
+                            <constraint firstItem="FQ4-pq-ixI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Shf-cM-xT8"/>
+                            <constraint firstItem="FQ4-pq-ixI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qy3-gj-sPF"/>
                         </constraints>
                     </view>
                 </viewController>
