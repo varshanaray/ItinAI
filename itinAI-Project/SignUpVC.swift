@@ -15,7 +15,7 @@ class SignUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
+        if let darkModeValue = UserDefaults.standard.object(forKey: "darkMode") as? Int, darkModeValue == 1 {
             logoImageView.image = UIImage(named: "logoDarkItinAI")
             logoImageView.alpha = 1.0
             // dark mode is on
@@ -47,7 +47,7 @@ class SignUpVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
+        if let darkModeValue = UserDefaults.standard.object(forKey: "darkMode") as? Int, darkModeValue == 1 {
             logoImageView.image = UIImage(named: "logoDarkItinAI")
             logoImageView.alpha = 1.0
             // dark mode is on

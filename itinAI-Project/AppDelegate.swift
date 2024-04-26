@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     override init() {
         super.init()
-        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
+        if let darkModeValue = UserDefaults.standard.object(forKey: "darkMode") as? Int, darkModeValue == 1 {
             //logoImageView.image = UIImage(named: "logoDarkItinAI")
             //logoImageView.alpha = 1.0
             // dark mode is on
@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
         } else {
             print("LIGHT mode Is on, launch page")
+            UserDefaults.standard.set(false, forKey: "darkMode")
             //logoImageView.alpha = 0.0
             //UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
@@ -33,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
-
+/*
         if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
             //logoImageView.image = UIImage(named: "logoDarkItinAI")
             //logoImageView.alpha = 1.0
@@ -44,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("LIGHT mode Is on, launch page")
             //logoImageView.alpha = 0.0
             //UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
-        }
+        } */
         
         return true
     }

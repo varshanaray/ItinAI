@@ -62,7 +62,7 @@ class HomePageVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 UserDefaults.standard.set(granted, forKey: "notificationPermission")
             }
         }
-        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
+        if let darkModeValue = UserDefaults.standard.object(forKey: "darkMode") as? Int, darkModeValue == 1 {
             // dark mode is on
             print("dark mode in home page")
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark

@@ -36,7 +36,7 @@ class SettingsVC: UIViewController {
             notifsSwitch.isOn = false
         }
         
-        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
+        if let darkModeValue = UserDefaults.standard.object(forKey: "darkMode") as? Int, darkModeValue == 1 {
             // dark mode is on
             darkModeSwitch.isOn = true
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
