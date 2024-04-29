@@ -1,9 +1,6 @@
-//
-//  IconButton.swift
-//  itinAI-Project
-//
-//  Created by Erick Albarran on 4/12/24.
-//
+// Project: itinAI-Final
+// EID: ezy78, gkk298, esa549, vn4597
+// Course: CS371L
 
 import UIKit
 
@@ -24,7 +21,6 @@ class IconButton: UIButton {
         backgroundColor = .systemGray2
         setTitleColor(.white, for: .normal)
         titleLabel?.font = UIFont(name: "Poppins-Bold", size: 17)
-        
         
         // Add title label
         let titleLabel = UILabel()
