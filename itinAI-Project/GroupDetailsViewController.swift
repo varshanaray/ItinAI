@@ -9,12 +9,13 @@ import FirebaseAuth
 
 class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @IBOutlet weak var leaveGroupButton: UIBarButtonItem!
     @IBOutlet weak var detailsImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var groupCodeLabel: UILabel!
     @IBOutlet weak var descript: UITextView!
-    @IBOutlet weak var leaveButton: UIButton!
+
     
     var groupProfilePics = [UIImage?]()
     var profilePicsURLs = [String?]()
