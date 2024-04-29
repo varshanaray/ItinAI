@@ -1,4 +1,4 @@
-// Project: itinAI-Beta
+// Project: itinAI-Final
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -19,18 +19,13 @@ class SignUpVC: UIViewController {
             logoImageView.image = UIImage(named: "logoDarkItinAI")
             logoImageView.alpha = 1.0
             // dark mode is on
-            print("Dark mode Is on, sign up page")
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
         } else {
-            print("LIGHT mode Is on, sign up page")
             logoImageView.alpha = 0.0
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
-        //emailField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         emailField.backgroundColor = UIColor(named: "LoginFields")
-        //passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         passwordField.backgroundColor = UIColor(named: "LoginFields")
-        //nameField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         nameField.backgroundColor = UIColor(named: "LoginFields")
         passwordField.isSecureTextEntry = true
         
@@ -51,10 +46,8 @@ class SignUpVC: UIViewController {
             logoImageView.image = UIImage(named: "logoDarkItinAI")
             logoImageView.alpha = 1.0
             // dark mode is on
-            print("Dark mode Is on, sign up page")
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
         } else {
-            print("LIGHT mode Is on, sign up page")
             logoImageView.alpha = 0.0
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
@@ -63,9 +56,9 @@ class SignUpVC: UIViewController {
     @IBAction func signUpButtonPressed(_ sender: Any) {
         // Check for empty fields
         guard let email = emailField.text, !email.isEmpty else {
-                displayErrorAlert(message: "Please enter your email.")
-                return
-            }
+            displayErrorAlert(message: "Please enter your email.")
+            return
+        }
         guard let realName = nameField.text, !realName.isEmpty else {
             displayErrorAlert(message: "Please enter your real name.")
             return
@@ -89,14 +82,12 @@ class SignUpVC: UIViewController {
     }
     
     func createUser(email: String, password: String, displayName: String) {
-        print("createUser was called")
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             guard let user = authResult?.user, error == nil else {
                 print(error!.localizedDescription)
                 return
             }
-            print("got past auth()")
-             let db = Firestore.firestore()
+            let db = Firestore.firestore()
             db.collection("Users").document(user.uid).setData([
                  "name": displayName,
                  "profileImageURL": "",
