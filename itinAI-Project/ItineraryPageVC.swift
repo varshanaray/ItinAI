@@ -1,4 +1,4 @@
-// Project: itinAI-Beta
+// Project: itinAI-Final
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -16,7 +16,7 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
     var cityName: String?
     var cityImage: UIImage?
     
-    var itineraryDays: [ItineraryDay] = [] // Populate this array from Firestore
+    var itineraryDays: [ItineraryDay] = []
     var contentView = UITextView()
     var blockView = UIView()
     
@@ -34,7 +34,6 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
             self?.populateScrollView()
         }
         contentView.delegate = self
-        //bgImageView.image = cityImage
     }
     
     func fetchItineraryData(cityDocId: String, completion: @escaping () -> Void) {
@@ -58,7 +57,6 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
         var yOffset: CGFloat = 10
         let maskView = UIView(frame: CGRect(x: 0, y: 0, width: scrollView.frame.width, height: 50))
         maskView.layer.cornerRadius = 15
-        //maskView.backgroundColor = .white
         maskView.backgroundColor = UIColor(named: "CustomBackground")
         scrollView.addSubview(maskView)
         for day in itineraryDays {
@@ -71,10 +69,9 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
     }
     
     func createItineraryBlock(for day: ItineraryDay, yOffset: CGFloat) -> UIView {
-        blockView = UIView(frame: CGRect(x: 0, y: yOffset, width: scrollView.frame.width, height: 0)) // Start with 0 height
-        //blockView.backgroundColor = .white // Set background color if needed
+        blockView = UIView(frame: CGRect(x: 0, y: yOffset, width: scrollView.frame.width, height: 0)) 
+        // Start with 0 height
         blockView.backgroundColor = UIColor(named: "CustomBackground")
-        //blockView.layer.cornerRadius = 15 // Set rounded corners
         
         let dayLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 80, height: 20))
         dayLabel.font = UIFont(name: "Poppins-Bold", size: 20)
@@ -125,20 +122,19 @@ class ItineraryPageVC: UIViewController, UITextViewDelegate {
     
     func saveTextToStorage(cityDocId: String, dayNumber: String, newContent: String) {
         print("in saveTextToStorage")
-            let db = Firestore.firestore()
-            db.collection("Cities")
-              .document(cityDocId)
-              .collection("ItineraryDays")
-              .document(dayNumber)  // Make sure this matches the document ID for the day
-              .updateData(["content": newContent]) { error in
-                    if let error = error {
-                        print("Error updating document: \(error)")
-                    } else {
-                        print("Document successfully updated")
-                    }
+        let db = Firestore.firestore()
+        db.collection("Cities")
+            .document(cityDocId)
+            .collection("ItineraryDays")
+            .document(dayNumber)  // Make sure this matches the document ID for the day
+            .updateData(["content": newContent]) { error in
+                if let error = error {
+                    print("Error updating document: \(error)")
+                } else {
+                    print("Document successfully updated")
                 }
+        }
     }
-     
 }
 
 func fetchSurveyResponsesAndGenerate(cityDocId: String) async -> Bool {
@@ -183,9 +179,10 @@ func fetchSurveyResponsesAndGenerate(cityDocId: String) async -> Bool {
 func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList: [String], _ startDate: String, _ endDate: String) async {
     
     let openAI = OpenAI(apiToken: "hidden")
+    print("Start date \(startDate) and end date \(endDate)")
     
     let prompt = """
-        Generate a detailed travel itinerary for a trip to \(cityName), from \(startDate) to \(endDate). The response should only include the itinerary details, without any additional text. Utilize custom separators to clearly distinguish between different parts of the itinerary. For each day, prefix the day number with '###Day:', followed by '###Date:' for the date. Each itinerary item should be prefixed with '###Content:- '. Do not include any new line characters, leav everything in one single line so it's easily parsable. Ensure the itinerary is practical, considering travel time between locations, and aligns with the user's interests.
+        Generate a detailed travel itinerary for a trip to \(cityName), from \(startDate) to \(endDate). Note that if the start and end date are the same, that means you only need to generate the itinerary for that one day. The response should only include the itinerary details, without any additional text. Utilize custom separators to clearly distinguish between different parts of the itinerary. For each day, prefix the day number with '###Day:', followed by '###Date:' for the date. Each itinerary item should be prefixed with '###Content:- '. Do not include any new line characters, leav everything in one single line so it's easily parsable. Ensure the itinerary is practical, considering travel time between locations, and aligns with the user's interests.
 
         Example of the desired format:
 
@@ -193,7 +190,7 @@ func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList:
 
         ###Day:2 ###Date:April 3rd ###Content:- 10:00 AM: Explore the vibrant Takeshita Street in Harajuku for quirky fashion finds and unique souvenirs. ###Content:- 1:00 PM: Have a sushi lunch at one of the local sushi joints near Harajuku to continue enjoying delicious sushi. ###Content:- 4:00 PM: Visit the Meiji Shrine for a peaceful stroll through the serene forest and to learn about Japanese culture and history. ###Content:- 8:00 PM: Experience Tokyo's nightlife scene at a popular club in Shibuya to dance the night away and enjoy the electric atmosphere.
         
-        Recall to do this for however many days from \(startDate) to \(endDate). And note that we do not need to strictly visit 4 places per day.
+        Recall to do this for however many days from \(startDate) to \(endDate). If it's the same date, then you only need to do it for that day. And note that we do not need to strictly visit 4 places per day.
 
         Please create a similar itinerary, ensuring each day offers a unique and enriching experience and make sure to consider all of the user's preferences. Use English instead of other languages.
         """
@@ -208,14 +205,9 @@ func generateCityItinerary(_ cityDocId: String, _ cityName: String, _ inputList:
     do {
         print("begin querying GPT API")
         let result = try await openAI.chats(query: query)
-        
-        print("Itinerary full result:\n \(result)")
-        print("\n\n\n")
+
         for choice in result.choices {
             DispatchQueue.main.async {
-                //print("full content: \(choice.message.content)")
-                
-                print("calling parseItinerary")
                 parseItinerary(cityDocId: cityDocId, response: "\(choice.message.content)")
                 
             }
@@ -256,7 +248,6 @@ func parseItinerary(cityDocId: String, response: String) {
         }
     }
 
-    // Don't forget to upload the last day's content to Firestore
     if !content.isEmpty {
         uploadDayItineraryToFirestore(db: db, cityDocId: cityDocId, dayNumber: dayNumber, date: date, content: content)
     }

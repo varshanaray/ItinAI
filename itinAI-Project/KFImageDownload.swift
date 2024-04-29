@@ -1,6 +1,9 @@
+// Project: itinAI-Final
+// EID: ezy78, gkk298, esa549, vn4597
+// Course: CS371L
+
 import UIKit
 import Kingfisher
-
 
 extension UIImageView {
     
@@ -12,18 +15,6 @@ extension UIImageView {
             return
         }
         
-        /*
-        let downloader = ImageDownloader.default
-        
-        downloader.downloadImage(with: url) { result in
-            switch result {
-                case .success(let value):
-                print(value.image)
-            case .failure(let error):
-                print(error)
-            }
-        }*/
-        
         let processor = DefaultImageProcessor()
         
         self.kf.setImage(
@@ -33,16 +24,14 @@ extension UIImageView {
             completionHandler: { [weak self] result in
                 switch result {
                 case .success(let value):
-                    print("Image loaded successfully from \(value.cacheType)")
-                    print("image URL: \(url)")
+                    print("Image loaded successfully")
+                    //print("image URL: \(url)")
                 case .failure(let error):
-                    print("Failed to load image: \(error)")
-                    print("used fallback image for url: \(url)")
+                    print("Failed to load image")
+                    //print("used fallback image for url: \(url)")
                     self?.image = fallbackImage
                 }
             }
         )
-        
-        
     }
 }

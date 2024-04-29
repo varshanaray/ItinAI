@@ -1,4 +1,4 @@
-// Project: itinAI-Beta
+// Project: itinAI-Final
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -12,7 +12,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     @IBOutlet weak var announceCell: UITableViewCell!
     @IBOutlet weak var groupNameLabel: UILabel!
-    
     
     @IBOutlet weak var citiesTableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
@@ -105,14 +104,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         print("group code!: ", (group?.groupCode)!)
         fetchUsers(groupCode: (group?.groupCode)!)
         
-        print("City list in ViewDidLoad:")
-        for city in cityList {
-            print("  city name: ", city?.name)
-        }
-        
         fetchGroupsAndScheduleNotifications()
         fetchCities()
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         // fetchLastAnnouncement()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped(_:)))
         // Add tap gesture recognizer to the cell
@@ -122,14 +115,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @objc func cellTapped(_ sender: UITapGestureRecognizer) {
         self.navigateToAnnouncements(group: group!)
     }
-    
-    //    override func viewWillAppear(_ animated: Bool) {
-    //        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& viewWillAppear called")
-    //        fetchLastAnnouncement()
-    //    }
-    
+
     func fetchLastAnnouncement() {
-        print("IN FETCH LAST ANNOUNCEMT -------------------------------")
         let db = Firestore.firestore()
         let groupRef = db.collection("Groups").document((self.group?.groupCode)!)
         
@@ -186,13 +173,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
         announceMessage.setTitle(messageDisplayed, for: .normal)
         announceMessage.setTitleColor(.black, for: .normal)
-        // Allow multiple lines
-        // announceMessage.titleLabel?.numberOfLines = 1
-        // Add an ellipsis if the text exceeds the width of the button
-        // announceMessage.titleLabel?.lineBreakMode = .byTruncatingTail
-        
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         fetchLastAnnouncement()
@@ -216,7 +197,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         self.imageToPass = self.imageView.image
                         self.currentGroupImageURL = groupImageURL
                     }
-                    //self.downloadGroupImage(groupImageURL)
                 } else {
                     print("Profile image URL not found")
                     // Use default profile picture
@@ -235,7 +215,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             return
         }
         
-        // Create a URLSessionDataTask to fetch the image data from the URL
         // Create a URLSessionDataTask to fetch the image data from the URL
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             // Check for errors
@@ -287,8 +266,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("CITY COUNT: ", cityList.count)
-        return 1 //cityList.count
+        return 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -310,10 +288,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let newWidth = cell.contentView.frame.width * 0.5
         let margin = (cell.contentView.frame.width - newWidth) / 2.0
         
-        //cell.contentView.frame = CGRect(x: margin, y: 0, width: newWidth, height: cell.contentView.frame.height)
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        //cell.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        
+   
         // Get the city name for the current row.
         let thisCity = cityList[indexPath.section]
         
@@ -339,11 +315,8 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let db = Firestore.firestore()
         let groupCode = group?.groupCode ?? ""
         let cityName = cityList[indexPath.section]?.name ?? ""
-        //let cityImageURL = cityList[indexPath.section]?.cityImageURL
-        //let cityImage = (citiesTableView.cellForRow(at: indexPath)?.imageView?.image)!
-        
+
         let cityId = "\(groupCode)\(cityName)"
-        print("City ID:", cityId)
         let cityRef = db.collection("Cities").document(cityId)
         
         cityRef.getDocument { (document, error) in
@@ -388,7 +361,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     func checkIfItineraryGenerated(cityId: String, completion: @escaping (Bool) -> Void) {
-        print("calling checkIfItineraryGenerated")
         let db = Firestore.firestore()
         db.collection("Cities").document(cityId).collection("ItineraryDays").limit(to: 1).getDocuments { (querySnapshot, err) in
             if let err = err {
@@ -403,7 +375,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     func generateItinerary(cityId: String, completion: @escaping (Bool) -> Void) {
-        print("calling generateItinerary")
         Task {
             let success = await fetchSurveyResponsesAndGenerate(cityDocId: cityId)
             completion(success)
@@ -431,29 +402,23 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.view.isUserInteractionEnabled = true // Re-enables interaction
     }
     
-    
     func navigateToItineraryPage(cityId: String, cityName: String) {
         if let itineraryVC = self.storyboard?.instantiateViewController(withIdentifier: "ItineraryVCID") as? ItineraryPageVC {
-            print("segueing to itinerary page")
             itineraryVC.cityId = cityId
             itineraryVC.cityName = cityName
-            //itineraryVC.cityImage = cityImage
             self.navigationController?.pushViewController(itineraryVC, animated: true)
         }
     }
     
 func navigateToSurveyPage(cityId: String, cityName: String) {
-        print("segue to survey")
         if let surveyVC = self.storyboard?.instantiateViewController(withIdentifier: "SurveyVCID") as? SurveyPageVC {
             surveyVC.cityId = cityId
             surveyVC.cityName = cityName
-            //surveyVC.cityImage = cityImage
             self.navigationController?.pushViewController(surveyVC, animated: true)
         }
     }
     
     @IBAction func addButton(_ sender: Any) {
-        print("add button pressed!")
         setupCitiesModalView(title: "Add A City")
         currentModalView = citiesModalView
         animateModalView()
@@ -493,39 +458,27 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
                 let dispatchGroup = DispatchGroup()
                 for cityRef in cityRefs {
                     dispatchGroup.enter()
-                    print("cityRefs found")
                     cityRef.getDocument { (cityDoc, error) in
                         defer {
                             dispatchGroup.leave()
                         }
-                        print("type of deadline: " ,type(of: cityDoc?.get("deadline")))
-                        print("type of citydoc: ", type(of: cityDoc))
                         if let cityDoc = cityDoc, cityDoc.exists, let cityName =  cityDoc.data()?["cityName"] as? String,
                            let deadline = cityDoc.data()?["deadline"] as? Timestamp,
                            let startDate = cityDoc.data()?["startDate"] as? Timestamp,
                            let endDate = cityDoc.data()?["endDate"] as? Timestamp {
-                            print("start date value: ", startDate.dateValue())
-                            print("start type: ", type(of: startDate.dateValue()))
                             let cityImageURL = cityDoc.data()?["cityImageURL"] as? String
                             let city = City(name: cityName, startDate: startDate.dateValue(), endDate: endDate.dateValue(), deadline: deadline.dateValue(), imageURL: cityImageURL ?? "default")
                             self.cityList.append(city)
-                            print("Appended to city list in fetchCities, leng of cityList: ", self.cityList.count)
                         }
                     }
                 }
                 dispatchGroup.notify(queue: .main) {
-                    print("Printing city after fetching cityRefs")
-                    for city in self.cityList {
-                        print("HELLOOOOOOOOOOOOOOO")
-                        print(city?.name)
-                    }
                     self.citiesTableView.reloadData()
                 }
                 
             }
         }
     }
-    
     
     func setupCitiesModalView(title: String) {
         var modalTitle: String = ""
@@ -622,7 +575,6 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         surveyDeadlineLabel.translatesAutoresizingMaskIntoConstraints = false
         surveyDeadlineLabel.text = "Survey Deadline"
         surveyDeadlineLabel.font = UIFont(name: "Poppins-Bold", size: 16)
-        //surveyDeadlineLabel.textColor = .black
         surveyDeadlineLabel.textColor = UIColor(named: "CustomOutlineText")
         citiesModalView.addSubview(surveyDeadlineLabel)
         
@@ -664,7 +616,6 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         NSLayoutConstraint.activate([
             startDatePicker.topAnchor.constraint(equalTo: tripDatesLabel.bottomAnchor, constant: 5),
             startDatePicker.leadingAnchor.constraint(equalTo: citiesModalView.leadingAnchor, constant: 20), // Left-aligned
-            //startDatePicker.widthAnchor.constraint(equalToConstant: 200) // Match width with the existing date picker
         ])
         
         // To label between start and end date pickers
@@ -773,9 +724,8 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         let startTimestamp = Timestamp(date: startDate.date)
         let endTimestamp = Timestamp(date: endDate.date)
         let deadlineTimestamp = Timestamp(date: deadline.date)
-        print("CITY ID: ", cityId)
+        
         // append to user's groupList
-        // let cityRef = db.collection("Cities").document(cityId)
         db.collection("Cities").document(cityId).setData([
             "cityName": name,
             "startDate": startTimestamp,
@@ -865,22 +815,15 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
-        //cell.userImageView.image = groupProfilePics[indexPath.row]
         var currentURL = self.profilePicsURLs[indexPath.row]
-        //cell.userImageView.clipsToBounds = true
         cell.userImageView.contentMode = .scaleAspectFill
         
         DispatchQueue.main.async {
             cell.userImageView.setImage(with: currentURL!, fallbackImage: UIImage(named: "defaultProfilePicture"))
         }
         
-        
-        //cell.userImageView.clipsToBounds = true
-        //cell.userDisplayLabel.text = displayNames[indexPath.row]
         return cell
     }
-    
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Prepare to segue to Details page
@@ -916,29 +859,84 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         return configuration
     }
-    
+
     func deleteCity(at indexPath: IndexPath) {
-        let cityName = cityList[indexPath.section]?.name
-        let cityId = group!.groupCode + cityName!
+        guard let cityName = cityList[indexPath.section]?.name else { return }
+        let cityId = group!.groupCode + cityName
         let db = Firestore.firestore()
         
-        // Remove city from Firestore document in Groups collection
-        let groupDocRef = db.collection("Groups").document("groupCode")
+        // Creating the document reference that needs to be removed from the array
+        let cityDocRef = db.collection("Cities").document(cityId)
+
+        // Remove city reference from Firestore document in Groups collection
+        let groupDocRef = db.collection("Groups").document(group!.groupCode)
         groupDocRef.updateData([
-            "cityList": FieldValue.arrayRemove([cityId])
-        ])
-        
-        // Delete the city document from Cities collection
-        db.collection("Cities").document(cityId).delete { error in
+            "cityList": FieldValue.arrayRemove([cityDocRef])
+        ]) { error in
             if let error = error {
-                print("Error deleting city: \(error)")
-            } else {
-                print("City successfully deleted")
-                DispatchQueue.main.async {
-                    self.cityList.remove(at: indexPath.section)
-                    let indexSet = IndexSet(arrayLiteral: indexPath.section)
-                    
-                    self.citiesTableView.deleteSections(indexSet, with: .automatic)
+                print("Failed to remove city from group cityList: \(error.localizedDescription)")
+                return
+            }
+
+            // Delete the city document and its "ItineraryDays" subcollection
+            self.deleteCityAndItsItinerary(cityId: cityId) { error in
+                if let error = error {
+                    print("Error deleting city and its itinerary: \(error)")
+                } else {
+                    print("City and itinerary successfully deleted")
+                    DispatchQueue.main.async {
+                        self.cityList.remove(at: indexPath.section)
+                        let indexSet = IndexSet(arrayLiteral: indexPath.section)
+                        self.citiesTableView.deleteSections(indexSet, with: .automatic)
+                    }
+                }
+            }
+        }
+    }
+
+    func deleteCityAndItsItinerary(cityId: String, completion: @escaping (Error?) -> Void) {
+        let db = Firestore.firestore()
+        let cityRef = db.collection("Cities").document(cityId)
+        let itineraryCollectionRef = cityRef.collection("ItineraryDays")
+
+        // First, delete the "ItineraryDays" subcollection
+        deleteCollection(collectionRef: itineraryCollectionRef) { error in
+            if let error = error {
+                completion(error)
+                return
+            }
+
+            // Once the subcollection is deleted, delete the city document
+            cityRef.delete { error in
+                completion(error)
+            }
+        }
+    }
+    
+    func deleteCollection(collectionRef: CollectionReference, batchSize: Int = 100, completion: @escaping (Error?) -> Void) {
+        // Get the first batch of documents in the collection
+        collectionRef.limit(to: batchSize).getDocuments { (docSet, error) in
+            guard let docSet = docSet else {
+                completion(error)
+                return
+            }
+
+            guard docSet.count > 0 else {
+                // No documents left, the collection is deleted
+                completion(nil)
+                return
+            }
+
+            let batch = collectionRef.firestore.batch()
+            docSet.documents.forEach { batch.deleteDocument($0.reference) }
+
+            // Commit the batch
+            batch.commit { batchError in
+                if let batchError = batchError {
+                    completion(batchError)
+                } else {
+                    // Recurse to delete next batch
+                    self.deleteCollection(collectionRef: collectionRef, batchSize: batchSize, completion: completion)
                 }
             }
         }
@@ -950,7 +948,6 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         currentEditingCityIndexPath = indexPath
         currentEditingCityId = group!.groupCode + cityName!
         
-        print("Initiate edit for city image: \(cityName)")
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .photoLibrary
@@ -971,9 +968,6 @@ func navigateToSurveyPage(cityId: String, cityName: String) {
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             picker.dismiss(animated: true, completion: nil)
         }
-        
-
-        
         
     func uploadImageToFirebaseStorage(_ image: UIImage) {
         guard let imageData = image.jpegData(compressionQuality: 0.5) else {
