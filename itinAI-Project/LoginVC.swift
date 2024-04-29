@@ -1,4 +1,4 @@
-// Project: itinAI-Beta
+// Project: itinAI-Final
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -9,34 +9,26 @@ import FirebaseFirestore
 class LoginVC: UIViewController {
     
     @IBOutlet weak var passwordField: UITextField!
-    
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var signUpButton: UIButton!
-   
     @IBOutlet weak var emailField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let darkModeValue = UserDefaults.standard.object(forKey: "darkMode") as? Int, darkModeValue == 1 {
             logoImageView.image = UIImage(named: "logoDarkItinAI")
             logoImageView.alpha = 1.0
             // dark mode is on
-            print("Dark mode Is on, login page")
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
         } else {
-            print("LIGHT mode Is on, login page")
             logoImageView.alpha = 0.0
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
-        // UIColor(named: "CustomBackground")
-        //emailField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         emailField.backgroundColor = UIColor(named: "LoginFields")
-        //passwordField.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
         passwordField.backgroundColor = UIColor(named: "LoginFields")
         passwordField.isSecureTextEntry = true
-        
         signUpButton.setTitleColor(UIColor.black, for: .normal)
         signUpButton.titleLabel?.font = UIFont(name: "Poppins-Bold", size: 16)
-        
         Auth.auth().addStateDidChangeListener()
         {
             (auth, user) in
@@ -53,10 +45,8 @@ class LoginVC: UIViewController {
             logoImageView.image = UIImage(named: "logoDarkItinAI")
             logoImageView.alpha = 1.0
             // dark mode is on
-            print("Dark mode Is on, login page")
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
         } else {
-            print("LIGHT mode Is on, login page")
             logoImageView.alpha = 0.0
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
@@ -66,9 +56,9 @@ class LoginVC: UIViewController {
     @IBAction func loginButtonPressed(_ sender: Any) {
         // Check for empty fields
         guard let email = emailField.text, !email.isEmpty else {
-                displayErrorAlert(message: "Please enter your email.")
-                return
-            }
+            displayErrorAlert(message: "Please enter your email.")
+            return
+        }
         guard let password = passwordField.text, !password.isEmpty else {
             displayErrorAlert(message: "Please enter your password.")
             return
@@ -100,12 +90,12 @@ class LoginVC: UIViewController {
     }
 
     func displayErrorAlert(message: String) {
-        let controller = UIAlertController(
+        let controller = UIAlertController (
             title: "Error",
             message: message,
             preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "OK", style: .default))
-        present(controller, animated: true)
+            controller.addAction(UIAlertAction(title: "OK", style: .default))
+            present(controller, animated: true)
     }
 }
 
