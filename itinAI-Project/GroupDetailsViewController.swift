@@ -154,7 +154,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func downloadGroupImage(_ urlString: String) {
-        print("Inside downloadGroupImage")
         print("The url retrieved is: \(urlString)")
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
