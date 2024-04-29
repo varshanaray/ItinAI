@@ -390,33 +390,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uqN-6t-IoS">
-                                <rect key="frame" x="308" y="194" width="69" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Leave" cornerStyle="large">
-                                    <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" systemColor="systemRedColor"/>
-                                    </backgroundConfiguration>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="leaveButtonPressed:" destination="SFR-uj-AIK" eventType="touchUpInside" id="kDJ-Ew-Z15"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qqI-aG-AXn"/>
                         <color key="backgroundColor" name="CustomBackground"/>
-                        <constraints>
-                            <constraint firstItem="qqI-aG-AXn" firstAttribute="trailing" secondItem="uqN-6t-IoS" secondAttribute="trailing" constant="16" id="Uyb-cj-IoR"/>
-                            <constraint firstItem="uqN-6t-IoS" firstAttribute="top" secondItem="qqI-aG-AXn" secondAttribute="top" constant="150" id="oh0-iq-L6Q"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="rYB-EW-a4u"/>
+                    <navigationItem key="navigationItem" id="rYB-EW-a4u">
+                        <barButtonItem key="rightBarButtonItem" title="Leave" style="plain" id="bMF-GL-V5y">
+                            <connections>
+                                <action selector="leaveButtonPressed:" destination="SFR-uj-AIK" id="Vdf-Bq-IMe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="descript" destination="QPq-bY-hP9" id="dyZ-AZ-Vaq"/>
                         <outlet property="detailsImage" destination="WFQ-Aw-BQ0" id="Lz7-y7-au3"/>
                         <outlet property="groupCodeLabel" destination="4rC-LF-y2F" id="uVK-ue-899"/>
                         <outlet property="groupNameLabel" destination="Mre-DY-wL2" id="G8j-DK-VVc"/>
-                        <outlet property="leaveButton" destination="uqN-6t-IoS" id="ZDd-1P-4CB"/>
                         <outlet property="tableView" destination="5EZ-6e-ekN" id="0nl-De-IM2"/>
                     </connections>
                 </viewController>
@@ -476,14 +465,14 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CityCell" id="Tn5-bf-9Zw" customClass="CityCell" customModule="itinAI_Project" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="55.333332061767578" width="346" height="94"/>
+                                                <rect key="frame" x="0.0" y="55.333332061767578" width="346" height="93.666664123535156"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tn5-bf-9Zw" id="86k-jH-EyG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="346" height="94"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="346" height="93.666664123535156"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Kd-nw-tYC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="346" height="94"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="346" height="93.666666666666671"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxe-Q4-sCB">
                                                             <rect key="frame" x="20" y="9.9999999999999964" width="99" height="50.666666666666657"/>
@@ -492,7 +481,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j74-iD-1Dk">
-                                                            <rect key="frame" x="305.33333333333331" y="20" width="20.666666666666686" height="54"/>
+                                                            <rect key="frame" x="305.33333333333331" y="19.999999999999996" width="20.666666666666686" height="53.666666666666657"/>
                                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="38"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1076,9 +1065,6 @@
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
