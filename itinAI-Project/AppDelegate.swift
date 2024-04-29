@@ -1,4 +1,4 @@
-// Project: itinAI-Beta
+// Project: itinAI-Final
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -9,44 +9,21 @@ import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    
+
     override init() {
         super.init()
         if let darkModeValue = UserDefaults.standard.object(forKey: "darkMode") as? Int, darkModeValue == 1 {
-            //logoImageView.image = UIImage(named: "logoDarkItinAI")
-            //logoImageView.alpha = 1.0
             // dark mode is on
-            print("init")
-            print("Dark mode Is on, launch page")
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
         } else {
-            print("LIGHT mode Is on, launch page")
             UserDefaults.standard.set(false, forKey: "darkMode")
-            //logoImageView.alpha = 0.0
-            //UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
         }
-    
     }
-    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
-/*
-        if (UserDefaults.standard.object(forKey: "darkMode")! as! Int == 1) {
-            //logoImageView.image = UIImage(named: "logoDarkItinAI")
-            //logoImageView.alpha = 1.0
-            // dark mode is on
-            print("Dark mode Is on, launch page")
-            UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
-        } else {
-            print("LIGHT mode Is on, launch page")
-            //logoImageView.alpha = 0.0
-            //UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
-        } */
-        
         return true
     }
 
@@ -108,5 +85,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
