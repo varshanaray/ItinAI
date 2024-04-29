@@ -284,6 +284,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
             imagePickerController.delegate = self
             imagePickerController.sourceType = .camera
             present(imagePickerController, animated: true, completion: nil)
+            dismissModalView()
         } else {
             // If no camera is available, pop up an alert
             let alertVC = UIAlertController(
@@ -309,19 +310,13 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true, completion: nil)
     
         if let selectedImage = info[.originalImage] as? UIImage {
-            
-            if let currentUrl = currentProfilePictureUrl {
+            DispatchQueue.main.async {
                 self.profilePicture.image = selectedImage
-                uploadImageToFirebaseStorage(selectedImage)
-            } else {
-                // No current profile picture, proceed with upload
-                self.profilePicture.image = selectedImage
-                uploadImageToFirebaseStorage(selectedImage)
+                self.uploadImageToFirebaseStorage(selectedImage)
             }
-
+            picker.dismiss(animated: true, completion: nil)
         }
     }
     
