@@ -10,10 +10,10 @@ class ProfileDoneButton: StyledButton {
         
         var title: String {
             switch self {
-            case .create: return "Create"
-            case .join: return "Join"
-            case .reset: return "Reset"
-            case .cities: return "Cities"
+                case .create: return "Create"
+                case .join: return "Join"
+                case .reset: return "Reset"
+                case .cities: return "Cities"
             }
         }
     }
@@ -21,7 +21,6 @@ class ProfileDoneButton: StyledButton {
     var typeOfButton: ButtonType = .create
     var createDoneCallback: (() -> Void)?
     var joinDoneCallback: (() -> Void)?
-    //var resetDoneCallback:
     var dismissCallback: (() -> Void)?
     var citiesDoneCallback: (() -> Void)?
     
