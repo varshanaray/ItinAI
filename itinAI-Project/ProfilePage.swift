@@ -211,7 +211,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         overlayView.addGestureRecognizer(tapGesture)
         
-        
         // Add the picture modal view to the main view
         overlayView.addSubview(pictureModalView)
         
