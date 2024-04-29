@@ -47,7 +47,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
         tableView.allowsSelection = false
         groupNameLabel.text = group?.groupName
         groupCodeLabel.text = "Group Code: " + group!.groupCode
-        //detailsImage.image = self.receivedImage
         detailsImage.setImage(with: currentGroupImageURL, fallbackImage: UIImage(named: "scene"))
         descript.delegate = self
         descript.allowsEditingTextAttributes = true
@@ -135,7 +134,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     func retrieveGroupImage() {
         let db = Firestore.firestore()
         let groupRef = db.collection("Groups").document(group!.groupCode)
-        
         groupRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 if let groupImageURL = document.get("groupImageURL") as? String {
@@ -145,7 +143,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
                         self.downloadGroupImage(groupImageURL)
                         self.currentGroupImageURL = groupImageURL
                     }
-                    //self.downloadGroupImage(groupImageURL)
                 } else {
                     print("Group image URL not found")
                     // Use default profile picture
@@ -163,7 +160,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             print("Invalid URL")
             return
         }
-        
         // Create a URLSessionDataTask to fetch the image data from the URL
         // Create a URLSessionDataTask to fetch the image data from the URL
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -172,20 +168,17 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
                 print("Error downloading image: \(error.localizedDescription)")
                 return
             }
-            
             // Check for response status code
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
                 print("Invalid response")
                 return
             }
-            
             // Check if data is available
             guard let imageData = data else {
                 print("No data received")
                 return
             }
-            
             // Convert the downloaded data into a UIImage
             if let image = UIImage(data: imageData) {
                 // Update the profileImageView with the downloaded image
@@ -197,7 +190,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
                 print("Failed to create image from data")
             }
         }
-        
         // Start the URLSessionDataTask
         task.resume()
     }
@@ -207,26 +199,20 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             print("Failed to convert image to data")
             return
         }
-        
         let imageName = "\(UUID().uuidString).jpg"
-        
         // Create a reference to the image in the user's folder
         guard let groupStorageRef = self.groupStorageRef else {
             print("User storage reference is nil")
             return
         }
-        
         let imageRef = groupStorageRef.child(imageName)
-        
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
-        
         let _ = imageRef.putData(imageData, metadata: metadata) { (metadata, error) in
             guard error == nil else {
                 print("Error uploading image: \(error!.localizedDescription)")
                 return
             }
-            
             // Image uploaded successfully
             imageRef.downloadURL { (url, error) in
                 guard let downloadURL = url else {
@@ -243,7 +229,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     func updateGroupImageURL(_ downloadURL: URL) {
         let db = Firestore.firestore()
         let groupRef = db.collection("Groups").document(group!.groupCode)
-        
         groupRef.updateData(["groupImageURL": downloadURL.absoluteString]) { error in
             if let error = error {
                 print("Error updating group image URL: \(error.localizedDescription)")
@@ -260,7 +245,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleCell", for: indexPath) as! CustomPeopleTableViewCell
         if (indexPath.row == 1) {
-            
             // Assuming 'displayNames' is an array of strings and 'indexPath.row' gives you the current index
             let normalString = displayNames[indexPath.row]! + "            " // Regular string part
             
@@ -271,41 +255,25 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.italicSystemFont(ofSize: 14) // Set the font to italic with size 16
             ]
-            
-            // Create the italic attributed string
-            let italicAttributedString = NSAttributedString(string: "Group Admin", attributes: attributes)
-            
-            // Append the italic attributed string to the normal attributed string
-            normalAttributedString.append(italicAttributedString)
-            
             // Assign the combined attributed string to the UILabel's attributedText property
             cell.name.attributedText = normalAttributedString
             
         } else {
             // Assuming 'displayNames' is an array of strings and 'indexPath.row' gives you the current index
-            let normalString = displayNames[indexPath.row]! + "            " // Regular string part
-            
+            // Regular string part
+            let normalString = displayNames[indexPath.row]! + "            "
             // Create an initial attributed string from the normal string
             let normalAttributedString = NSMutableAttributedString(string: normalString)
-            
             // Define the attributes for the italic part
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.italicSystemFont(ofSize: 14) // Set the font to italic with size 16
             ]
-            
-            // Create the italic attributed string
-            let italicAttributedString = NSAttributedString(string: "Group Member", attributes: attributes)
-            
-            // Append the italic attributed string to the normal attributed string
-            normalAttributedString.append(italicAttributedString)
-            
             // Assign the combined attributed string to the UILabel's attributedText property
             cell.name.attributedText = normalAttributedString
             
         }
         var currentURL = self.profilePicsURLs[indexPath.row]!
         cell.iconImageView.setImage(with: currentURL, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
-        //cell.iconImageView.image = groupProfilePics[indexPath.row]
         cell.backgroundColor = UIColor(named: "CustomBackground")
         return cell
     }
@@ -331,9 +299,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     @IBAction func leaveButtonPressed(_ sender: Any) {
-        
         let alertController = UIAlertController(title: "Leave Group", message: "Are you sure you want to leave this group?", preferredStyle: .alert)
-        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let leaveAction = UIAlertAction(title: "Leave", style: .destructive) { _ in
             // Call function to remove user from group
@@ -345,20 +311,16 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             self.removeGroupFromUser(currentGroupReference: currentGroupRef)
             self.popTwoViews()
         }
-        
         alertController.addAction(cancelAction)
         alertController.addAction(leaveAction)
-        
         present(alertController, animated: true, completion: nil)
     }
     
     func removeUserFromGroup(currentUserReference: DocumentReference, groupID: String) {
         // Get a reference to the Firestore database
         let db = Firestore.firestore()
-        
         // Reference to the group document
         let groupRef = db.collection("Groups").document(groupID)
-        
         // Update the group document
         groupRef.updateData([
             "userList": FieldValue.arrayRemove([currentUserReference])
@@ -373,7 +335,6 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
                         print("Group document does not exist")
                         return
                     }
-                    
                     if let userList = document.data()?["userList"] as? [Any], userList.isEmpty {
                         // Delete all cities associated with the group
                         self.cityList.forEach { City in
@@ -433,19 +394,14 @@ class GroupDetailsViewController: UIViewController, UITableViewDataSource, UITab
             print("no navigation controller")
             return
         }
-        
         // Check if there are enough view controllers in the navigation stack
         guard navigationController.viewControllers.count >= 3 else {
             print("not enough views")
             return
         }
-        
         // Get the view controller you want to navigate back to
         let targetViewController = navigationController.viewControllers[navigationController.viewControllers.count - 3]
-        
         // Pop to the target view controller
         navigationController.popToViewController(targetViewController, animated: true)
     }
-    
 }
-    
