@@ -283,6 +283,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
             let imagePickerController = UIImagePickerController()
             imagePickerController.delegate = self
             imagePickerController.sourceType = .camera
+            imagePickerController.cameraCaptureMode = .photo
             present(imagePickerController, animated: true, completion: nil)
             dismissModalView()
         } else {
@@ -310,14 +311,14 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    
-        if let selectedImage = info[.originalImage] as? UIImage {
-            DispatchQueue.main.async {
-                self.profilePicture.image = selectedImage
-                self.uploadImageToFirebaseStorage(selectedImage)
+        picker.dismiss(animated: true, completion: {
+            if let selectedImage = info[.originalImage] as? UIImage {
+                DispatchQueue.main.async {
+                    self.profilePicture.image = selectedImage
+                    self.uploadImageToFirebaseStorage(selectedImage)
+                }
             }
-            picker.dismiss(animated: true, completion: nil)
-        }
+        })
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
