@@ -1,4 +1,4 @@
-// Project: itinAI-Beta
+// Project: itinAI-Final
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L   
 
