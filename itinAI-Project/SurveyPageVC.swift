@@ -1,4 +1,4 @@
-// Project: itinAI-Beta
+// Project: itinAI-Final
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -21,7 +21,6 @@ class SurveyPageVC: UIViewController {
         super.viewDidLoad()
         print("In survey page")
 
-        // Do any additional setup after loading the view.
         // Create the label
         let titleLabel = UILabel()
         titleLabel.text = cityName
@@ -33,20 +32,6 @@ class SurveyPageVC: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
-        //backgroundImage.image = cityImage
-        /*
-        // Determine the background color's lightness/darkness
-        let backgroundColor = backgroundImage.image?.averageColor
-        if let backgroundColor = backgroundColor {
-            // Determine if the background is light or dark
-            let isLightBackground = backgroundColor.isLight
-            // Set text color based on background
-            titleLabel.textColor = isLightBackground ? .black : .white
-        } else {
-            // Default text color if background image is not available
-            titleLabel.textColor = .white
-        }*/
-        
         // Add constraints for the label
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -55,7 +40,6 @@ class SurveyPageVC: UIViewController {
         
         // Create the white view
         let whiteView = UIView()
-        //whiteView.backgroundColor = .white
         whiteView.backgroundColor = UIColor(named: "CustomBackground")
         whiteView.translatesAutoresizingMaskIntoConstraints = false
         // Round the corners
@@ -80,7 +64,6 @@ class SurveyPageVC: UIViewController {
         
         let detailLabel1 = UILabel()
         detailLabel1.text = "E.g. museums, historical sites, art galleries, landmarks, theme parks, local markets, neighborhoods, etc."
-        //detailLabel1.textColor = .gray
         detailLabel1.textColor = UIColor(named: "CustomDetailLabel")
         detailLabel1.font = UIFont(name: "Poppins-Regular", size: 12)
         detailLabel1.numberOfLines = 0 // Make it multiline
@@ -88,7 +71,6 @@ class SurveyPageVC: UIViewController {
         whiteView.addSubview(detailLabel1)
         
         textField1.translatesAutoresizingMaskIntoConstraints = false
-        //textField1.layer.borderColor = UIColor.gray.cgColor // Set border color
         textField1.layer.borderColor = UIColor(named: "CustomDetailLabel")?.cgColor // Set border color
         textField1.backgroundColor = UIColor(named: "CustomBackground")
         textField1.layer.borderWidth = 1.0 // Set border width
@@ -110,9 +92,6 @@ class SurveyPageVC: UIViewController {
             textField1.heightAnchor.constraint(equalToConstant: 120), // Adjust height as needed
         ])
         
-        // Create UI elements for the second pair (similar to the first pair)
-        // Add constraints for the second pair of UI elements
-        // ...
         // Create UI elements for the first survey question
         let boldLabel2 = UILabel()
         boldLabel2.text = "Activities you're interested in?"
@@ -130,7 +109,6 @@ class SurveyPageVC: UIViewController {
         whiteView.addSubview(detailLabel2)
         
         textField2.translatesAutoresizingMaskIntoConstraints = false
-        //textField2.layer.borderColor = UIColor.gray.cgColor // Set border color
         textField2.layer.borderColor = UIColor(named: "CustomDetailLabel")?.cgColor
         textField2.backgroundColor = UIColor(named: "CustomBackground")
         textField2.layer.borderWidth = 1.0 // Set border width

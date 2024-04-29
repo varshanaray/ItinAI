@@ -1,3 +1,7 @@
+// Project: itinAI-Final
+// EID: ezy78, gkk298, esa549, vn4597
+// Course: CS371L
+
 import Foundation
 
 // Class to create an announcement object.
@@ -16,5 +20,4 @@ class Announcements {
         self.message = message
         self.timestamp = timestamp
     }
-
 }
