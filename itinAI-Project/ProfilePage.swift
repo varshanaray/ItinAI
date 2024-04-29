@@ -279,10 +279,23 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     
     // Method to handle button press events
     @objc func takePictureButtonPressed() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .camera
-        present(imagePickerController, animated: true, completion: nil)
+        if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self
+            imagePickerController.sourceType = .camera
+            present(imagePickerController, animated: true, completion: nil)
+        } else {
+            // If no camera is available, pop up an alert
+            let alertVC = UIAlertController(
+                title: "No camera",
+                message: "Sorry, this device doesn't have a camera",
+                preferredStyle: .alert)
+            let okAction = UIAlertAction(
+                title: "OK",
+                style: .default)
+            alertVC.addAction(okAction)
+            present(alertVC,animated:true)
+        }
     }
     
     @objc func accessGalleryButtonPressed() {
