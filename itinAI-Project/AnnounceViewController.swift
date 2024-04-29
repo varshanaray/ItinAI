@@ -49,7 +49,6 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
     
     
     @IBAction func addClicked(_ sender: Any) {
-        print("Add button pressed")
         let buttonTitle = addAnnounce.title(for: .normal) ?? ""
         setupCreateModalView(title: buttonTitle)
         currentModalView = createModalView
@@ -57,10 +56,10 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("viewWillAppear called")
         fetchAnnouncements()
         self.announceTableView.reloadData()
     }
+    
     func setupCreateModalView(title: String) {
         var modalTitle: String = ""
         let leftMargin: CGFloat = 20.0
@@ -102,8 +101,6 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
            titleLabel.topAnchor.constraint(equalTo: createModalView.topAnchor, constant: 20),
            titleLabel.leadingAnchor.constraint(equalTo: createModalView.leadingAnchor, constant: 20),
        ])
-       
-       print("Create modal view")
 
        // Create Subject label
        var subjectLabel = UILabel()
@@ -121,7 +118,7 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
        ])
        
        // Subject text field
-       var placeHolderText = "Max 50 word count"
+       var placeHolderText = ""
        var placeHolderFont = UIFont(name: "Poppins-Regular", size: 12)
        
        let attributes: [NSAttributedString.Key: Any] = [
@@ -199,7 +196,6 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
        
    
         createDoneButton.createDoneCallback = {
-            print("Create done callback")
             self.handleAnnouncmentCreation(subject: subjectTextField.text!, announcement: announceTextView.text!)
         }
         
@@ -249,7 +245,6 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
        }
        
        func fetchAnnouncements() {
-           print("fetchGroups() called")
            guard let currentUser = Auth.auth().currentUser else {
                print("No current user found")
                return
@@ -301,30 +296,14 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
                                }
                                return date1 > date2 // Sort in descending order based on the date
                            })
-                       for announcement in self.allAnnouncements {
-                           print(announcement?.message)
-                       }
                        self.announceTableView.reloadData()
-                       print("allAnnouncements loaded: \(self.allAnnouncements.count)")
-                       // Assuming you have a UITableView to reload, called announceTableView
-                       // self.announceTableView.reloadData()
                    } else {
                        print("No announcements found in the group document.")
                    }
-                   
-//                   dispatchGroup.notify(queue: .main) {
-//                       for announcement in self.allAnnouncements {
-//                           print(announcement?.message)
-//                       }
-//                       print("allAnnouncements loaded: \(self.allAnnouncements.count)")
-//                       // Assuming you have a UITableView to reload, called announceTableView
-//                       self.announceTableView.reloadData()
-//                   }
                }
            }
        }
 
-       
     func animateModalView() {
         UIView.animate(withDuration: 0.3) {
             self.overlayView.alpha = 1.0
@@ -374,7 +353,6 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
     }
        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("here")
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnnounceTableCell", for: indexPath) as! AnnouncementsTableViewCell
         let row = indexPath.section
         let userName = allAnnouncements[row]!.user
@@ -382,41 +360,22 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
         let subject = allAnnouncements[row]!.subject
         let timestamp = allAnnouncements[row]!.timestamp
         cell.name.text = userName
-        //cell.groupImageView.image = UIImage(named: "japan")
-        // downloadGroupImage(groupImageURL, cell)
         cell.subject.text = subject
         let dateString = convertDateToString(date: timestamp)
         cell.time.text = dateString
-        // print("name in cell", cell.name.text)
         cell.message.text = message
         cell.message.backgroundColor = UIColor.clear
         cell.message.isScrollEnabled = false
         var currentURL = allAnnouncements[row]!.userImageURL
-        //cell.userImageView.clipsToBounds = true
         cell.img.setImage(with: currentURL, placeholder: UIImage(named: "defaultProfilePicture"), fallbackImage: UIImage(named: "defaultProfilePicture"))
         cell.img.contentMode = .scaleAspectFill
         cell.img.clipsToBounds = true
-        //cell.allowS = .none
-        
         return cell
     }
        
     func convertDateToString(date: Date) -> String {
         let formatter = DateFormatter()
-        // Example of a format: "yyyy-MM-dd HH:mm:ss"
-        // You can adjust this format to meet your needs.
         formatter.dateFormat = "yyyy-MM-dd"
-           
-        // Optionally, you can set the locale or timezone if needed
-        // formatter.locale = Locale(identifier: "en_US_POSIX")
-        // formatter.timeZone = TimeZone(secondsFromGMT: 0)
-           
         return formatter.string(from: date)
     }
-    
 }
-    
-
-        
-            
- 
