@@ -19,8 +19,6 @@ class SurveyPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("In survey page")
-
         // Create the label
         let titleLabel = UILabel()
         titleLabel.text = cityName
@@ -101,7 +99,6 @@ class SurveyPageVC: UIViewController {
         
         let detailLabel2 = UILabel()
         detailLabel2.text = "E.g. sightseeing, shopping, hiking, attending shows or concerts, relaxation/spa days, boat rides, etc."
-        //detailLabel2.textColor = .gray
         detailLabel2.textColor = UIColor(named: "CustomDetailLabel")
         detailLabel2.font = UIFont(name: "Poppins-Regular", size: 12)
         detailLabel2.numberOfLines = 0 // Make it multiline
