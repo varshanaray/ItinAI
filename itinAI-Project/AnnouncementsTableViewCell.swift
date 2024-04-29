@@ -1,9 +1,6 @@
-//
-//  AnnouncementsTableViewCell.swift
-//  itinAI-Project
-//
-//  Created by Gurman Kalkat on 4/16/24.
-//
+// Project: itinAI-Final
+// EID: ezy78, gkk298, esa549, vn4597
+// Course: CS371L
 
 import UIKit
 
@@ -14,10 +11,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var subject: UILabel!
-    
-    
     @IBOutlet weak var content: UIView!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,25 +21,13 @@ class AnnouncementsTableViewCell: UITableViewCell {
         self.layer.borderWidth = 1
         self.clipsToBounds = true
 
-        // Customize the appearance of the image view
-        /*
-        groupImageView.layer.borderWidth = 0.5
-        groupImageView.layer.borderColor = UIColor.black.cgColor
-        groupImageView.contentMode = .scaleAspectFill
-        groupImageView.layer.cornerRadius = 10 // Optional: Add rounded corners
-        groupImageView.clipsToBounds = true
-        */
-        
         setupViews()
-//        NSLayoutConstraint.activate([
-//            message.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 50),
-//        ])
     }
-
-        override func setSelected(_ selected: Bool, animated: Bool) {
-            super.setSelected(selected, animated: animated)
-            // Configure the view for the selected state
-        }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        // Configure the view for the selected state
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -61,13 +43,9 @@ class AnnouncementsTableViewCell: UITableViewCell {
         message.translatesAutoresizingMaskIntoConstraints = false
         message.isScrollEnabled = false  // Important for expanding size
         message.isEditable = false       // Typically not editable in a cell
-            //contentView.addSubview(message)
 
-            NSLayoutConstraint.activate([
-                //message.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-                message.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7),
-                //message.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-                //message.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
-            ])
-        }
+        NSLayoutConstraint.activate([
+            message.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7),
+        ])
+    }
 }

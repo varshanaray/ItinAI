@@ -1,4 +1,4 @@
-// Project: itinAI-Beta
+// Project: itinAI-Final
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -14,7 +14,6 @@ func setNotificationPreference(enabled: Bool) {
 func isNotificationEnabled() -> Bool {
     return UserDefaults.standard.bool(forKey: "notificationPermission")
 }
-
 
 func scheduleSurveyDeadlineReminders(groupCode: String, groupName: String, cityName: String, deadline: Date) {
     let notificationTimes = calculateNotificationTimes(deadline: deadline)
@@ -59,7 +58,6 @@ func scheduleLocalNotification(groupCode: String, cityName: String, content: UNM
     UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [identifier])
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
     
-    
     let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
     let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
@@ -71,7 +69,6 @@ func scheduleLocalNotification(groupCode: String, cityName: String, content: UNM
         }
     }
 }
-
 
 func hasNotificationBeenScheduled(groupCode: String, cityName: String, deadline: Date, completion: @escaping (Bool) -> Void) {
     UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
@@ -111,8 +108,6 @@ func scheduleNotificationsIfNeeded(groupCode: String, groupName: String, cityNam
     }
 }
 
-
-
 func printAllPendingNotifications() {
     UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
         print("Pending Notifications:")
@@ -121,7 +116,6 @@ func printAllPendingNotifications() {
         }
     }
 }
-
 
 func fetchGroupsAndScheduleNotifications() {
     
@@ -141,10 +135,7 @@ func fetchGroupsAndScheduleNotifications() {
     }
 
     let db = Firestore.firestore()
-    
-    print("performing global notification scheduling")
 
-    print("userID \(userId)")
     // Fetch groups referenced by the current user
     db.collection("Users").document(userId).getDocument { (document, error) in
         guard let document = document, let data = document.data(), error == nil else {
@@ -176,7 +167,7 @@ func fetchGroupsAndScheduleNotifications() {
                             let cityName = cityData["cityName"] as? String ?? "Unknown City"
                             if let deadlineTimestamp = cityData["deadline"] as? Timestamp {
                                 let deadline = deadlineTimestamp.dateValue()
-                                print("attempting auto notification schedule for \(groupName)(\(groupCode)) \(cityName)")
+                                //print("attempting auto notification schedule for \(groupName)(\(groupCode)) \(cityName)")
                                 scheduleNotificationsIfNeeded(groupCode: groupCode, groupName: groupName, cityName: cityName, deadline: deadline)
                             }
                         }

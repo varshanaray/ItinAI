@@ -1,4 +1,4 @@
-// Project: itinAI-Beta
+// Project: itinAI-Final
 // EID: ezy78, gkk298, esa549, vn4597
 // Course: CS371L
 
@@ -29,10 +29,8 @@ class StyledButton: UIButton {
         self.layer.borderWidth = 1.0
         
         // Set the background color
-        //self.backgroundColor = UIColor(red: 242/255.0, green: 241/255.0, blue: 241/255.0, alpha: 1)
         self.backgroundColor = UIColor(named: "LoginButton")
         
-        //self.setTitleColor(UIColor.black, for: .normal)
         self.setTitleColor(UIColor(named: "LoginButtonText"), for: .normal)
         self.titleLabel?.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont(name: "Poppins-Bold", size:18)!)
     }
