@@ -90,11 +90,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     }
     
     @IBAction func resetPassPressed(_ sender: Any) {
-        /*guard let email = emailTextField.text, !email.isEmpty else {
-            // Display error message indicating that email field is empty
-            return
-        } */
-
         Auth.auth().sendPasswordReset(withEmail: userEmail ?? "") { error in
             if let error = error {
                 // Handle error
@@ -111,6 +106,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
             }
         }
     }
+    
     func retrieveProfilePicture() {
         guard let currentUser = Auth.auth().currentUser else {
             print("No current user")
