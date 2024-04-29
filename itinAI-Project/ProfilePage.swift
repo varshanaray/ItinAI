@@ -57,12 +57,9 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         
         var userStorageRef = pfpRef.child(Auth.auth().currentUser!.uid)
         self.userStorageRef = userStorageRef
-        print("This is userStorageRef: ", userStorageRef)
         
         logoutButton.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 15)
         resetPasswordButton.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 15)
-
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,14 +138,12 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     }
     
     func downloadProfilePicture(_ urlString: String) {
-        print("Inside downloadProfilePicture")
-        print("The url retrieved is: \(urlString)")
         guard let url = URL(string: urlString) else {
              print("Invalid URL")
              return
          }
          
-         // Create a URLSessionDataTask to fetch the image data from the URL
+        // Create a URLSessionDataTask to fetch the image data from the URL
         // Create a URLSessionDataTask to fetch the image data from the URL
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             // Check for errors
@@ -186,9 +181,7 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
         task.resume()
     }
     
-    // TODO: FINAL - implement
     @IBAction func changePictureButtonPressed(_ sender: Any) {
-        print("Change picture button pressed")
         setupPictureModalView()
         currentModalView = pictureModalView
         animateModalView()
@@ -291,7 +284,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     
     // Method to handle button press events
     @objc func takePictureButtonPressed() {
-        print("Take picture button pressed")
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .camera
@@ -299,7 +291,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     }
     
     @objc func accessGalleryButtonPressed() {
-        print("Access gallery button pressed")
         // Implement functionality to access the photo gallery
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -311,18 +302,14 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
-        
+    
         if let selectedImage = info[.originalImage] as? UIImage {
             
             if let currentUrl = currentProfilePictureUrl {
-                print("Profile picture already exists, comparing")
-                //checkIfSameImage(selectedImage, withUrl: currentUrl)
-                // TODO: Debug checkIfSameImage
                 self.profilePicture.image = selectedImage
                 uploadImageToFirebaseStorage(selectedImage)
             } else {
                 // No current profile picture, proceed with upload
-                print("No current profile picture, proceed with upload")
                 self.profilePicture.image = selectedImage
                 uploadImageToFirebaseStorage(selectedImage)
             }
@@ -335,7 +322,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
     }
     
     @objc func deletePhotoButtonPressed() {
-       print("Delete photo button pressed")
        // Implement functionality to delete the current photo and replace it with the default image
        profilePicture.image = defaultImage
        let db = Firestore.firestore()
@@ -349,7 +335,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
        }
        dismissModalView()
    }
-    
     
     func uploadImageToFirebaseStorage(_ image: UIImage) {
         guard let imageData = image.jpegData(compressionQuality: 0.5) else {
@@ -405,42 +390,6 @@ class ProfilePage: UIViewController, UITextFieldDelegate, UIImagePickerControlle
             }
         }
     }
-    
-    // Function to compare selected image with current profile picture
-    func checkIfSameImage(_ image: UIImage, withUrl url: String) {
-        print("Inside checkIfSameImgage")
-        let profilePictureRef = userStorageRef?.child(url)
-        
-        profilePictureRef?.getData(maxSize: 1 * 1024 * 1024) { data, error in
-            if let error = error {
-                print("Error downloading profile picture: \(error.localizedDescription)")
-            } else {
-                if let imageData = data, let currentImage = UIImage(data: imageData) {
-                    // Compare images
-                    if self.imagesAreEqual(image, currentImage) {
-                        print("Selected image is the same as current profile picture")
-                        return // Do not upload if images are the same
-                    }
-                } else {
-                    print("No data received for profile picture")
-                }
-                print("Selected image is different than current pfp, proceed with upload")
-                // Selected image is different, proceed with upload
-                self.uploadImageToFirebaseStorage(image)
-            }
-        }
-    }
-    
-    // Function to compare two images
-    func imagesAreEqual(_ image1: UIImage, _ image2: UIImage) -> Bool {
-        guard let data1 = image1.jpegData(compressionQuality: 1.0),
-              let data2 = image2.jpegData(compressionQuality: 1.0) else {
-            return false
-        }
-        
-        return data1 == data2
-    }
-    
     
     func dismissModalView() {
         // Animate modal view and overlay out of the screen
