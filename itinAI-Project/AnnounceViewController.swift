@@ -148,53 +148,50 @@ class AnnounceViewController: UIViewController, UITextFieldDelegate, UITableView
        
        // Create Announcement label
        // Announcement Label
-           let announceLabel = UILabel()
-           announceLabel.text = "Announcement"
-           announceLabel.font = UIFont(name: "Poppins-Bold", size: 16)
-           announceLabel.translatesAutoresizingMaskIntoConstraints = false
-           createModalView.addSubview(announceLabel)
-           
-           NSLayoutConstraint.activate([
-               announceLabel.topAnchor.constraint(equalTo: subjectTextField.bottomAnchor, constant: 15),
-               announceLabel.leadingAnchor.constraint(equalTo: createModalView.leadingAnchor, constant: 20),
-           ])
-           
-           // Announcement TextView
-           let announceTextView = UITextView()
-           announceTextView.backgroundColor = UIColor(red: 242/255.0, green: 241/255.0, blue: 241/255.0, alpha: 1)
-           announceTextView.layer.cornerRadius = 8.0
-           announceTextView.font = UIFont(name: "Poppins-Regular", size: 12)
-           announceTextView.translatesAutoresizingMaskIntoConstraints = false
-           createModalView.addSubview(announceTextView)
-           
-           NSLayoutConstraint.activate([
-               announceTextView.topAnchor.constraint(equalTo: announceLabel.bottomAnchor, constant: 10),
-               announceTextView.leadingAnchor.constraint(equalTo: createModalView.leadingAnchor, constant: 20),
-               announceTextView.trailingAnchor.constraint(equalTo: createModalView.trailingAnchor, constant: -20),
-               announceTextView.heightAnchor.constraint(equalToConstant: 150) // Increased height for more text
-           ])
+       let announceLabel = UILabel()
+       announceLabel.text = "Announcement"
+       announceLabel.font = UIFont(name: "Poppins-Bold", size: 16)
+       announceLabel.translatesAutoresizingMaskIntoConstraints = false
+       createModalView.addSubview(announceLabel)
+       
+       NSLayoutConstraint.activate([
+           announceLabel.topAnchor.constraint(equalTo: subjectTextField.bottomAnchor, constant: 15),
+           announceLabel.leadingAnchor.constraint(equalTo: createModalView.leadingAnchor, constant: 20),
+       ])
+       
+       // Announcement TextView
+       let announceTextView = UITextView()
+       announceTextView.backgroundColor = UIColor(red: 242/255.0, green: 241/255.0, blue: 241/255.0, alpha: 1)
+       announceTextView.layer.cornerRadius = 8.0
+       announceTextView.font = UIFont(name: "Poppins-Regular", size: 12)
+       announceTextView.translatesAutoresizingMaskIntoConstraints = false
+       createModalView.addSubview(announceTextView)
+       
+       NSLayoutConstraint.activate([
+           announceTextView.topAnchor.constraint(equalTo: announceLabel.bottomAnchor, constant: 10),
+           announceTextView.leadingAnchor.constraint(equalTo: createModalView.leadingAnchor, constant: 20),
+           announceTextView.trailingAnchor.constraint(equalTo: createModalView.trailingAnchor, constant: -20),
+           announceTextView.heightAnchor.constraint(equalToConstant: 150) // Increased height for more text
+       ])
        
        announcement = announceTextView.text!
        
        createModalView.addSubview(announceTextView)
-       
-       // Configure the Done Button
-           let createDoneButton = ProfileDoneButton() // Assuming UIButton, adjust as necessary
-           createDoneButton.setTitle("Done", for: .normal)
-           createDoneButton.translatesAutoresizingMaskIntoConstraints = false
-           createModalView.addSubview(createDoneButton)
+    
+       let createDoneButton = ProfileDoneButton() // Assuming UIButton, adjust as necessary
+       createDoneButton.setTitle("Done", for: .normal)
+       createDoneButton.translatesAutoresizingMaskIntoConstraints = false
+       createModalView.addSubview(createDoneButton)
 
-           NSLayoutConstraint.activate([
-               createDoneButton.centerXAnchor.constraint(equalTo: createModalView.centerXAnchor),
-               createDoneButton.bottomAnchor.constraint(equalTo: createModalView.bottomAnchor, constant: -25),  // 20 points from the bottom
-               createDoneButton.widthAnchor.constraint(equalToConstant: 70),
-               createDoneButton.heightAnchor.constraint(equalToConstant: 40)
-           ])
+       NSLayoutConstraint.activate([
+           createDoneButton.centerXAnchor.constraint(equalTo: createModalView.centerXAnchor),
+           createDoneButton.bottomAnchor.constraint(equalTo: createModalView.bottomAnchor, constant: -25),  // 20 points from the bottom
+           createDoneButton.widthAnchor.constraint(equalToConstant: 70),
+           createDoneButton.heightAnchor.constraint(equalToConstant: 40)
+       ])
            
-           // Ensure the constraints are activated and the layout is updated
-           createModalView.layoutIfNeeded()
-       
-   
+        // Ensure the constraints are activated and the layout is updated
+        createModalView.layoutIfNeeded()
         createDoneButton.createDoneCallback = {
             self.handleAnnouncmentCreation(subject: subjectTextField.text!, announcement: announceTextView.text!)
         }
