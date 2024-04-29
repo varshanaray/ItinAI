@@ -40,27 +40,20 @@ class SettingsVC: UIViewController {
     }
     
     @IBAction func darkModeChanged(_ sender: Any) {
-        print("Dark mode switch changed")
         if (sender as! UISwitch).isOn {
-            print("darkMode switch is ON")
             UserDefaults.standard.set(true, forKey: "darkMode")
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .dark
         } else {
-            print("Darkmode Switch is OFF")
             UserDefaults.standard.set(false, forKey: "darkMode")
             UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .light
-         
         }
     }
     
     @IBAction func notifsSwitchChange(_ sender: Any) {
-        print("Notif switch changed")
         if (sender as! UISwitch).isOn {
-            print("Switch is ON")
             UserDefaults.standard.set(true, forKey: "notificationPermission")
             fetchGroupsAndScheduleNotifications()
         } else {
-            print("Switch is OFF")
             UserDefaults.standard.set(false, forKey: "notificationPermission")
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
             UNUserNotificationCenter.current().removeAllDeliveredNotifications()
