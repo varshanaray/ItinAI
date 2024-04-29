@@ -10,7 +10,7 @@ extension UIImageView {
     func setImage(with urlString: String, placeholder: UIImage? = UIImage(named: "placeholder"), fallbackImage: UIImage? = UIImage(named: "defaultImage")) {
 
         guard let url = URL(string: urlString) else {
-            print("Invalid URL")
+            print("Invalid image URL")
             self.image = fallbackImage
             return
         }
@@ -23,12 +23,9 @@ extension UIImageView {
             options: [.transition(.fade(0.2)), .fromMemoryCacheOrRefresh],
             completionHandler: { [weak self] result in
                 switch result {
-                case .success(let value):
-                    print("Image loaded successfully")
-                    //print("image URL: \(url)")
+                case .success(let value): break
+                    // no actions needed
                 case .failure(let error):
-                    print("Failed to load image")
-                    //print("used fallback image for url: \(url)")
                     self?.image = fallbackImage
                 }
             }

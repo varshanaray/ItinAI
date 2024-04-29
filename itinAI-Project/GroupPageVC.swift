@@ -149,8 +149,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     self.lastAnnouncement = lastAnnouncement
                     
                     DispatchQueue.main.async {
-                        print("about to update announce")
-                        print("last announce", lastAnnouncement.message)
                         self.updateAnnounceCell(lastAnnouncement: lastAnnouncement)
                     }
                 }
@@ -161,7 +159,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     func updateAnnounceCell(lastAnnouncement: Announcements) {
-        print("in updateAnnounceCell")
         announceName.text = lastAnnouncement.user
         announceImage.contentMode = .scaleAspectFill
         announceImage.clipsToBounds = true
@@ -178,9 +175,6 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func viewWillAppear(_ animated: Bool) {
         fetchLastAnnouncement()
         retrieveGroupImage()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
     }
     
     func retrieveGroupImage() {
@@ -254,7 +248,7 @@ class GroupPageVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     @IBAction func announceClicked(_ sender: Any) {
-        //self.navigateToAnnouncements(group: group!)
+        self.navigateToAnnouncements(group: group!)
     }
     
     func navigateToAnnouncements(group: Group) {
