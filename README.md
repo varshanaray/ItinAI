@@ -5,3 +5,4 @@ Upon the establishment of travel dates and the destination, the app enters its f
 <br>
 The final itinerary, a product of collaborative filtering and AI optimization, is then displayed on the Itinerary page, accessible to all group members. The ability for continuous editing, post-generation, ensures that any last-minute changes or insights can still be incorporated, offering flexibility that mirrors the dynamic nature of travel itself.
 
+Link to Figma Design: https://www.figma.com/design/IB39HQmQA8YcYn3NnqPk2A/Design?node-id=0-1&t=xIS4HMovcc7mvdi5-1
